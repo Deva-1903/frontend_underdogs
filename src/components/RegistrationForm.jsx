@@ -1,0 +1,586 @@
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createUser, reset } from "../features/user/userSlice";
+import Spinner from "../components/Spinner";
+import axios from "../axios";
+import { storage } from "../utils/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+
+function RegistrationForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    mobile: "",
+    email: "",
+    healthIssues: "",
+    emergencyContactNo: "",
+    height: "",
+    weight: "",
+    bloodGroup: "",
+    address: "",
+    subscription: "",
+    subscription_type: "",
+    mode_of_payment: "",
+    cardio: "",
+    photoURL: "",
+  });
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [options, setOptions] = useState([]);
+  const [subscriptionTypes, setSubscriptionTypes] = useState([]);
+  const [cardioOptions, setCardioOptions] = useState([]);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { admin } = useSelector((state) => state.auth);
+
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    const fetchSubscriptionOptions = async () => {
+      try {
+        // Fetch subscription options
+        const optionsResponse = await axios.get(
+          "/api/admin/subscription-options",
+          {
+            headers: {
+              Authorization: `Bearer ${admin.token}`,
+            },
+          }
+        );
+        setOptions(optionsResponse.data);
+
+        // Fetch subscription types
+        const typesResponse = await axios.get("/api/admin/subscription-types", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setSubscriptionTypes(typesResponse.data);
+
+        // Fetch subscription types
+        const cardioTypesResponse = await axios.get("/api/admin/cardio-types", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setCardioOptions(cardioTypesResponse.data);
+      } catch (error) {
+        console.error("Error fetching subscription data:", error);
+      }
+    };
+
+    fetchSubscriptionOptions();
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (!admin) {
+      navigate("/login");
+    }
+
+    if (isSuccess) {
+      toast.success(`User ${user.id} registered successfully`);
+      setFormData({
+        name: "",
+        age: "",
+        gender: "",
+        mobile: "",
+        email: "",
+        healthIssues: "",
+        emergencyContactNo: "",
+        height: "",
+        weight: "",
+        bloodGroup: "",
+        address: "",
+        subscription: "",
+        subscription_type: "",
+        mode_of_payment: "",
+        cardio: "",
+        photoURL: "",
+      });
+    }
+
+    dispatch(reset());
+  }, [admin, user, isError, isSuccess, message, navigate, dispatch]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const userData = {
+      name: formData.name,
+      age: formData.age,
+      gender: formData.gender,
+      mobile: formData.mobile,
+      email: formData.email,
+      healthIssues: formData.healthIssues,
+      emergencyContactNo: formData.emergencyContactNo,
+      height: formData.height,
+      weight: formData.weight,
+      bloodGroup: formData.bloodGroup,
+      address: formData.address,
+      subscription: formData.subscription,
+      subscription_type: formData.subscription_type,
+      mode_of_payment: formData.mode_of_payment,
+      cardio: formData.cardio,
+      photoURL: formData.photoURL,
+      adminName: admin.username,
+    };
+
+    dispatch(createUser(userData));
+
+    // Reset form data
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const uploadProfilePhoto = (file) => {
+    const uuid = uuidv4();
+    const fileRef = ref(storage, `images/${uuid}`);
+    const uploadTask = uploadBytesResumable(fileRef, file);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        null,
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  const handlePhotoChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const maxSize = 50000000;
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/gif"];
+
+    if (file.size > maxSize) {
+      alert("The file size is too large.");
+      return;
+    }
+
+    if (!allowedFileTypes.includes(file.type)) {
+      alert("The file type is not supported.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setSelectedPhoto(reader.result);
+    };
+    reader.readAsDataURL(file);
+
+    uploadProfilePhoto(file)
+      .then((downloadURL) => {
+        setFormData((prevData) => ({
+          ...prevData,
+          photoURL: downloadURL,
+        }));
+      })
+      .catch((error) => {
+        console.error("Error uploading profile photo:", error);
+      });
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <div className="flex flex-col justify-center items-center h-full mt-20">
+      <div className="flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-slate-900 shadow-md shadow-gray-700 rounded px-8 pt-6 pb-8 mb-4 max-h-full"
+        >
+          <p className="text-gray-200 font-bold text-xl md:text-3xl mb-6 mt-4 lg:mt-0 flex justify-center">
+            Registration Form
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Profile Photo field */}
+            <div className="col-span-1 flex flex-col items-center">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-4"
+                htmlFor="photo"
+              >
+                Profile Photo
+              </label>
+              <div className="relative mb-4">
+                {selectedPhoto && (
+                  <div className="mt-2 h-20 w-20 rounded-full mb-3 ml-8 bg-gray-200 overflow-hidden">
+                    <img
+                      className="h-full w-full object-cover"
+                      src={selectedPhoto}
+                      alt="Profile Preview"
+                    />
+                  </div>
+                )}
+                <input
+                  className="hidden"
+                  id="photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                />
+                <label
+                  htmlFor="photo"
+                  className="bg-indigo-500 cursor-pointer hover:bg-indigo-400 hover:scale-110 duration-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  {selectedPhoto ? "Change Photo" : "Add Photo"}
+                </label>
+              </div>
+            </div>
+
+            {/* <!-- Username field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="username"
+              >
+                Username
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            {/* <!-- Age field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="age"
+              >
+                Age
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                placeholder="30"
+              />
+            </div>
+
+            {/* <!-- Gender field --> */}
+            <div class="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                for="gender"
+              >
+                Gender
+              </label>
+              <select
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white  px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline appearance-none"
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled selected>
+                  Select your gender
+                </option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {/* <!-- Mobile field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="mobile"
+              >
+                Mobile
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="tel"
+                id="mobile"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="9876543210"
+                required
+              />
+            </div>
+
+            {/* <!-- Email field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="email"
+              >
+                Email
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="john.doe@example.com"
+                required
+              />
+            </div>
+
+            {/* <!-- Emergency Contact field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="emergency-contact"
+              >
+                Emergency Contact
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="tel"
+                id="emergencyContactNo"
+                name="emergencyContactNo"
+                value={formData.emergencyContactNo}
+                onChange={handleChange}
+                placeholder="9876543210"
+              />
+            </div>
+
+            {/* <!-- Height field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="height"
+              >
+                Height
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text"
+                id="height"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+                placeholder="5'11''"
+              />
+            </div>
+
+            {/* <!-- Weight field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="weight"
+              >
+                Weight
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text"
+                id="weight"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+                placeholder="150 lbs"
+              />
+            </div>
+
+            {/* <!-- Blood Group field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="blood-group"
+              >
+                Blood Group
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text"
+                id="bloodGroup"
+                name="bloodGroup"
+                value={formData.bloodGroup}
+                onChange={handleChange}
+                placeholder="O+"
+              />
+            </div>
+
+            {/* <!-- Health Issues field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="health-issues"
+              >
+                Health Issues
+              </label>
+              <textarea
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-3 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                id="healthIssues"
+                name="healthIssues"
+                value={formData.healthIssues}
+                onChange={handleChange}
+                placeholder="Enter any health issues here"
+              ></textarea>
+            </div>
+
+            {/* <!-- Address field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="address"
+              >
+                Address
+              </label>
+              <textarea
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-3 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder=""
+              ></textarea>
+            </div>
+
+            {/* <!-- Subscription field --> */}
+            <div class="col-span-1 relative">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="subscription"
+              >
+                Subscription
+              </label>
+              <select
+                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+    border-transparent border-2 focus:border-indigo-500"
+                id="subscription"
+                name="subscription"
+                value={formData.subscription}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-- Please select --</option>
+                {options.map((option) => (
+                  <option key={option._id} value={option.name}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* <!-- Subscription Type field --> */}
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="subscription-type"
+              >
+                Subscription Type
+              </label>
+              <select
+                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+                 border-transparent border-2 focus:border-indigo-500"
+                id="subscription_type"
+                name="subscription_type"
+                value={formData.subscription_type}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-- Please select --</option>
+                {subscriptionTypes.map((option) => (
+                  <option key={option._id} value={option.name}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                htmlFor="cardio"
+              >
+                Cardio
+              </label>
+              <select
+                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                id="cardio"
+                name="cardio"
+                value={formData.cardio}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-- Please select --</option>
+                {cardioOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="mode_of_payment"
+              >
+                Mode of Payment
+              </label>
+              <select
+                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+    border-transparent border-2 focus:border-indigo-500"
+                id="mode_of_payment"
+                name="mode_of_payment"
+                value={formData.mode_of_payment}
+                onChange={handleChange}
+                required
+              >
+                <option value="">-- Please select --</option>
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="UPI">UPI</option>
+              </select>
+            </div>
+          </div>
+          {/* <!-- Submit button --> */}
+          <div className="flex justify-center items-center">
+            <button
+              className="bg-indigo-500 mt-8 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default RegistrationForm;
