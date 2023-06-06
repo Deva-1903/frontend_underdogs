@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC6v4oFokqLyb9-iRDCH6cBcvLBzhpZRUs",
-  authDomain: "underdogs-fitness-9d740.firebaseapp.com",
-  projectId: "underdogs-fitness-9d740",
-  storageBucket: "underdogs-fitness-9d740.appspot.com",
-  messagingSenderId: "952797632514",
-  appId: "1:952797632514:web:1d041cbf5216bbf9752f1b",
-  measurementId: "G-X3QNW96P0M",
+  apiKey: "AIzaSyDZnZg5PgUNLYhbBucBkifcy_PYgfj90xs",
+  authDomain: "underdogs-fitness.firebaseapp.com",
+  projectId: "underdogs-fitness",
+  storageBucket: "underdogs-fitness.appspot.com",
+  messagingSenderId: "280081822710",
+  appId: "1:280081822710:web:2fd560578a8d59697c0dd7",
+  measurementId: "G-1HDXWJ00JR",
 };
 
 // Initialize Firebase
