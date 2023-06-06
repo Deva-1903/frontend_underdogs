@@ -12,13 +12,14 @@ import axios from "../axios";
 const ContactForms = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { admin } = useSelector((state) => state.auth);
   const { users, isLoading, isError, message } = useSelector(
     (state) => state.allUsers
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const condition = admin?.username === "karthik" || admin?.username === "bala";
 
   useEffect(() => {
     if (!admin) {
@@ -49,28 +50,32 @@ const ContactForms = () => {
   }
 
   const handleDelete = async (id) => {
-    try {
-      const response = await axios.delete(`/api/admin/contact-form/${id}`, {
-        headers: {
-          Authorization: `Bearer ${admin.token}`,
-        },
-      });
+    if (condition) {
+      try {
+        const response = await axios.delete(`/api/admin/contact-form/${id}`, {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
 
-      dispatch(
-        getContactForms({
-          page: currentPage,
-        })
-      );
+        dispatch(
+          getContactForms({
+            page: currentPage,
+          })
+        );
 
-      if (response.status === 200) {
-        toast.success("Contact form deleted successfully");
-      } else {
-        console.error("Error deleting contact form:", response);
+        if (response.status === 200) {
+          toast.success("Contact form deleted successfully");
+        } else {
+          console.error("Error deleting contact form:", response);
+          toast.error("Error deleting contact form");
+        }
+      } catch (error) {
+        console.error("Error deleting contact form:", error);
         toast.error("Error deleting contact form");
       }
-    } catch (error) {
-      console.error("Error deleting contact form:", error);
-      toast.error("Error deleting contact form");
+    } else {
+      toast.error("You don't have access");
     }
   };
 

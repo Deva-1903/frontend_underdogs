@@ -7,6 +7,7 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import { storage } from "../utils/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import { AiFillDelete } from "react-icons/ai";
 
 function ManageContent() {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
@@ -166,7 +167,8 @@ function ManageContent() {
   };
 
   const uploadProfilePhoto = (file) => {
-    const storageRef = ref(storage, `brochure/${file.name}`);
+    const uuid = uuidv4();
+    const storageRef = ref(storage, `brochure/${uuid}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     return new Promise((resolve, reject) => {
       uploadTask.on(
@@ -286,7 +288,7 @@ function ManageContent() {
                 onClick={() => handleDeleteSubscriptionOption(option._id)}
                 className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
-                <RiDeleteBack2Fill />
+                <AiFillDelete />
               </button>
             </div>
           ))}
@@ -302,7 +304,7 @@ function ManageContent() {
             />
             <button
               onClick={handleAddSubscriptionOption}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline ml-2"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -321,7 +323,7 @@ function ManageContent() {
                 onClick={() => handleDeleteSubscriptionType(type._id)}
                 className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
-                <RiDeleteBack2Fill />
+                   <AiFillDelete />
               </button>
             </div>
           ))}
@@ -337,7 +339,7 @@ function ManageContent() {
             />
             <button
               onClick={handleAddSubscriptionType}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline ml-2"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -356,12 +358,12 @@ function ManageContent() {
                 onClick={() => handleDeleteCardioType(type._id)}
                 className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
-                <RiDeleteBack2Fill />
+                <AiFillDelete />
               </button>
             </div>
           ))}
           {/* Add Cardio Type */}
-          <div className="flex items-center mt-2">
+          <div className="flex items-center mt-4">
             <input
               type="text"
               name="newCardioName"
@@ -372,7 +374,7 @@ function ManageContent() {
             />
             <button
               onClick={handleAddCardioType}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline ml-2"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -407,7 +409,7 @@ function ManageContent() {
                 onChange={(event) => setSelectedPhoto(event.target.files[0])}
               />
               <button
-                className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2  md:w-6/12 rounded focus:outline-none focus:shadow-outline"
+                className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2  md:w-6/12 rounded focus:outline-none focus:shadow-outline hover:scale-110 duration-200"
                 onClick={handleUpdateBrochure}
               >
                 Update Brochure
