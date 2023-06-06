@@ -2,13 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { getFeesDetails, reset } from "../features/allUsers/allUsersSlice";
 import axios from "../axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import logo from "../assets/UnderDogs_logo.png";
 import { FiDownload } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
@@ -53,6 +53,11 @@ function FeesDetails() {
           admin: selectedAdmin,
           page: currentPage,
         };
+
+        if (admin.username !== "bala" && admin.username !== "karthik") {
+          params.admin = admin.username;
+        }
+
         const apiUrl = "/api/admin/fees-details";
         const response = await axios.get(apiUrl, {
           params,

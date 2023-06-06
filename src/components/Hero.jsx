@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "../axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineLocalOffer } from "react-icons/md";
+import { FaTags } from "react-icons/fa";
 
 function Hero() {
   const [showForm, setShowForm] = useState(false);
@@ -83,13 +83,13 @@ function Hero() {
           <div className="items-center flex flex-wrap">
             <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
               <div>
-                <h1 className="text-white font-semibold text-3xl lg:text-5xl">
-                  Underdogs<span className="text-orange-500">Fitness Club</span>
+                <h1 className="text-white font-semibold text-2xl lg:text-5xl">
+                  Underdogs<span className="text-orange-500"> FitnessClub</span>
                 </h1>
-                <p className="mt-4 text-lg text-gray-300">
+                <p className="mt-4 text-base lg:text-lg text-gray-300">
                   Unleash your potential at Underdogs Fitness Club. Experience
                   the power of our training center today by downloading our
-                  complete brochure.
+                  complete offers.
                 </p>
                 <div className="flex justify-center mt-5">
                   <a
@@ -98,15 +98,15 @@ function Hero() {
                     className="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white p-4 border border-orange-500 hover:border-transparent rounded inline-block cursor-pointer mr-4"
                   >
                     <div className="flex gap-3">
-                      <p className="text-xl">Offers</p>
-                      <MdOutlineLocalOffer className=" mt-1 text-2xl" />
+                      <FaTags className=" mt-1 text-2xl" />
+                      <p className="text-xl lg:pr-2">Offers</p>
                     </div>
                   </a>
                   <button
                     className="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white p-4 border border-orange-500 hover:border-transparent rounded inline-block cursor-pointer"
                     onClick={() => setShowForm(true)}
                   >
-                    Add Attendance
+                    <p className="lg:text-xl text-lg">Add Attendance</p>
                   </button>
                 </div>
               </div>
@@ -154,7 +154,7 @@ function Hero() {
             </button>
             <div className="flex items-center mb-8">
               <h2 className="text-2xl md:text-3xl text-white font-bold">
-              <span className="text-orange-500">Attendance</span> Register
+                <span className="text-orange-500">Attendance</span> Register
               </h2>
             </div>
 
