@@ -164,11 +164,11 @@ function FeesDetails() {
       <h1 className="text-white text-center text-3xl font-bold py-6">
         Fees Details{" "}
         <span className="text-white cursor-pointer" onClick={handleDownloadPDF}>
-          <FiDownload className="inline-block align-middle text-2xl mb-1 ml-3 hover:text-orange-600" />{" "}
+          <FiDownload className="inline-block align-middle text-2xl mb-1 ml-3 hover:text-orange-600 hover:scale-110 duration-200" />{" "}
         </span>
       </h1>
       <div className="flex justify-center items-center">
-        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 ">
           <div className="flex justify-center items-center gap-3 mb-6 ml-20 ">
             <label className="text-gray-500 uppercase font-bold text-sm mr-4">
               Start Date:
