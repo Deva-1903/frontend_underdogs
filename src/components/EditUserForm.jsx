@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import {
   fetchUserDataForUpdate,
@@ -426,13 +426,22 @@ function EditUserForm() {
             </div>
           </div>
           {/* <!-- Submit button --> */}
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center gap-5 items-center">
             <button
               className="bg-indigo-500 mt-8 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Update
             </button>
+            <button
+             className="bg-gray-300 hover:bg-gray-400 text-gray-800 mt-8 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+            >
+             <Link
+             to="/admin/update/user">
+              Cancel
+             </Link>
+            </button>
+
           </div>
         </form>
       </div>
