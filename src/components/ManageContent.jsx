@@ -166,7 +166,8 @@ function ManageContent() {
   };
 
   const uploadProfilePhoto = (file) => {
-    const storageRef = ref(storage, `brochure/${file.name}`);
+    const uuid = uuidv4();
+    const storageRef = ref(storage, `brochure/${uuid}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     return new Promise((resolve, reject) => {
       uploadTask.on(
