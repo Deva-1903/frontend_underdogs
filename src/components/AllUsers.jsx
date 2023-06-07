@@ -43,6 +43,14 @@ function AllUsers() {
     }
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6 ">
@@ -108,76 +116,102 @@ function AllUsers() {
       </div>
 
       <div className="flex justify-center p-6  w-full">
-      <div className=" overflow-x-auto p-4">
-      <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
-        <table className="w-full divide-y divide-x divide-gray-200 border" >
-          <thead>
-            <tr>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                Id
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                Age
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                Gender
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                Mobile
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                Email
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                Health Issues
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                Emergency Contact
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                Blood Group
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs  md:text-base font-medium text-white uppercase tracking-wider">
-               Subscription
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-               Subscription Type
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-               Plan Ends
-              </th>
-              <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-               Status
-              </th>              
-            </tr>
-          </thead>
-          <tbody className="divide-y  divide-gray-200 border">
-            {users.map((user) => (
-              <tr key={user.id} className="border">
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.age}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.gender}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.mobile}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.healthIssues}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.emergencyContactNo}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.bloodGroup}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.subscription}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.subscription_type}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.planEnds}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">{user.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className=" overflow-x-auto p-4">
+          <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
+            <table className="w-full divide-y divide-x divide-gray-200 border">
+              <thead>
+                <tr>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Id
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Age
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Gender
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Mobile
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Health Issues
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Emergency Contact
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Blood Group
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs  md:text-base font-medium text-white uppercase tracking-wider">
+                    Subscription
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Subscription Type
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Plan Ends
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y  divide-gray-200 border">
+                {users.map((user) => (
+                  <tr key={user.id} className="border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.age}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.gender}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.mobile}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.healthIssues}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.emergencyContactNo}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.bloodGroup}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.subscription}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.subscription_type}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {formatDate(user.planEnds)}
+                    </td>{" "}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.status}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
   );
 }
 

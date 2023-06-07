@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams,Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import {
   fetchUserDataForUpdate,
@@ -433,15 +433,12 @@ function EditUserForm() {
             >
               Update
             </button>
-            <button
-             className="bg-gray-300 hover:bg-gray-400 text-gray-800 mt-8 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+            <Link
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 mt-8 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+              to="/admin/update/user"
             >
-             <Link
-             to="/admin/update/user">
               Cancel
-             </Link>
-            </button>
-
+            </Link>
           </div>
         </form>
       </div>

@@ -51,6 +51,14 @@ function ViewAttendance() {
   //   doc.save("attendance.pdf");
   // }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6 ">
@@ -147,6 +155,9 @@ function ViewAttendance() {
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription Type
                   </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Session
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y  divide-gray-200 border">
@@ -165,16 +176,19 @@ function ViewAttendance() {
                       {user.timeIn}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                      {user.date}
+                      {formatDate(user.date)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                      {user.planEnds}
+                      {formatDate(user.planEnds)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.subscription}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.subscription_type}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.session}
                     </td>
                   </tr>
                 ))}

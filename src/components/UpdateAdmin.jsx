@@ -152,6 +152,14 @@ function UpdateAdmin() {
     setShowConfirmation(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
   return (
     <div className="flex flex-col justify-center items-center w-full h-full bg-body mt-24 p-10 ">
       <div className="shadow-lg shadow-gray-700 p-10">
@@ -291,9 +299,7 @@ function UpdateAdmin() {
                         </td>
 
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          {new Date(admin.createdAt).toLocaleDateString(
-                            "en-GB"
-                          )}
+                          {formatDate(admin.createdAt)}
                         </td>
 
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">

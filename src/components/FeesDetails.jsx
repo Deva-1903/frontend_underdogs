@@ -279,12 +279,15 @@ function FeesDetails() {
                         {user.transaction_type}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        {new Date(user.createdAt).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "numeric",
-                          year: "numeric",
-                        })}
+                        {new Date(user.createdAt)
+                          .toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                          .replace(/\//g, "-")}
                       </td>
+
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                         {new Date(user.createdAt).toLocaleTimeString("en-US", {
                           hour: "numeric",
