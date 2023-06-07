@@ -143,9 +143,6 @@ function ViewAttendance() {
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Time In
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                    Date
-                  </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Plan Ends
                   </th>
@@ -157,6 +154,9 @@ function ViewAttendance() {
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Session
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Date
                   </th>
                 </tr>
               </thead>
@@ -176,9 +176,6 @@ function ViewAttendance() {
                       {user.timeIn}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                      {formatDate(user.date)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {formatDate(user.planEnds)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
@@ -187,8 +184,12 @@ function ViewAttendance() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.subscription_type}
                     </td>
+
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.session}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {formatDate(user.date)}
                     </td>
                   </tr>
                 ))}
