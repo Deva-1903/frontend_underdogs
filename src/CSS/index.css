@@ -28,3 +28,6 @@ html {
 body {
   background-color: #111827;
 }
+:root {
+  --toastify-toast-width: 400px; /* Change the width value as per your requirements */
+}

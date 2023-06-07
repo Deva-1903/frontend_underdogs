@@ -229,14 +229,14 @@ function ManageContent() {
   const handleChange = (event, setState) => {
     setState(event.target.value);
   };
+
   return (
-    <div className="flex flex-col justify-center items-center h-full bg-body mt-24 p-10">
-      {/* <h1 className="text-white text-2xl mb-4">Manage Content</h1> */}
+    <div className="flex flex-col justify-center items-center h-full bg-page bg-gradient-to-b  mt-24 p-10">
       <div className="flex justify-center items-center mb-4">
-        <div className=" grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-0 ">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-4">
           <button
             onClick={() => handleTabChange("subscriptionOptions")}
-            className={`text-md md:text-lg font-semibold py-2 px-4 rounded md:rounded-s-lg ${
+            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
               activeTab === "subscriptionOptions"
                 ? "bg-indigo-500 text-white"
                 : "bg-gray-800 text-gray-200"
@@ -247,7 +247,7 @@ function ManageContent() {
           {/* Subscription Types Tab */}
           <button
             onClick={() => handleTabChange("subscriptionTypes")}
-            className={`text-md md:text-lg font-semibold py-2 px-4 rounded md:rounded-none ${
+            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
               activeTab === "subscriptionTypes"
                 ? "bg-indigo-500 text-white"
                 : "bg-gray-800 text-gray-200"
@@ -257,7 +257,7 @@ function ManageContent() {
           </button>
           <button
             onClick={() => handleTabChange("cardioTypes")}
-            className={`text-md md:text-lg font-semibold py-2 px-4 rounded md:rounded-none ${
+            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
               activeTab === "cardioTypes"
                 ? "bg-indigo-500 text-white"
                 : "bg-gray-800 text-gray-200"
@@ -267,7 +267,7 @@ function ManageContent() {
           </button>
           <button
             onClick={() => handleTabChange("brochure")}
-            className={`text-md md:text-lg font-semibold py-2 px-4 rounded md:rounded-e-lg ${
+            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
               activeTab === "brochure"
                 ? "bg-indigo-500 text-white"
                 : "bg-gray-800 text-gray-200"
@@ -286,7 +286,7 @@ function ManageContent() {
               </span>
               <button
                 onClick={() => handleDeleteSubscriptionOption(option._id)}
-                className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="bg-red-500 hover:bg-red-400 text-lg text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
                 <AiFillDelete />
               </button>
@@ -298,13 +298,13 @@ function ManageContent() {
               type="text"
               name="newOptionName"
               placeholder="Add Subscription Option"
-              className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+              className="appearance-none rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500 bg-slate-800 text-white border-gray-200 border-transparent border-2 "
               value={newOptionName}
               onChange={(e) => handleChange(e, setNewOptionName)}
             />
             <button
               onClick={handleAddSubscriptionOption}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-3 rounded-md focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -321,9 +321,9 @@ function ManageContent() {
               </span>
               <button
                 onClick={() => handleDeleteSubscriptionType(type._id)}
-                className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="bg-red-500 hover:bg-red-400 text-lg text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
-                   <AiFillDelete />
+                <AiFillDelete />
               </button>
             </div>
           ))}
@@ -333,13 +333,13 @@ function ManageContent() {
               type="text"
               name="newTypeName"
               placeholder="Add Subscription Type"
-              className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+              className="appearance-none rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500 bg-slate-800 text-white border-gray-200 border-transparent border-2 "
               value={newTypeName}
               onChange={(e) => handleChange(e, setNewTypeName)}
             />
             <button
               onClick={handleAddSubscriptionType}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-3 rounded-md focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -356,7 +356,7 @@ function ManageContent() {
               </span>
               <button
                 onClick={() => handleDeleteCardioType(type._id)}
-                className="bg-red-500 hover:bg-red-400 text-xl text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                className="bg-red-500 hover:bg-red-400 text-lg text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
               >
                 <AiFillDelete />
               </button>
@@ -368,13 +368,13 @@ function ManageContent() {
               type="text"
               name="newCardioName"
               placeholder="Add Cardio Type"
-              className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+              className="appearance-none rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500 bg-slate-800 text-white border-gray-200 border-transparent border-2 "
               value={newCardioName}
               onChange={(e) => handleChange(e, setNewCardioName)}
             />
             <button
               onClick={handleAddCardioType}
-              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-3 rounded-md focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add
             </button>
@@ -389,13 +389,15 @@ function ManageContent() {
               <div className="flex flex-col items-center">
                 <h3 className="text-white mt-4">Brochure Image:</h3>
                 <div className="flex">
-                  {brochureImage && brochureImage.length > 0 && (
+                  {brochureImage && brochureImage.length > 0 ? (
                     <img
                       src={brochureImage[0].photoURL}
                       alt="Selected Image"
                       className="mt-2 max-w-xs md:max-w-md"
                       style={{ margin: "auto" }}
                     />
+                  ) : (
+                    <p className="text-white">No image available.</p>
                   )}
                 </div>
               </div>
@@ -409,7 +411,7 @@ function ManageContent() {
                 onChange={(event) => setSelectedPhoto(event.target.files[0])}
               />
               <button
-                className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2  md:w-6/12 rounded focus:outline-none focus:shadow-outline hover:scale-110 duration-200"
+                className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-1 px-2 md:w-6/12 rounded focus:outline-none focus:shadow-outline hover:scale-110 duration-200"
                 onClick={handleUpdateBrochure}
               >
                 Update Brochure

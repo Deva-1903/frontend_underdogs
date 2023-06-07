@@ -23,14 +23,20 @@ function Hero() {
         setUserId("");
         navigate(`/attendance/${userId}`);
       } else if (response.status === 204) {
-        toast.error(
-          "Attendance already added for this user on the current date"
-        );
+        toast.error(response.data.message);
       } else {
         toast.error("Failed to add attendance");
       }
     } catch (error) {
-      toast.error("User does not exist");
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("User does not exist");
+      }
     }
   }
 

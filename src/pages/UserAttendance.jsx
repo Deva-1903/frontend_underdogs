@@ -99,8 +99,14 @@ function UserAttendance() {
               Cardio status: {userData.cardio}
             </p>
             <p className="text-gray-200 mb-6">
-              Subscription ends on {userData.planEnds}
+              Subscription ends on{" "}
+              {new Date(userData.planEnds).toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </p>
+
             <p className="text-orange-200 text-sm">
               "Don't wish for a good body, work for it"
             </p>

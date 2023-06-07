@@ -9,6 +9,8 @@ import {
 } from "../features/user/userSlice";
 import Spinner from "../components/Spinner";
 import axios from "../axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const UpdateSubscription = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +18,7 @@ const UpdateSubscription = () => {
     subscription_type: "",
     mode_of_payment: "",
     cardio: "",
+    paymentDate: "",
   });
   const [userData, setUserData] = useState({
     id: "",
@@ -111,6 +114,7 @@ const UpdateSubscription = () => {
       subscription_type: formData.subscription_type,
       cardio: formData.cardio,
       mode_of_payment: formData.mode_of_payment,
+      paymentDate: formData.paymentDate,
       adminName: admin.username,
     };
 
@@ -138,6 +142,14 @@ const UpdateSubscription = () => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
 
   return (
     <div className="flex justify-center items-center ">
@@ -182,7 +194,9 @@ const UpdateSubscription = () => {
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <p className="text-gray-300 font-semibold mb-2">Plan Ends:</p>
-                  <p className="text-gray-400">{userData.planEnds}</p>
+                  <p className="text-gray-400">
+                    {formatDate(userData.planEnds)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -249,8 +263,7 @@ const UpdateSubscription = () => {
                   name="cardio"
                   value={formData.cardio}
                   onChange={handleChange}
-                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
-    border-transparent border-2 focus:border-indigo-500"
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                   required
                 >
                   <option value="">-- Please select --</option>
@@ -269,22 +282,44 @@ const UpdateSubscription = () => {
                   Payment Mode
                 </label>
                 <select
-                   id="mode_of_payment"
-                  name="mode_of_payment"  
+                  id="mode_of_payment"
+                  name="mode_of_payment"
                   value={formData.mode_of_payment}
                   onChange={handleChange}
-                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
-    border-transparent border-2 focus:border-indigo-500"
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                   required
                 >
-                 <option value="">-- Please select --</option>
+                  <option value="">-- Please select --</option>
                   <option value="Cash">Cash</option>
                   <option value="Card">Card</option>
                   <option value="UPI">UPI</option>
                 </select>
               </div>
+
+              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-32">
+                <label
+                  className="block text-gray-200 font-semibold mb-2"
+                  htmlFor="payment-date"
+                >
+                  Payment Date
+                </label>
+                <DatePicker
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="payment-date"
+                  name="paymentDate"
+                  selected={formData.paymentDate}
+                  onChange={(date) =>
+                    handleChange({
+                      target: { name: "paymentDate", value: date },
+                    })
+                  }
+                  dateFormat="dd-MM-yyyy"
+                  required
+                />
+              </div>
             </div>
-            <div className="flex flex-wrap mx-3 mb-6">
+
+            <div className="flex flex-wrap mx-3 mb-6 mt-7">
               <div className="w-full px-4 flex justify-center ">
                 <button
                   type="submit"

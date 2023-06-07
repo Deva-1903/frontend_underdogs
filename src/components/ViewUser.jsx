@@ -21,6 +21,7 @@ import {
   FaToggleOn,
   FaWalking,
   FaRunning,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { MdPermIdentity } from "react-icons/md";
 
@@ -46,6 +47,7 @@ function ViewUser() {
     planEnds: "",
     status: "",
     photoURL: "",
+    joiningDate: "",
   });
 
   const { id } = useParams();
@@ -87,15 +89,24 @@ function ViewUser() {
     return <Spinner />;
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
   return (
     <div className="flex justify-center items-center max-w-5xl mx-auto px-4 py-10">
-      <div className="bg-slate-900 rounded-lg  overflow-hidden shadow-md shadow-gray-700">
+      <div className="bg-slate-900 rounded-lg overflow-hidden shadow-md shadow-gray-700">
         <div className="px-6 py-4">
           <div className="flex items-center mb-4 pb-4">
-            <div className=" h-20 w-20 rounded-full border-2 mr-4 overflow-hidden">
+            <div className="h-20 w-20 rounded-full border-2 mr-4 overflow-hidden">
               <img
                 src={userData.photoURL}
                 className="h-full w-full object-cover bg-white"
+                alt="User Photo"
               />
             </div>
             <div>
@@ -103,7 +114,7 @@ function ViewUser() {
                 {userData.name}
               </div>
               <div className="mt-2">
-                <span className="text-white font-bold text-2xl">
+                <span className="text-white font-bold text-lg">
                   Id: {userData.id}
                 </span>
               </div>
@@ -112,101 +123,104 @@ function ViewUser() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="flex items-center">
               <FaBirthdayCake className="text-white mr-2" size={24} />
-              <span className="text-white  text-base">Age: {userData.age}</span>
+              <span className="text-white text-base">Age: {userData.age}</span>
             </div>
             <div className="flex items-center">
-              <FaTransgenderAlt className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaTransgenderAlt className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Gender: {userData.gender}
               </span>
             </div>
             <div className="flex items-center">
-              <FaMobileAlt className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaMobileAlt className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Mobile: {userData.mobile}
               </span>
             </div>
             <div className="flex items-center">
               <FaEnvelope className="text-white mr-2" size={24} />
-              <span className="text-white  text-base">
+              <span className="text-white text-base">
                 Email: {userData.email}
               </span>
             </div>
             <div className="flex items-center">
-              <FaHeartbeat className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaHeartbeat className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Health Issues: {userData.healthIssues}
               </span>
             </div>
             <div className="flex items-center">
-              <FaAmbulance className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaAmbulance className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Emergency Contact No: {userData.emergencyContactNo}
               </span>
             </div>
             <div className="flex items-center">
-              <FaRulerVertical className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaRulerVertical className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Height: {userData.height}
               </span>
             </div>
             <div className="flex items-center">
-              <FaWeight className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaWeight className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Weight: {userData.weight}
               </span>
             </div>
             <div className="flex items-center">
-              <FaTint className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaTint className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Blood Group: {userData.bloodGroup}
               </span>
             </div>
             <div className="flex items-center">
-              <FaMapMarkerAlt className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base text-clip">
+              <FaMapMarkerAlt className="text-white mr-2" size={24} />
+              <span className="text-white text-base text-clip">
                 Address: {userData.address}
               </span>
             </div>
             <div className="flex items-center">
-              <FaUserCheck className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaUserCheck className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Subscription: {userData.subscription}
               </span>
             </div>
             <div className="flex items-center">
-              <FaClipboardList className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
+              <FaClipboardList className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
                 Subscription Type: {userData.subscription_type}
               </span>
             </div>
             <div className="flex items-center">
-              <FaCalendarCheck className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
-                Plan Ends: {userData.planEnds}
+              <FaCalendarCheck className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
+                Plan Ends: {formatDate(userData.planEnds)}
               </span>
             </div>
             <div className="flex items-center">
-              <FaToggleOn className="text-white  mr-2" size={24} />
-              <span className="text-white  text-base">
-                {" "}
-                Status: {userData.status}{" "}
+              <FaToggleOn className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
+                Status: {userData.status}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <FaCalendarAlt className="text-white mr-2" size={24} />
+              <span className="text-white text-base">
+                Joining Date: {formatDate(userData.joiningDate)}
               </span>
             </div>
             {userData.cardio === "With cardio" ? (
               <div className="flex items-center">
-                <FaRunning className="text-white  mr-2" size={24} />
-                <span className="text-white  text-base">
-                  {" "}
-                  cardio: {userData.cardio}{" "}
+                <FaRunning className="text-white mr-2" size={24} />
+                <span className="text-white text-base">
+                  Cardio: {userData.cardio}
                 </span>
               </div>
             ) : (
               <div className="flex items-center">
-                <FaWalking className="text-white  mr-2" size={24} />
-                <span className="text-white  text-base">
-                  {" "}
-                  cardio: {userData.cardio}{" "}
+                <FaWalking className="text-white mr-2" size={24} />
+                <span className="text-white text-base">
+                  Cardio: {userData.cardio}
                 </span>
               </div>
             )}
@@ -218,10 +232,9 @@ function ViewUser() {
             >
               Update
             </Link>
-
             <Link
               to="/admin/get/user"
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-5 rounded focus:outline-none focus:shadow-outline  text-center"
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-5 rounded focus:outline-none focus:shadow-outline text-center"
             >
               Back
             </Link>
