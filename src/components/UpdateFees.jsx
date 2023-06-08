@@ -296,27 +296,27 @@ const UpdateSubscription = () => {
                 </select>
               </div>
 
-              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-36">
-              <label
-                className="block text-gray-200 font-semibold mb-2"
-                htmlFor="payment-date"
-              >
-                Payment Date
-              </label>
-              <DatePicker
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                id="payment-date"
-                name="paymentDate"
-                selected={formData.paymentDate}
-                onChange={(date) =>
-                  handleChange({
-                    target: { name: "paymentDate", value: date },
-                  })
-                }
-                dateFormat="dd-MM-yyyy"
-                required
-              />
-            </div>
+              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-32">
+                <label
+                  className="block text-gray-200 font-semibold mb-2"
+                  htmlFor="payment-date"
+                >
+                  Payment Date
+                </label>
+                <DatePicker
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="payment-date"
+                  name="paymentDate"
+                  selected={formData.paymentDate}
+                  onChange={(date) =>
+                    handleChange({
+                      target: { name: "paymentDate", value: date },
+                    })
+                  }
+                  dateFormat="dd-MM-yyyy"
+                  required
+                />
+              </div>
             </div>
 
             <div className="flex flex-wrap mx-3 mb-6 mt-7">
