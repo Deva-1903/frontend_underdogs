@@ -137,7 +137,7 @@ function ViewAttendance() {
               <thead>
                 <tr>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                    No.
+                    No
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Id
