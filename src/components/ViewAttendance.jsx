@@ -19,7 +19,6 @@ function ViewAttendance() {
   const { users } = useSelector((state) => state.allUsers);
 
   useEffect(() => {
-    console.log(sessionFilter);
     dispatch(
       getAttendancesByDate({
         status: statusFilter,
