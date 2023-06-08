@@ -295,12 +295,13 @@ function ManageContent() {
           {/* Add Subscription Option */}
           <div className="flex items-center mt-2">
             <input
-              type="text"
+              type="number"
               name="newOptionName"
-              placeholder="Add Subscription Option"
+              placeholder="Enter number of months"
               className="appearance-none rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500 bg-slate-800 text-white border-gray-200 border-transparent border-2 "
               value={newOptionName}
               onChange={(e) => handleChange(e, setNewOptionName)}
+              min="1"
             />
             <button
               onClick={handleAddSubscriptionOption}

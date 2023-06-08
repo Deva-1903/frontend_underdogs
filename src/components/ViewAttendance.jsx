@@ -145,21 +145,21 @@ function ViewAttendance() {
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Name
                   </th>
-
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Status
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Time In
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                    Plan Ends
-                  </th>
+
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription Type
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Plan Ends
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Session
@@ -187,16 +187,16 @@ function ViewAttendance() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.timeIn}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                      {formatDate(user.planEnds)}
-                    </td>
+
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.subscription}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.subscription_type}
                     </td>
-
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {formatDate(user.planEnds)}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.session}
                     </td>
