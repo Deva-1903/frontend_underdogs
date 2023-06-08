@@ -88,7 +88,7 @@ const ContactForms = () => {
         <div className="flex items-center w-1/3 justify-center pr-6">
           <div className="flex items-center">
             <button
-              className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 mr-2"
+              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
               onClick={handlePageBackward}
             >
               <IoChevronForwardCircleSharp className="rotate-180" />
@@ -97,7 +97,7 @@ const ContactForms = () => {
               {currentPage}
             </span>
             <button
-              className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 ml-2"
+              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
               onClick={handlePageForward}
             >
               <IoChevronForwardCircleSharp />
@@ -110,7 +110,7 @@ const ContactForms = () => {
           <Spinner />
         ) : (
           <div className="flex justify-center items-center mt-36 ml-6">
-            <span className="block sm:inline text-white pe-5 text-2xl md:text-3xl font-bold	">
+            <span className="block sm:inline text-white pe-5 text-xl md:text-3xl font-bold	">
               No contact forms to display
             </span>
           </div>
