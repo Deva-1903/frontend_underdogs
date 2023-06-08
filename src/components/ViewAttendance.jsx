@@ -10,6 +10,7 @@ import { IoChevronForwardCircleSharp } from "react-icons/io5";
 
 function ViewAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
+  const [sessionFilter, setSessionFilter] = useState("all");
   const [date, setDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,14 +19,16 @@ function ViewAttendance() {
   const { users } = useSelector((state) => state.allUsers);
 
   useEffect(() => {
+    console.log(sessionFilter);
     dispatch(
       getAttendancesByDate({
         status: statusFilter,
         date: date,
         page: currentPage,
+        session: sessionFilter,
       })
     );
-  }, [dispatch, date, statusFilter, currentPage]);
+  }, [dispatch, date, statusFilter, sessionFilter, currentPage]);
 
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
@@ -41,6 +44,10 @@ function ViewAttendance() {
       setCurrentPage(currentPage - 1);
     }
   }
+
+  const handleSessionFilterChange = (event) => {
+    setSessionFilter(event.target.value);
+  };
 
   // function downloadAsPDF() {
   //   const doc = new jsPDF();
@@ -85,24 +92,24 @@ function ViewAttendance() {
             </select>
           </div>
           <div className="flex items-center justify-center">
-            <div className="flex items-center">
-              <button
-                className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 mr-2"
-                onClick={handlePageBackward}
-              >
-                <IoChevronForwardCircleSharp className="rotate-180" />
-              </button>
-              <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
-                {currentPage}
-              </span>
-              <button
-                className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 ml-2"
-                onClick={handlePageForward}
-              >
-                <IoChevronForwardCircleSharp />
-              </button>
-            </div>
+            <label
+              className="text-gray-500 uppercase font-bold text-sm mr-4"
+              htmlFor="session-filter"
+            >
+              Session Filter:
+            </label>
+            <select
+              className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+              id="session-filter"
+              value={sessionFilter}
+              onChange={handleSessionFilterChange}
+            >
+              <option value="all">All</option>
+              <option value="morning">Morning</option>
+              <option value="evening">Evening</option>
+            </select>
           </div>
+
           <div className="flex items-center justify-center ml-20">
             <label
               className="text-gray-500 uppercase font-bold text-sm mr-4"
@@ -130,6 +137,9 @@ function ViewAttendance() {
             >
               <thead>
                 <tr>
+                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    No.
+                  </th>
                   <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Id
                   </th>
@@ -164,6 +174,9 @@ function ViewAttendance() {
                 {users.map((user) => (
                   <tr key={user.id} className="border">
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      {user.number}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {user.user_id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
@@ -196,6 +209,26 @@ function ViewAttendance() {
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center sm:pb-8">
+        <div className="flex items-center">
+          <button
+            className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 mr-2"
+            onClick={handlePageBackward}
+          >
+            <IoChevronForwardCircleSharp className="rotate-180" />
+          </button>
+          <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
+            {currentPage}
+          </span>
+          <button
+            className="px-2 py-1 text-white rounded-lg border text-2xl border-gray-300 hover:border-gray-400 ml-2"
+            onClick={handlePageForward}
+          >
+            <IoChevronForwardCircleSharp />
+          </button>
         </div>
       </div>
     </div>
