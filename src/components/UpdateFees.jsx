@@ -295,8 +295,8 @@ const UpdateSubscription = () => {
                   <option value="UPI">UPI</option>
                 </select>
               </div>
-            </div>
-            <div className="col-span-1">
+
+              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-36">
               <label
                 className="block text-gray-200 font-semibold mb-2"
                 htmlFor="payment-date"
@@ -316,6 +316,7 @@ const UpdateSubscription = () => {
                 dateFormat="dd-MM-yyyy"
                 required
               />
+            </div>
             </div>
 
             <div className="flex flex-wrap mx-3 mb-6 mt-7">
