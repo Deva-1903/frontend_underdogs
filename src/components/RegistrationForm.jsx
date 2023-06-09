@@ -10,7 +10,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {BsCurrencyRupee} from "react-icons/bs"
+import { BsCurrencyRupee } from "react-icons/bs";
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -226,7 +226,7 @@ function RegistrationForm() {
             Registration Form
           </p>
 
-           {/* Profile Photo field */}
+          {/* Profile Photo field */}
           <div className="col-span-1 flex flex-col items-center pb-3">
             <div className="relative mb-4">
               {selectedPhoto && (
@@ -255,9 +255,6 @@ function RegistrationForm() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-           
-
             {/* <!-- Username field --> */}
             <div class="col-span-1">
               <label
@@ -474,8 +471,8 @@ function RegistrationForm() {
               ></input>
             </div>
 
-             {/* <!-- Occupation field --> */}
-             <div class="col-span-1">
+            {/* <!-- Occupation field --> */}
+            <div class="col-span-1">
               <label
                 class="block text-gray-200 text-sm font-bold mb-3"
                 for="address"
@@ -599,19 +596,18 @@ function RegistrationForm() {
                 Registration Fees
               </label>
               <div className="flex justify-center items-center">
-              <select
-                className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                id="fees"
-                name="fees"
-                required
-              >
-               <option value="">-- Please select --</option>
-                <option value="Cash">1000</option>
-                <option value="Card">2000</option>
-                <option value="UPI">3000</option>
-              </select>
-              <BsCurrencyRupee 
-               className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <select
+                  className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="fees"
+                  name="fees"
+                  required
+                >
+                  <option value="">-- Please select --</option>
+                  <option value="Cash">1000</option>
+                  <option value="Card">2000</option>
+                  <option value="UPI">3000</option>
+                </select>
+                <BsCurrencyRupee className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
               </div>
             </div>
 
@@ -623,19 +619,18 @@ function RegistrationForm() {
                 Fees
               </label>
               <div className="flex justify-center items-center">
-              <select
-                className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                id="fees"
-                name="fees"
-                required
-              >
-               <option value="">-- Please select --</option>
-                <option value="Cash">1000</option>
-                <option value="Card">2000</option>
-                <option value="UPI">3000</option>
-              </select>
-              <BsCurrencyRupee 
-               className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <select
+                  className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="fees"
+                  name="fees"
+                  required
+                >
+                  <option value="">-- Please select --</option>
+                  <option value="Cash">1000</option>
+                  <option value="Card">2000</option>
+                  <option value="UPI">3000</option>
+                </select>
+                <BsCurrencyRupee className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
               </div>
             </div>
 
