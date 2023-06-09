@@ -637,9 +637,8 @@ function RegistrationForm() {
                   required
                 >
                   <option value="">-- Please select --</option>
-                  <option value="Cash">1000</option>
-                  <option value="Card">2000</option>
-                  <option value="UPI">3000</option>
+                  <option value="1000">1000</option>
+                  <option value="2000">2000</option>
                 </select>
               </div>
             </div>

@@ -11,6 +11,7 @@ import Spinner from "../components/Spinner";
 import axios from "../axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { BsCurrencyRupee } from "react-icons/bs";
 
 const UpdateSubscription = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const UpdateSubscription = () => {
     mode_of_payment: "",
     cardio: "",
     paymentDate: "",
+    feesAmount: "",
   });
   const [userData, setUserData] = useState({
     id: "",
@@ -115,6 +117,7 @@ const UpdateSubscription = () => {
       cardio: formData.cardio,
       mode_of_payment: formData.mode_of_payment,
       paymentDate: formData.paymentDate,
+      feesAmount: formData.feesAmount,
       adminName: admin.username,
     };
 
@@ -320,17 +323,26 @@ const UpdateSubscription = () => {
 
               <div className="w-full md:w-1/2 px-3 mt-6">
                 <label
-                  className="block text-gray-200 font-semibold mb-2"
-                  htmlFor="payment-date"
+                  className="block text-gray-200 text-sm font-bold mb-3"
+                  htmlFor="fees-amount"
                 >
                   Fees amount
                 </label>
-                <input
-                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                  id="fees update"
-                  name="fees update"
-                  required
-                />
+                <div className="flex justify-center items-center">
+                  <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                  <select
+                    className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                    id="feesAmount"
+                    name="feesAmount"
+                    value={formData.feesAmount}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Please select --</option>
+                    <option value="1000">1000</option>
+                    <option value="2000">2000</option>
+                  </select>
+                </div>
               </div>
             </div>
 
