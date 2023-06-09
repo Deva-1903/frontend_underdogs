@@ -233,14 +233,14 @@ function ManageContent() {
   return (
     <div className="flex flex-col justify-center items-center h-full bg-page bg-gradient-to-b  mt-24 p-10">
       <div className="flex justify-center items-center mb-4">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-0">
 
           <button
             onClick={() => handleTabChange("subscriptionOptions")}
-            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+            className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
               activeTab === "subscriptionOptions"
-                ? "bg-indigo-500  text-white"
-                : "bg-gray-800 text-gray-200"
+                ? " text-white text-lg"
+                : " text-gray-200"
             }`}
           >
             Subscription Options
@@ -249,10 +249,10 @@ function ManageContent() {
           {/* Subscription Types Tab */}
           <button
             onClick={() => handleTabChange("subscriptionTypes")}
-            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+            className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
               activeTab === "subscriptionTypes"
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-800 text-gray-200"
+                ? " text-white text-lg"
+                : " text-gray-200"
             }`}
           >
             Subscription Types
@@ -260,10 +260,10 @@ function ManageContent() {
 
           <button
             onClick={() => handleTabChange("cardioTypes")}
-            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+            className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
               activeTab === "cardioTypes"
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-800 text-gray-200"
+                ? " text-white text-lg"
+                : " text-gray-200"
             }`}
           >
             Cardio Types
@@ -271,10 +271,10 @@ function ManageContent() {
 
           <button
             onClick={() => handleTabChange("cardioTypes")}
-            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+            className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
               activeTab === "fees"
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-800 text-gray-200"
+                ? " text-white text-lg"
+                : " text-gray-200"
             }`}
           >
             Fees
@@ -282,10 +282,10 @@ function ManageContent() {
 
           <button
             onClick={() => handleTabChange("brochure")}
-            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+            className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700 hover:border-indigo-500 focus:border-orange-500 ${
               activeTab === "brochure"
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-800 text-gray-200"
+                ? " text-white text-lg"
+                : " text-gray-200"
             }`}
           >
             Brochure
