@@ -599,19 +599,16 @@ function RegistrationForm() {
                 Registration Fees
               </label>
               <div className="flex justify-center items-center">
-              <select
-                className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                id="fees"
-                name="fees"
-                required
-              >
-               <option value="">-- Please select --</option>
-                <option value="Cash">1000</option>
-                <option value="Card">2000</option>
-                <option value="UPI">3000</option>
-              </select>
               <BsCurrencyRupee 
-               className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+               className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+              <input
+                  className="appearance-none rounded-e-md  w-52 py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="fees"
+                  name="fees"
+                  type="number"
+                  min="0"
+                  required
+                />
               </div>
             </div>
 
@@ -623,8 +620,10 @@ function RegistrationForm() {
                 Fees
               </label>
               <div className="flex justify-center items-center">
+              <BsCurrencyRupee 
+               className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
               <select
-                className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                 id="fees"
                 name="fees"
                 required
@@ -634,8 +633,6 @@ function RegistrationForm() {
                 <option value="Card">2000</option>
                 <option value="UPI">3000</option>
               </select>
-              <BsCurrencyRupee 
-               className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
               </div>
             </div>
 
