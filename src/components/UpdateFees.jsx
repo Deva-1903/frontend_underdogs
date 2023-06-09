@@ -323,7 +323,7 @@ const UpdateSubscription = () => {
                   className="block text-gray-200 font-semibold mb-2"
                   htmlFor="payment-date"
                 >
-                  Fees update
+                  Fees amount
                 </label>
                 <input
                   className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"

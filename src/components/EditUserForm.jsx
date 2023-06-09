@@ -431,11 +431,9 @@ function EditUserForm() {
                 className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="occupation"
                 name="occupation"
-                placeholder="Enter your Occupation"
+                placeholder="Enter Occupation"
               ></input>
             </div>
-
-
           </div>
           {/* <!-- Submit button --> */}
           <div className="flex justify-center gap-5 items-center">

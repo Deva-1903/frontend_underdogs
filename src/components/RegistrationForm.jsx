@@ -31,6 +31,9 @@ function RegistrationForm() {
     cardio: "",
     joiningDate: "",
     photoURL: "",
+    occupation: "",
+    feesAmount: "",
+    registrationFees: "",
   });
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [options, setOptions] = useState([]);
@@ -112,6 +115,9 @@ function RegistrationForm() {
         cardio: "",
         photoURL: "",
         joiningDate: "",
+        occupation: "",
+        feesAmount: "",
+        registrationFees: "",
       });
     }
 
@@ -139,6 +145,9 @@ function RegistrationForm() {
       mode_of_payment: formData.mode_of_payment,
       cardio: formData.cardio,
       joiningDate: formData.joiningDate,
+      occupation: formData.occupation,
+      feesAmount: formData.feesAmount,
+      registrationFees: formData.registrationFees,
       adminName: admin.username,
     };
 
@@ -471,11 +480,10 @@ function RegistrationForm() {
               ></input>
             </div>
 
-            {/* <!-- Occupation field --> */}
             <div class="col-span-1">
               <label
                 class="block text-gray-200 text-sm font-bold mb-3"
-                for="address"
+                for="occupation"
               >
                 Occupation
               </label>
@@ -483,7 +491,9 @@ function RegistrationForm() {
                 className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="occupation"
                 name="occupation"
-                placeholder="Enter your Occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+                placeholder="Enter Occupation"
               ></input>
             </div>
 
@@ -587,42 +597,43 @@ function RegistrationForm() {
               </select>
             </div>
 
-            {/* registration Fees details */}
             <div className="col-span-1">
               <label
                 className="block text-gray-200 text-sm font-bold mb-3"
-                htmlFor="cardio"
+                htmlFor="registration-fees"
               >
-                Registration Fees
+                Registration Fee
               </label>
               <div className="flex justify-center items-center">
-                <select
-                  className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                  id="fees"
-                  name="fees"
+                <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <input
+                  type="number"
+                  className="appearance-none rounded-e-md  w-52 py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="registrationFees"
+                  name="registrationFees"
+                  value={formData.registrationFees}
+                  onChange={handleChange}
+                  min="0"
                   required
-                >
-                  <option value="">-- Please select --</option>
-                  <option value="Cash">1000</option>
-                  <option value="Card">2000</option>
-                  <option value="UPI">3000</option>
-                </select>
-                <BsCurrencyRupee className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                />
               </div>
             </div>
 
             <div className="col-span-1">
               <label
                 className="block text-gray-200 text-sm font-bold mb-3"
-                htmlFor="cardio"
+                htmlFor="fees-amount"
               >
-                Fees
+                Fees amount
               </label>
               <div className="flex justify-center items-center">
+                <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
                 <select
-                  className="appearance-none rounded-s-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                  id="fees"
-                  name="fees"
+                  className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="feesAmount"
+                  name="feesAmount"
+                  value={formData.feesAmount}
+                  onChange={handleChange}
                   required
                 >
                   <option value="">-- Please select --</option>
@@ -630,7 +641,6 @@ function RegistrationForm() {
                   <option value="Card">2000</option>
                   <option value="UPI">3000</option>
                 </select>
-                <BsCurrencyRupee className="rounded-e-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
               </div>
             </div>
 
