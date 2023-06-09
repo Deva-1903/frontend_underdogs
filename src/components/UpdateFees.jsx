@@ -296,7 +296,7 @@ const UpdateSubscription = () => {
                 </select>
               </div>
 
-              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-32">
+              <div className="w-full md:w-1/2 px-3 mt-6">
                 <label
                   className="block text-gray-200 font-semibold mb-2"
                   htmlFor="payment-date"
@@ -314,6 +314,21 @@ const UpdateSubscription = () => {
                     })
                   }
                   dateFormat="dd-MM-yyyy"
+                  required
+                />
+              </div>
+
+              <div className="w-full md:w-1/2 px-3 mt-6">
+                <label
+                  className="block text-gray-200 font-semibold mb-2"
+                  htmlFor="payment-date"
+                >
+                  Fees update
+                </label>
+                <input
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="fees update"
+                  name="fees update"
                   required
                 />
               </div>
