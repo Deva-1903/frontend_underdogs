@@ -233,17 +233,19 @@ function ManageContent() {
   return (
     <div className="flex flex-col justify-center items-center h-full bg-page bg-gradient-to-b  mt-24 p-10">
       <div className="flex justify-center items-center mb-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-4">
+
           <button
             onClick={() => handleTabChange("subscriptionOptions")}
             className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
               activeTab === "subscriptionOptions"
-                ? "bg-indigo-500 text-white"
+                ? "bg-indigo-500  text-white"
                 : "bg-gray-800 text-gray-200"
             }`}
           >
             Subscription Options
           </button>
+
           {/* Subscription Types Tab */}
           <button
             onClick={() => handleTabChange("subscriptionTypes")}
@@ -255,6 +257,7 @@ function ManageContent() {
           >
             Subscription Types
           </button>
+
           <button
             onClick={() => handleTabChange("cardioTypes")}
             className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
@@ -265,6 +268,18 @@ function ManageContent() {
           >
             Cardio Types
           </button>
+
+          <button
+            onClick={() => handleTabChange("cardioTypes")}
+            className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
+              activeTab === "fees"
+                ? "bg-indigo-500 text-white"
+                : "bg-gray-800 text-gray-200"
+            }`}
+          >
+            Fees
+          </button>
+
           <button
             onClick={() => handleTabChange("brochure")}
             className={`text-lg md:text-xl font-semibold py-2 px-4 rounded-md ${
@@ -277,6 +292,8 @@ function ManageContent() {
           </button>
         </div>
       </div>
+
+
       {activeTab === "subscriptionOptions" && (
         <div className="mt-8">
           {subscriptionOptions.map((option) => (
