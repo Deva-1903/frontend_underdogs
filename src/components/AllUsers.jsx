@@ -201,7 +201,7 @@ function AllUsers() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                       {formatDate(user.planEnds)}
                     </td>{" "}
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className={`${user.status === "active" ? "text-gray-100" : "text-red-500"} px-6 py-4 whitespace-nowrap text-sm md:text-base border`}>
                       {user.status}
                     </td>
                   </tr>
