@@ -202,7 +202,7 @@ const UpdateSubscription = () => {
               <div className="flex flex-wrap mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
                   <p className="text-gray-300 font-semibold mb-2">Status:</p>
-                  <p className="text-gray-400">{userData.status}</p>
+                  <p className={`${userData.status === "active" ? "text-gray-400" : "text-red-500"}`}>{userData.status}</p>
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <p className="text-gray-300 font-semibold mb-2">Plan Ends:</p>
