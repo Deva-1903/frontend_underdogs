@@ -13,10 +13,12 @@ function ManageContent() {
   const [subscriptionOptions, setSubscriptionOptions] = useState([]);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioTypes, setCardioTypes] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
   const [activeTab, setActiveTab] = useState("subscriptionOptions");
   const [newOptionName, setNewOptionName] = useState("");
   const [newTypeName, setNewTypeName] = useState("");
   const [newCardioName, setNewCardioName] = useState("");
+  const [newPrice, setNewPrice] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [brochureImage, setBrochureImage] = useState(null);
   const { admin } = useSelector((state) => state.auth);
@@ -38,10 +40,13 @@ function ManageContent() {
     fetchData("/api/admin/subscription-types", setSubscriptionTypes);
     fetchData("/api/admin/cardio-types", setCardioTypes);
     fetchData("/api/admin/brochure", setBrochureImage);
+    fetchData("/api/admin/prices", setPriceOptions);
   }, [admin.token]);
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
+
   const handleAddSubscriptionOption = async () => {
     try {
       if (newOptionName === "") {
@@ -166,6 +171,49 @@ function ManageContent() {
     }
   };
 
+  const handleAddPriceOption = async () => {
+    try {
+      if (newPrice === "") {
+        toast.error("Please enter a valid price");
+        return;
+      }
+      const response = await axios.post(
+        "/api/admin/prices",
+        { price: newPrice },
+        {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        }
+      );
+      const newItem = response.data;
+      console.log(newItem);
+      setPriceOptions((prevOptions) => [...prevOptions, newItem]);
+      setNewPrice("");
+      toast.success("Price added successfully");
+    } catch (error) {
+      console.error("Error adding price:", error);
+      toast.error("Failed to add price");
+    }
+  };
+
+  const handleDeletePriceOption = async (optionId) => {
+    try {
+      await axios.delete(`/api/admin/prices/${optionId}`, {
+        headers: {
+          Authorization: `Bearer ${admin.token}`,
+        },
+      });
+      setPriceOptions((prevOptions) =>
+        prevOptions.filter((option) => option._id !== optionId)
+      );
+      toast.success("Price deleted successfully");
+    } catch (error) {
+      console.error("Error deleting price:", error);
+      toast.error("Failed to delete price");
+    }
+  };
+
   const uploadProfilePhoto = (file) => {
     const uuid = uuidv4();
     const storageRef = ref(storage, `brochure/${uuid}`);
@@ -234,7 +282,6 @@ function ManageContent() {
     <div className="flex flex-col justify-center items-center h-full bg-page bg-gradient-to-b  mt-24 p-10">
       <div className="flex justify-center items-center mb-4">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-0">
-
           <button
             onClick={() => handleTabChange("subscriptionOptions")}
             className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
@@ -246,7 +293,6 @@ function ManageContent() {
             Subscription Options
           </button>
 
-          {/* Subscription Types Tab */}
           <button
             onClick={() => handleTabChange("subscriptionTypes")}
             className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
@@ -270,9 +316,9 @@ function ManageContent() {
           </button>
 
           <button
-            onClick={() => handleTabChange("cardioTypes")}
+            onClick={() => handleTabChange("feesOptions")}
             className={`text-gray-500 font-semibold py-2 px-4 border-b-2 border-transparent hover:text-gray-700  hover:border-indigo-500 focus:border-orange-500 ${
-              activeTab === "fees"
+              activeTab === "feesOptions"
                 ? " text-white text-lg"
                 : " text-gray-200"
             }`}
@@ -292,7 +338,6 @@ function ManageContent() {
           </button>
         </div>
       </div>
-
 
       {activeTab === "subscriptionOptions" && (
         <div className="mt-8">
@@ -392,6 +437,41 @@ function ManageContent() {
             />
             <button
               onClick={handleAddCardioType}
+              className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-3 rounded-md focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "feesOptions" && (
+        <div className="mt-8">
+          {priceOptions.map((option) => (
+            <div key={option._id} className="flex items-center mt-4 mb-2">
+              <span className="text-white text-xl flex-grow mb-2">
+                ₹ {option.price}
+              </span>
+              <button
+                onClick={() => handleDeletePriceOption(option._id)}
+                className="bg-red-500 hover:bg-red-400 text-lg text-white font-semibold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+              >
+                <AiFillDelete />
+              </button>
+            </div>
+          ))}
+          <div className="flex items-center mt-2">
+            <input
+              type="number"
+              name="newPrice"
+              placeholder="Enter the price"
+              className="appearance-none rounded-md w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500 bg-slate-800 text-white border-gray-200 border-transparent border-2 "
+              value={newPrice}
+              onChange={(e) => handleChange(e, setNewPrice)}
+              min="1"
+            />
+            <button
+              onClick={handleAddPriceOption}
               className="bg-indigo-500 hover:bg-indigo-400 text-white font-semibold py-2 px-3 rounded-md focus:outline-none focus:shadow-outline ml-2 hover:scale-110 duration-150"
             >
               Add

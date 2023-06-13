@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   fetchUserDataForUpdate,
   updateFees,
@@ -33,6 +33,7 @@ const UpdateSubscription = () => {
   const [options, setOptions] = useState([]);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
 
   const { id } = useParams();
 
@@ -74,6 +75,14 @@ const UpdateSubscription = () => {
           },
         });
         setCardioOptions(cardioTypesResponse.data);
+
+        // Fetch price options
+        const priceTypesResponse = await axios.get("/api/admin/prices", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setPriceOptions(priceTypesResponse.data);
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
@@ -339,22 +348,29 @@ const UpdateSubscription = () => {
                     required
                   >
                     <option value="">-- Please select --</option>
-                    <option value="1000">1000</option>
-                    <option value="2000">2000</option>
+                    {priceOptions.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.price}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap mx-3 mb-6 mt-7">
-              <div className="w-full px-4 flex justify-center ">
-                <button
-                  type="submit"
-                  className="bg-indigo-500 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-2 px-5 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Update
-                </button>
-              </div>
+            <div className="flex justify-center gap-5 items-center">
+              <button
+                className="bg-indigo-500 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Update
+              </button>
+              <Link
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                to="/admin/update/subscription"
+              >
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

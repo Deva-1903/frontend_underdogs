@@ -39,6 +39,7 @@ function RegistrationForm() {
   const [options, setOptions] = useState([]);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,13 +72,21 @@ function RegistrationForm() {
         });
         setSubscriptionTypes(typesResponse.data);
 
-        // Fetch subscription types
+        // Fetch cardio types
         const cardioTypesResponse = await axios.get("/api/admin/cardio-types", {
           headers: {
             Authorization: `Bearer ${admin.token}`,
           },
         });
         setCardioOptions(cardioTypesResponse.data);
+
+        // Fetch price options
+        const priceTypesResponse = await axios.get("/api/admin/prices", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setPriceOptions(priceTypesResponse.data);
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
@@ -119,6 +128,7 @@ function RegistrationForm() {
         feesAmount: "",
         registrationFees: "",
       });
+      setSelectedPhoto(null);
     }
 
     dispatch(reset());
@@ -637,8 +647,11 @@ function RegistrationForm() {
                   required
                 >
                   <option value="">-- Please select --</option>
-                  <option value="1000">1000</option>
-                  <option value="2000">2000</option>
+                  {priceOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.price}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

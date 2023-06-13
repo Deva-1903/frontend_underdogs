@@ -29,6 +29,7 @@ function EditUserForm() {
     subscription: "",
     subscription_type: "",
     photoURL: "",
+    occupation: "",
   });
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -146,6 +147,7 @@ function EditUserForm() {
       subscription: formData.subscription,
       subscription_type: formData.subscription_type,
       photoURL: formData.photoURL,
+      occupation: formData.occupation,
     };
 
     dispatch(updateUser({ id, userData }));
@@ -423,7 +425,7 @@ function EditUserForm() {
             <div class="col-span-1">
               <label
                 class="block text-gray-200 text-sm font-bold mb-3"
-                for="address"
+                for="occupation"
               >
                 Occupation
               </label>
@@ -431,6 +433,8 @@ function EditUserForm() {
                 className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="occupation"
                 name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
                 placeholder="Enter Occupation"
               ></input>
             </div>
