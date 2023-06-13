@@ -29,6 +29,7 @@ function EditUserForm() {
     subscription: "",
     subscription_type: "",
     photoURL: "",
+    occupation: "",
   });
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -146,6 +147,7 @@ function EditUserForm() {
       subscription: formData.subscription,
       subscription_type: formData.subscription_type,
       photoURL: formData.photoURL,
+      occupation: formData.occupation,
     };
 
     dispatch(updateUser({ id, userData }));
@@ -174,41 +176,36 @@ function EditUserForm() {
           <p className="text-gray-200 font-bold text-xl md:text-3xl mb-6 mt-4  lg:mt-0 flex justify-center">
             Edit Form
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Profile Photo field */}
-            <div className="col-span-1 flex flex-col items-center">
-              <label
-                className="block text-gray-200 text-sm font-bold mb-4"
-                htmlFor="photo"
-              >
-                Profile Photo
-              </label>
-              <div className="relative mb-4">
-                {selectedPhoto && (
-                  <div className="mt-2 h-20 w-20 rounded-full mb-3 ml-8 bg-gray-200 overflow-hidden">
-                    <img
-                      className="h-full w-full object-cover"
-                      src={selectedPhoto}
-                      alt="Profile Preview"
-                    />
-                  </div>
-                )}
-                <input
-                  className="hidden"
-                  id="photo"
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoChange}
-                />
-                <label
-                  htmlFor="photo"
-                  className="bg-indigo-500 cursor-pointer hover:bg-indigo-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:scale-110 duration-200"
-                >
-                  {selectedPhoto ? " Change Photo" : "Add Photo"}
-                </label>
-              </div>
-            </div>
 
+          {/* Profile Photo field */}
+          <div className="col-span-1 flex flex-col items-center pb-3">
+            <div className="relative mb-4">
+              {selectedPhoto && (
+                <div className="mt-2 h-20 w-20 rounded-full mb-3 ml-8 bg-gray-200 overflow-hidden">
+                  <img
+                    className="h-full w-full object-cover"
+                    src={selectedPhoto}
+                    alt="Profile Preview"
+                  />
+                </div>
+              )}
+              <input
+                className="hidden"
+                id="photo"
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+              />
+              <label
+                htmlFor="photo"
+                className="bg-indigo-500 cursor-pointer hover:bg-indigo-400 hover:scale-110 duration-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                {selectedPhoto ? "Change Photo" : "Add Photo"}
+              </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* <!-- Username field --> */}
             <div class="col-span-1">
               <label
@@ -359,14 +356,14 @@ function EditUserForm() {
               >
                 Health Issues
               </label>
-              <textarea
+              <input
                 className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="healthIssues"
                 name="healthIssues"
                 value={formData.healthIssues}
                 onChange={handleChange}
                 placeholder="Enter any health issues here"
-              ></textarea>
+              ></input>
             </div>
 
             {/* <!-- Weight field --> */}
@@ -415,14 +412,31 @@ function EditUserForm() {
               >
                 Address
               </label>
-              <textarea
+              <input
                 className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
                 placeholder=""
-              ></textarea>
+              ></input>
+            </div>
+
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="occupation"
+              >
+                Occupation
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                id="occupation"
+                name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+                placeholder="Enter Occupation"
+              ></input>
             </div>
           </div>
           {/* <!-- Submit button --> */}

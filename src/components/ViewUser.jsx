@@ -199,7 +199,7 @@ function ViewUser() {
             </div>
             <div className="flex items-center">
               <FaToggleOn className="text-white mr-2" size={24} />
-              <span className="text-white text-base">
+              <span className={`${userData.status === "active" ? "text-white" : "text-red-500"} text-base`}>
                 Status: {userData.status}
               </span>
             </div>

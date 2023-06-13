@@ -124,9 +124,9 @@ function FeesDetails() {
       doc.setFont("helvetica", "bold"); // Set font style to bold
       doc.setFontSize(16); // Increase the font size for start date, end date, and fees details
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`Start Date: ${startDateStr}`, 20, y + logoHeight + 30);
+      doc.text(`Start Date: ${startDateStr}`, 20, y + logoHeight + 20);
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`End Date: ${endDateStr}`, pageWidth - 20, y + logoHeight + 30, {
+      doc.text(`End Date: ${endDateStr}`, pageWidth - 20, y + logoHeight + 20, {
         align: "right",
       });
 
@@ -141,7 +141,7 @@ function FeesDetails() {
       doc.setFont("helvetica", "bold"); // Set font style to bold
       doc.setFontSize(18); // Increase the font size for the "Fees Details" heading
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 60);
+      doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 40);
 
       // Set the current page number
       doc.setFontSize(12); // Set font size for the page number
@@ -154,7 +154,11 @@ function FeesDetails() {
         }
       );
 
-      doc.autoTable({ html: table, startY: y + logoHeight + 80 });
+      doc.autoTable({
+        html: table,
+        startY: y + logoHeight + 50,
+        orientation: "landscape",
+      });
       doc.save("fees_details.pdf");
     };
   };
@@ -238,10 +242,16 @@ function FeesDetails() {
                       Subscription Type
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Mode of Payment
+                      Cardio
+                    </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Pay Method
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Admin
+                    </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Amount
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Transaction Type
@@ -270,10 +280,16 @@ function FeesDetails() {
                         {user.subscription_type}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        {user.cardio}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                         {user.mode_of_payment}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                         {user.admin}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        {`₹ ${user.amount}`}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                         {user.transaction_type}
