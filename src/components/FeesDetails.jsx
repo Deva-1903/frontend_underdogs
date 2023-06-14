@@ -9,7 +9,8 @@ import logo from "../assets/UnderDogs_logo.png";
 import { FiDownload } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-
+import Invoice from "./pdf/Invoice";
+import { pdf } from "@react-pdf/renderer";
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -162,7 +163,19 @@ function FeesDetails() {
       doc.save("fees_details.pdf");
     };
   };
+const handlePdf = async()=>{
 
+  const component = <Invoice></Invoice>;
+
+  const blob = await pdf(component).toBlob();
+  const fileUrl = window.URL.createObjectURL(blob);
+  let downloadLink  = document.createElement('a');
+  downloadLink.href = fileUrl;
+  downloadLink.download = 'SamplePdf.pdf'
+  downloadLink.click();
+
+
+}
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
@@ -262,6 +275,7 @@ function FeesDetails() {
                     <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
+                    <tr> <button onClick={handlePdf} className="text-white "> DownloadPdf </button></tr>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
