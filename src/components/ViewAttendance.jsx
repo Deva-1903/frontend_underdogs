@@ -136,35 +136,35 @@ function ViewAttendance() {
             >
               <thead>
                 <tr>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     No
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Id
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Name
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Time In
                   </th>
 
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription Type
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Plan Ends
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Session
                   </th>
-                  <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Date
                   </th>
                 </tr>
@@ -172,35 +172,35 @@ function ViewAttendance() {
               <tbody className="divide-y  divide-gray-200 border">
                 {users.map((user) => (
                   <tr key={user.id} className="border">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.number}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_id}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_name}
                     </td>
-                    <td className={`${user.status === "active" ? "text-gray-100" : "text-red-500"} px-6 py-4 whitespace-nowrap text-sm md:text-base border`}>
+                    <td className={`${user.status === "active" ? "text-gray-100" : "text-red-500"} px-6 py-4 whitespace-nowrap text-sm md:text-base border text-center`}>
                       {user.status}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.timeIn}
                     </td>
 
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.subscription}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.subscription_type}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {formatDate(user.planEnds)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.session}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                       {formatDate(user.date)}
                     </td>
                   </tr>
