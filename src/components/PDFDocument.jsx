@@ -58,6 +58,7 @@ const PDFDocument = ({ startDate, endDate, selectedAdmin, users }) => {
       padding: "8px",
       borderRight: "1px solid #ddd",
       borderBottom: "1px solid #ddd",
+      justifyContent: "center",
     },
   });
 

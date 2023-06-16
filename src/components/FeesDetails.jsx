@@ -11,6 +11,8 @@ import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import Invoice from "./pdf/Invoice";
 import { pdf } from "@react-pdf/renderer";
+import { BsCurrencyRupee } from "react-icons/bs";
+
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -95,14 +97,14 @@ function FeesDetails() {
   };
 
   const handleDownloadPDF = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF('landscape','px','a4','portrait');
     const table = tableRef.current;
 
     const logoImage = new Image();
     logoImage.src = logo;
 
     logoImage.onload = function () {
-      const logoWidth = 90; // Adjust the desired width of the logo
+      const logoWidth = 150; // Adjust the desired width of the logo
       const logoHeight = (logoWidth * logoImage.height) / logoImage.width;
 
       const pageWidth = doc.internal.pageSize.getWidth();
@@ -140,12 +142,12 @@ function FeesDetails() {
 
       // Add table with centered "Fees Details" text and styling
       doc.setFont("helvetica", "bold"); // Set font style to bold
-      doc.setFontSize(18); // Increase the font size for the "Fees Details" heading
+      doc.setFontSize(14); // Increase the font size for the "Fees Details" heading
       doc.setTextColor("#333"); // Set text color to dark gray
       doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 40);
 
       // Set the current page number
-      doc.setFontSize(12); // Set font size for the page number
+      doc.setFontSize(10); // Set font size for the page number
       doc.text(
         `Page ${currentPage}`,
         pageWidth / 2,
@@ -163,6 +165,7 @@ function FeesDetails() {
       doc.save("fees_details.pdf");
     };
   };
+
 const handlePdf = async()=>{
 
   const component = <Invoice></Invoice>;
@@ -242,37 +245,37 @@ const handlePdf = async()=>{
               >
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       User ID
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       User Name
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription Type
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Cardio
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Pay Method
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Admin
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Amount
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Transaction Type
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Payment Date
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
                     <tr> <button onClick={handlePdf} className="text-white "> DownloadPdf </button></tr>
@@ -281,34 +284,37 @@ const handlePdf = async()=>{
                 <tbody className="divide-y divide-gray-200 border">
                   {users.map((user) => (
                     <tr key={user.user_id} className="border">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.user_id}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.user_name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.subscription}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.subscription_type}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.cardio}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.mode_of_payment}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.admin}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        {`₹ ${user.amount}`}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
+                        <div className="flex">
+                          {typeof user.amount === 'number' ? <BsCurrencyRupee className="mt-1" /> : " "}
+                          {user.amount}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.transaction_type}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {new Date(user.createdAt)
                           .toLocaleDateString("en-GB", {
                             day: "2-digit",
@@ -318,7 +324,7 @@ const handlePdf = async()=>{
                           .replace(/\//g, "-")}
                       </td>
 
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {new Date(user.createdAt).toLocaleTimeString("en-US", {
                           hour: "numeric",
                           minute: "numeric",
