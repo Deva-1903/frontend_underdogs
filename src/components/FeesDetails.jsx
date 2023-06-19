@@ -97,7 +97,7 @@ function FeesDetails() {
   };
 
   const handleDownloadPDF = () => {
-    const doc = new jsPDF('landscape','px','a4','portrait');
+    const doc = new jsPDF("landscape", "px", "a4", "portrait");
     const table = tableRef.current;
 
     const logoImage = new Image();
@@ -166,19 +166,32 @@ function FeesDetails() {
     };
   };
 
-const handlePdf = async()=>{
+  const userData = {
+    inoice_id: "A9JW",
+    id: 1038,
+    name: "Vijay",
+    email: "vj@gmail.com",
+    mobile: "908567822",
+    subscription: "12 months",
+    subscription_type: "Special training",
+    cardio: "With Cardio",
+    mode_of_payment: "Card",
+    registrationFees: 300,
+    feesAmount: 1200,
+    transaction_type: "New User",
+    planEnds: "2024-06-18T18:30:00.000Z",
+  };
 
-  const component = <Invoice></Invoice>;
+  const handlePdf = async () => {
+    const component = <Invoice user={userData} />;
 
-  const blob = await pdf(component).toBlob();
-  const fileUrl = window.URL.createObjectURL(blob);
-  let downloadLink  = document.createElement('a');
-  downloadLink.href = fileUrl;
-  downloadLink.download = 'SamplePdf.pdf'
-  downloadLink.click();
-
-
-}
+    const blob = await pdf(component).toBlob();
+    const fileUrl = window.URL.createObjectURL(blob);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = fileUrl;
+    downloadLink.download = "SamplePdf.pdf";
+    downloadLink.click();
+  };
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
@@ -270,7 +283,7 @@ const handlePdf = async()=>{
                       Amount
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Transaction Type
+                      Type
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Payment Date
@@ -278,7 +291,13 @@ const handlePdf = async()=>{
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
-                    <tr> <button onClick={handlePdf} className="text-white "> DownloadPdf </button></tr>
+                    <tr>
+                      {" "}
+                      <button onClick={handlePdf} className="text-white ">
+                        {" "}
+                        DownloadPdf{" "}
+                      </button>
+                    </tr>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
@@ -307,7 +326,11 @@ const handlePdf = async()=>{
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         <div className="flex">
-                          {typeof user.amount === 'number' ? <BsCurrencyRupee className="mt-1" /> : " "}
+                          {typeof user.amount === "number" ? (
+                            <BsCurrencyRupee className="mt-1" />
+                          ) : (
+                            " "
+                          )}
                           {user.amount}
                         </div>
                       </td>

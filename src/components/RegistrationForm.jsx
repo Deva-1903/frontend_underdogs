@@ -11,6 +11,11 @@ import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCurrencyRupee } from "react-icons/bs";
+import Invoice from "../components/pdf/Invoice";
+import PDFRenderer from "@react-pdf/renderer";
+import html2pdf from "html2pdf.js";
+import ReactDOM from "react-dom";
+import { pdf } from "@react-pdf/renderer";
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -40,6 +45,8 @@ function RegistrationForm() {
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
   const [priceOptions, setPriceOptions] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [registeredUser, setRegisteredUser] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,7 +60,6 @@ function RegistrationForm() {
   useEffect(() => {
     const fetchSubscriptionOptions = async () => {
       try {
-        // Fetch subscription options
         const optionsResponse = await axios.get(
           "/api/admin/subscription-options",
           {
@@ -106,28 +112,30 @@ function RegistrationForm() {
 
     if (isSuccess) {
       toast.success(`User ${user.id} registered successfully`);
-      setFormData({
-        name: "",
-        age: "",
-        gender: "",
-        mobile: "",
-        email: "",
-        healthIssues: "",
-        emergencyContactNo: "",
-        height: "",
-        weight: "",
-        bloodGroup: "",
-        address: "",
-        subscription: "",
-        subscription_type: "",
-        mode_of_payment: "",
-        cardio: "",
-        photoURL: "",
-        joiningDate: "",
-        occupation: "",
-        feesAmount: "",
-        registrationFees: "",
-      });
+      setRegisteredUser(user);
+      setIsRegistered(true);
+      // setFormData({
+      //   name: "",
+      //   age: "",
+      //   gender: "",
+      //   mobile: "",
+      //   email: "",
+      //   healthIssues: "",
+      //   emergencyContactNo: "",
+      //   height: "",
+      //   weight: "",
+      //   bloodGroup: "",
+      //   address: "",
+      //   subscription: "",
+      //   subscription_type: "",
+      //   mode_of_payment: "",
+      //   cardio: "",
+      //   photoURL: "",
+      //   joiningDate: "",
+      //   occupation: "",
+      //   feesAmount: "",
+      //   registrationFees: "",
+      // });
       setSelectedPhoto(null);
     }
 
@@ -162,9 +170,52 @@ function RegistrationForm() {
     };
 
     dispatch(createUser(userData));
-
-    // Reset form data
   };
+
+  const generatePDF = async () => {
+    const component = <Invoice user={registeredUser} />;
+    const pdfBlob = await pdf(component).toBlob();
+    return pdfBlob;
+  };
+
+  useEffect(() => {
+    if (isRegistered) {
+      const generateAndSendInvoice = async () => {
+        try {
+          const pdfData = await generatePDF();
+
+          const formData = new FormData();
+          formData.append("email", registeredUser.email);
+          formData.append("attachment", pdfData, "invoice.pdf");
+          formData.append("action", "register");
+          formData.append("invoice_id", registeredUser.invoice_id);
+          formData.append("user_name", registeredUser.name);
+
+          const response = await axios.post(
+            "/api/admin/send-invoice",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${admin.token}`,
+              },
+            }
+          );
+
+          // Check if the invoice was sent successfully
+          if (response.data.message === "Invoice sent successfully!") {
+            console.log("Invoice sent successfully!");
+          } else {
+            console.log("Failed to send the invoice.");
+          }
+        } catch (error) {
+          console.error("Error generating or sending the invoice:", error);
+        }
+      };
+
+      generateAndSendInvoice();
+    }
+  }, [isRegistered, registeredUser]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
