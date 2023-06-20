@@ -10,6 +10,7 @@ import { FiDownload } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import Invoice from "./pdf/Invoice";
+import updatePdf from "./pdf/UpdateInvoice"
 import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
 
@@ -184,7 +185,6 @@ function FeesDetails() {
 
   const handlePdf = async () => {
     const component = <Invoice user={userData} />;
-
     const blob = await pdf(component).toBlob();
     const fileUrl = window.URL.createObjectURL(blob);
     let downloadLink = document.createElement("a");
@@ -192,6 +192,17 @@ function FeesDetails() {
     downloadLink.download = "SamplePdf.pdf";
     downloadLink.click();
   };
+
+  const handleUpdatePdf = async () => {
+    const components = <updatePdf user={userData} />; 
+    const blob = await pdf(components).toBlob();
+    const fileUrl = window.URL.createObjectURL(blob);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = fileUrl;
+    downloadLink.download = "Sample2Pdf.pdf";
+    downloadLink.click();
+  };
+
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
@@ -295,10 +306,15 @@ function FeesDetails() {
                       {" "}
                       <button onClick={handlePdf} className="text-white ">
                         {" "}
-                        DownloadPdf{" "}
+                        DownloadInvoicePdf{" "}
+                      </button>
+                      <button onClick={handleUpdatePdf} className="text-white ">
+                        {" "}
+                        DownloadUpdatePdf{" "}
                       </button>
                     </tr>
                   </tr>
+                  
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
                   {users.map((user) => (
