@@ -10,12 +10,7 @@ import {
   Link,
   RadialGradient,
 } from "@react-pdf/renderer";
-
 import Logo from "../../assets/UnderDogs_logo.png";
-import PhoneLogo from "../../assets/phonelogo.png"
-import WebsiteLogo from "../../assets/websitelogo.png"
-import AddressLogo from "../../assets/addresslogo.png"
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -75,9 +70,6 @@ const styles = StyleSheet.create({
   link: {
     color: "black",
     textDecoration: "none",
-    fontSize:"13px",
-    left:"4px",
-    paddingLeft:"4px"
   },
   page: {
     fontSize: 12,
@@ -161,11 +153,6 @@ const styles = StyleSheet.create({
     marginBottom:8,
   },
 
-  logo2: {
-    width:12,
-    height:12,
-  },
-
   details: {
     marginVertical: 10,
     padding: 5,
@@ -240,11 +227,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
-  footerText : {
-    display: "flex",
-    gap:"2px",
-  },
-
   footer: {
     position: "absolute",
     display: "flex",
@@ -263,7 +245,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Invoice = ({ user }) => {
+const UpdateInvoice = ({ user }) => {
   const {
     invoice_id,
     id,
@@ -421,20 +403,13 @@ const Invoice = ({ user }) => {
           </View>
         </View>
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-          <Image src={PhoneLogo} style={styles.logo2} ></Image>
-            <Link style={styles.link} src="https://www.underdogsfitness.in/">
-              9123525358
-            </Link>
-          </Text>
-          <Text style={styles.footerText}>
-            <Image src={WebsiteLogo} style={styles.logo2} ></Image>
+          <Text>{String.fromCharCode(0xf058)}9123525358</Text>
+          <Text>
             <Link style={styles.link} src="https://www.underdogsfitness.in/">
               Website
             </Link>
-          </Text >
-          <Text style={styles.footerText}>
-            <Image src={AddressLogo} style={styles.logo2} ></Image>
+          </Text>
+          <Text>
             <Link
               style={styles.link}
               src="https://goo.gl/maps/JVNyukLzFWLyT79eA"
@@ -448,4 +423,4 @@ const Invoice = ({ user }) => {
   );
 };
 
-export default Invoice;
+export default UpdateInvoice;
