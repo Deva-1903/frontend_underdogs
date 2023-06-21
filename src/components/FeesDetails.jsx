@@ -167,50 +167,6 @@ function FeesDetails() {
     };
   };
 
-  const userData = {
-    invoice_id: "1001",
-    id: 1038,
-    name: "Madanraj",
-    email: "Madanraj@gmail.com",
-    mobile: "808567822",
-    subscription: "12 months",
-    subscription_type: "Special training",
-    cardio: "Cardio",
-    mode_of_payment: "Cash",
-    registrationFees: 100,
-    feesAmount: 1500,
-    transaction_type: "Renewal",
-    planEnds: "2025-06-18T18:30:00.000Z",
-  };
-
-  const handlePdf = async () => {
-    try {
-      const component = <NewUserInvoice user={userData} />;
-      const blob = await pdf(component).toBlob();
-      const fileUrl = window.URL.createObjectURL(blob);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = fileUrl;
-      downloadLink.download = "SamplePdf.pdf";
-      downloadLink.click();
-    } catch (error) {
-      console.error("Error generating or downloading PDF:", error);
-    }
-  };
-
-  const handleUpdatePdf = async () => {
-    try {
-      const components = <UpdateSubInvoice user={userData} />;
-      const blob = await pdf(components).toBlob();
-      const fileUrl = window.URL.createObjectURL(blob);
-      const downloadLink = document.createElement("a");
-      downloadLink.href = fileUrl;
-      downloadLink.download = "Sample2Pdf.pdf";
-      downloadLink.click();
-    } catch (error) {
-      console.error("Error generating or downloading updated PDF:", error);
-    }
-  };
-
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
@@ -310,17 +266,6 @@ function FeesDetails() {
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
-                    <tr>
-                      {" "}
-                      <button onClick={handlePdf} className="text-white ">
-                        {" "}
-                        DownloadInvoicePdf{" "}
-                      </button>
-                    </tr>
-                    <button onClick={handleUpdatePdf} className="text-white ">
-                      {" "}
-                      DownloadUpdatePdf{" "}
-                    </button>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
