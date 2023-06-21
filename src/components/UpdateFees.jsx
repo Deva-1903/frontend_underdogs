@@ -12,6 +12,8 @@ import axios from "../axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCurrencyRupee } from "react-icons/bs";
+import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
+import { pdf } from "@react-pdf/renderer";
 
 const UpdateSubscription = () => {
   const [formData, setFormData] = useState({
@@ -34,6 +36,8 @@ const UpdateSubscription = () => {
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
   const [priceOptions, setPriceOptions] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState(null);
 
   const { id } = useParams();
 
@@ -108,6 +112,8 @@ const UpdateSubscription = () => {
 
     if (isSuccess) {
       toast.success(`User ${id} subscription updated successfully`);
+      setUpdatedUser(user);
+      setIsUpdated(true);
     }
 
     if (!admin) {
@@ -142,6 +148,51 @@ const UpdateSubscription = () => {
       }));
     }
   };
+
+  const generatePDF = async () => {
+    const component = <UpdateSubInvoice user={updatedUser} />;
+    const pdfBlob = await pdf(component).toBlob();
+    return pdfBlob;
+  };
+
+  useEffect(() => {
+    if (isUpdated) {
+      const generateAndSendInvoice = async () => {
+        try {
+          const pdfData = await generatePDF();
+
+          const formData = new FormData();
+          formData.append("email", updatedUser.email);
+          formData.append("attachment", pdfData, "invoice.pdf");
+          formData.append("action", "updateSubscription");
+          formData.append("invoice_id", updatedUser.invoice_id);
+          formData.append("user_name", updatedUser.name);
+
+          const response = await axios.post(
+            "/api/admin/send-invoice",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${admin.token}`,
+              },
+            }
+          );
+
+          // Check if the invoice was sent successfully
+          if (response.data.message === "Invoice sent successfully!") {
+            toast.success("Invoice sent successfully!");
+          } else {
+            toast.error("Invoice sent successfully!");
+          }
+        } catch (error) {
+          console.error("Error generating or sending the invoice:", error);
+        }
+      };
+
+      generateAndSendInvoice();
+    }
+  }, [isUpdated, updatedUser]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -202,7 +253,15 @@ const UpdateSubscription = () => {
               <div className="flex flex-wrap mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
                   <p className="text-gray-300 font-semibold mb-2">Status:</p>
-                  <p className={`${userData.status === "active" ? "text-gray-400" : "text-red-500"}`}>{userData.status}</p>
+                  <p
+                    className={`${
+                      userData.status === "active"
+                        ? "text-gray-400"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {userData.status}
+                  </p>
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <p className="text-gray-300 font-semibold mb-2">Plan Ends:</p>

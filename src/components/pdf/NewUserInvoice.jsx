@@ -7,16 +7,12 @@ import {
   View,
   Text,
   Font,
-  Link,
-  RadialGradient,
 } from "@react-pdf/renderer";
+
 import Logo from "../../assets/UnderDogs_logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPhone,
-  faGlobe,
-  faMapMarker,
-} from "@fortawesome/free-solid-svg-icons";
+import PhoneLogo from "../../assets/phonelogo.png";
+import WebsiteLogo from "../../assets/websitelogo.png";
+import AddressLogo from "../../assets/addresslogo.png";
 
 //fonts
 import Roboto from "../../assets/fontsource/Roboto-Bold.ttf";
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
   h3font: {
     fontSize: 18,
     fontWeight: "demibold",
-    marginBottom:4,
+    marginBottom: 4,
   },
 
   pfont: {
@@ -64,12 +60,15 @@ const styles = StyleSheet.create({
 
   symbol: {
     display: "flex",
-    marginRight:8,
+    marginRight: 8,
   },
 
   link: {
     color: "black",
     textDecoration: "none",
+    fontSize: "13px",
+    left: "4px",
+    paddingLeft: "4px",
   },
   page: {
     fontSize: 12,
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
     padding: 2,
     minWidth: "150px",
     maxWidth: "150px",
-    left:48,
+    left: 48,
   },
   totalSectionRow: {
     display: "flex",
@@ -149,8 +148,8 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "flex-start",
     marginTop: -4,
-    marginLeft:-28,
-    marginBottom:8,
+    marginLeft: -28,
+    marginBottom: 8,
   },
 
   details: {
@@ -170,15 +169,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-end",
     maxWidth: "50%",
-    marginLeft:58,
-    marginTop:-68,
+    marginLeft: 58,
+    marginTop: -68,
   },
   headerRightcolumn2: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
     maxWidth: "50%",
-    marginLeft:58,
+    marginLeft: 58,
   },
   table: {
     display: "table",
@@ -240,12 +239,30 @@ const styles = StyleSheet.create({
     borderTopColor: THEME_COLOUR,
     padding: 4,
   },
+  footerItem: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  footerText: {
+    marginLeft: 8,
+    gap: "2px",
+  },
+  logo2: {
+    width: 19,
+    height: 19,
+    marginRight: 4,
+  },
+
+  linkText: {
+    color: "black",
+  },
   phoneNumber: {
     marginTop: 5, // Adjust the margin top value as needed
   },
 });
 
-const UpdateInvoice = ({ user }) => {
+const NewUserInvoice = ({ user }) => {
   const {
     invoice_id,
     id,
@@ -295,13 +312,12 @@ const UpdateInvoice = ({ user }) => {
               <Text style={styles.pfont}>{id}</Text>
             </View>
             <View style={styles.FlexRow1}>
-              <Text style={styles.pfont}>Name   </Text>
+              <Text style={styles.pfont}>Name</Text>
               <Text style={styles.symbol}>:</Text>
               <Text style={styles.pfont}>{name}</Text>
             </View>
-
             <View style={styles.FlexRow1}>
-              <Text style={styles.pfont}>Mobile </Text>
+              <Text style={styles.pfont}>Mobile</Text>
               <Text style={styles.symbol}>:</Text>
               <Text style={styles.pfont}>{mobile}</Text>
             </View>
@@ -369,7 +385,7 @@ const UpdateInvoice = ({ user }) => {
           <View style={styles.headerLeftcolumn}>
             <Text style={styles.h3font}>Additional Details</Text>
             <View style={styles.FlexRow}>
-              <Text style={styles.pfont}>Payment for     </Text>
+              <Text style={styles.pfont}>Payment for </Text>
               <Text style={styles.symbol}>:</Text>
               <Text style={styles.pfont}>{transaction_type}</Text>
             </View>
@@ -379,7 +395,7 @@ const UpdateInvoice = ({ user }) => {
               <Text style={styles.pfont}>{mode_of_payment}</Text>
             </View>
             <View style={styles.FlexRow}>
-              <Text style={styles.pfont}>Plan Ends on    </Text>
+              <Text style={styles.pfont}>Plan Ends on </Text>
               <Text style={styles.symbol}>:</Text>
               <Text style={styles.pfont}>{formattedPlanEnds}</Text>
             </View>
@@ -392,10 +408,7 @@ const UpdateInvoice = ({ user }) => {
                 {feesAmount} + {registrationFees}
               </Text>
             </View>
-            {/* <View style={styles.totalSectionRow}>
-                        <Text style={styles.totalSectionFont}>Registration Fees</Text>
-                        <Text style={styles.totalSectionFont}>100</Text>
-                    </View> */}
+
             <View style={styles.totalSectionRowlast}>
               <Text>TOTAL</Text>
               <Text>{totalSum(registrationFees, feesAmount)} </Text>
@@ -403,24 +416,21 @@ const UpdateInvoice = ({ user }) => {
           </View>
         </View>
         <View style={styles.footer}>
-          <Text>{String.fromCharCode(0xf058)}9123525358</Text>
-          <Text>
-            <Link style={styles.link} src="https://www.underdogsfitness.in/">
-              Website
-            </Link>
-          </Text>
-          <Text>
-            <Link
-              style={styles.link}
-              src="https://goo.gl/maps/JVNyukLzFWLyT79eA"
-            >
-              Address
-            </Link>
-          </Text>
+          <View style={styles.footerItem}>
+            <Image src={WebsiteLogo} style={styles.logo2} />
+            <Text style={styles.footerText}>www.underdogsfitness.in</Text>
+          </View>
+
+          <View style={styles.footerItem}>
+            <Image src={AddressLogo} style={styles.logo2} />
+            <Text style={styles.footerText}>
+              1/186, Mariamman Kovil St, Mugalivakkam, Ch-125
+            </Text>
+          </View>
         </View>
       </Page>
     </Document>
   );
 };
 
-export default UpdateInvoice;
+export default NewUserInvoice;

@@ -11,10 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCurrencyRupee } from "react-icons/bs";
-import Invoice from "../components/pdf/Invoice";
-import PDFRenderer from "@react-pdf/renderer";
-import html2pdf from "html2pdf.js";
-import ReactDOM from "react-dom";
+import NewUserInvoice from "./pdf/NewUserInvoice";
 import { pdf } from "@react-pdf/renderer";
 
 function RegistrationForm() {
@@ -114,28 +111,28 @@ function RegistrationForm() {
       toast.success(`User ${user.id} registered successfully`);
       setRegisteredUser(user);
       setIsRegistered(true);
-      // setFormData({
-      //   name: "",
-      //   age: "",
-      //   gender: "",
-      //   mobile: "",
-      //   email: "",
-      //   healthIssues: "",
-      //   emergencyContactNo: "",
-      //   height: "",
-      //   weight: "",
-      //   bloodGroup: "",
-      //   address: "",
-      //   subscription: "",
-      //   subscription_type: "",
-      //   mode_of_payment: "",
-      //   cardio: "",
-      //   photoURL: "",
-      //   joiningDate: "",
-      //   occupation: "",
-      //   feesAmount: "",
-      //   registrationFees: "",
-      // });
+      setFormData({
+        name: "",
+        age: "",
+        gender: "",
+        mobile: "",
+        email: "",
+        healthIssues: "",
+        emergencyContactNo: "",
+        height: "",
+        weight: "",
+        bloodGroup: "",
+        address: "",
+        subscription: "",
+        subscription_type: "",
+        mode_of_payment: "",
+        cardio: "",
+        photoURL: "",
+        joiningDate: "",
+        occupation: "",
+        feesAmount: "",
+        registrationFees: "",
+      });
       setSelectedPhoto(null);
     }
 
@@ -173,7 +170,7 @@ function RegistrationForm() {
   };
 
   const generatePDF = async () => {
-    const component = <Invoice user={registeredUser} />;
+    const component = <NewUserInvoice user={registeredUser} />;
     const pdfBlob = await pdf(component).toBlob();
     return pdfBlob;
   };
@@ -204,9 +201,9 @@ function RegistrationForm() {
 
           // Check if the invoice was sent successfully
           if (response.data.message === "Invoice sent successfully!") {
-            console.log("Invoice sent successfully!");
+            toast.success("Invoice sent successfully!");
           } else {
-            console.log("Failed to send the invoice.");
+            toast.error("Invoice sent successfully!");
           }
         } catch (error) {
           console.error("Error generating or sending the invoice:", error);

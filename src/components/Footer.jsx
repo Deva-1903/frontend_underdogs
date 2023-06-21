@@ -79,7 +79,7 @@ function Footer() {
                   +91 91235 25358
                 </a>
                 <a href="tel:+916382232050" className="ml-2">
-                  / 63822 32050
+                  /+91 63822 32050
                 </a>
               </p>
               <p className="text-lg mt-0 mb-2 text-gray-700">

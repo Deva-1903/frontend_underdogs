@@ -9,8 +9,8 @@ import logo from "../assets/UnderDogs_logo.png";
 import { FiDownload } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import Invoice from "./pdf/Invoice";
-import updatePdf from "./pdf/UpdateInvoice"
+import NewUserInvoice from "./pdf/NewUserInvoice";
+import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
 import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
 
@@ -168,7 +168,7 @@ function FeesDetails() {
   };
 
   const userData = {
-    inoice_id: "A9JW",
+    invoice_id: "#A9JW",
     id: 1038,
     name: "Vijay",
     email: "vj@gmail.com",
@@ -184,23 +184,31 @@ function FeesDetails() {
   };
 
   const handlePdf = async () => {
-    const component = <Invoice user={userData} />;
-    const blob = await pdf(component).toBlob();
-    const fileUrl = window.URL.createObjectURL(blob);
-    let downloadLink = document.createElement("a");
-    downloadLink.href = fileUrl;
-    downloadLink.download = "SamplePdf.pdf";
-    downloadLink.click();
+    try {
+      const component = <NewUserInvoice user={userData} />;
+      const blob = await pdf(component).toBlob();
+      const fileUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.download = "SamplePdf.pdf";
+      downloadLink.click();
+    } catch (error) {
+      console.error("Error generating or downloading PDF:", error);
+    }
   };
 
   const handleUpdatePdf = async () => {
-    const components = <updatePdf user={userData} />; 
-    const blob = await pdf(components).toBlob();
-    const fileUrl = window.URL.createObjectURL(blob);
-    let downloadLink = document.createElement("a");
-    downloadLink.href = fileUrl;
-    downloadLink.download = "Sample2Pdf.pdf";
-    downloadLink.click();
+    try {
+      const components = <UpdateSubInvoice user={userData} />;
+      const blob = await pdf(components).toBlob();
+      const fileUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.download = "Sample2Pdf.pdf";
+      downloadLink.click();
+    } catch (error) {
+      console.error("Error generating or downloading updated PDF:", error);
+    }
   };
 
   return (
@@ -308,13 +316,12 @@ function FeesDetails() {
                         {" "}
                         DownloadInvoicePdf{" "}
                       </button>
-                      <button onClick={handleUpdatePdf} className="text-white ">
-                        {" "}
-                        DownloadUpdatePdf{" "}
-                      </button>
                     </tr>
+                    <button onClick={handleUpdatePdf} className="text-white ">
+                      {" "}
+                      DownloadUpdatePdf{" "}
+                    </button>
                   </tr>
-                  
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
                   {users.map((user) => (
