@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   fetchUserDataForUpdate,
   updateFees,
@@ -11,6 +11,9 @@ import Spinner from "../components/Spinner";
 import axios from "../axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { BsCurrencyRupee } from "react-icons/bs";
+import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
+import { pdf } from "@react-pdf/renderer";
 
 const UpdateSubscription = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +22,7 @@ const UpdateSubscription = () => {
     mode_of_payment: "",
     cardio: "",
     paymentDate: "",
+    feesAmount: "",
   });
   const [userData, setUserData] = useState({
     id: "",
@@ -31,6 +35,9 @@ const UpdateSubscription = () => {
   const [options, setOptions] = useState([]);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [updatedUser, setUpdatedUser] = useState(null);
 
   const { id } = useParams();
 
@@ -72,6 +79,14 @@ const UpdateSubscription = () => {
           },
         });
         setCardioOptions(cardioTypesResponse.data);
+
+        // Fetch price options
+        const priceTypesResponse = await axios.get("/api/admin/prices", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setPriceOptions(priceTypesResponse.data);
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
@@ -97,6 +112,8 @@ const UpdateSubscription = () => {
 
     if (isSuccess) {
       toast.success(`User ${id} subscription updated successfully`);
+      setUpdatedUser(user);
+      setIsUpdated(true);
     }
 
     if (!admin) {
@@ -115,6 +132,7 @@ const UpdateSubscription = () => {
       cardio: formData.cardio,
       mode_of_payment: formData.mode_of_payment,
       paymentDate: formData.paymentDate,
+      feesAmount: formData.feesAmount,
       adminName: admin.username,
     };
 
@@ -130,6 +148,51 @@ const UpdateSubscription = () => {
       }));
     }
   };
+
+  const generatePDF = async () => {
+    const component = <UpdateSubInvoice user={updatedUser} />;
+    const pdfBlob = await pdf(component).toBlob();
+    return pdfBlob;
+  };
+
+  useEffect(() => {
+    if (isUpdated) {
+      const generateAndSendInvoice = async () => {
+        try {
+          const pdfData = await generatePDF();
+
+          const formData = new FormData();
+          formData.append("email", updatedUser.email);
+          formData.append("attachment", pdfData, "invoice.pdf");
+          formData.append("action", "updateSubscription");
+          formData.append("invoice_id", updatedUser.invoice_id);
+          formData.append("user_name", updatedUser.name);
+
+          const response = await axios.post(
+            "/api/admin/send-invoice",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${admin.token}`,
+              },
+            }
+          );
+
+          // Check if the invoice was sent successfully
+          if (response.data.message === "Invoice sent successfully!") {
+            toast.success("Invoice sent successfully!");
+          } else {
+            toast.error("Invoice sent successfully!");
+          }
+        } catch (error) {
+          console.error("Error generating or sending the invoice:", error);
+        }
+      };
+
+      generateAndSendInvoice();
+    }
+  }, [isUpdated, updatedUser]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -190,7 +253,15 @@ const UpdateSubscription = () => {
               <div className="flex flex-wrap mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
                   <p className="text-gray-300 font-semibold mb-2">Status:</p>
-                  <p className="text-gray-400">{userData.status}</p>
+                  <p
+                    className={`${
+                      userData.status === "active"
+                        ? "text-gray-400"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {userData.status}
+                  </p>
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                   <p className="text-gray-300 font-semibold mb-2">Plan Ends:</p>
@@ -296,7 +367,7 @@ const UpdateSubscription = () => {
                 </select>
               </div>
 
-              <div className="w-full md:w-1/2 px-3 mt-6 md:ml-32">
+              <div className="w-full md:w-1/2 px-3 mt-6">
                 <label
                   className="block text-gray-200 font-semibold mb-2"
                   htmlFor="payment-date"
@@ -317,17 +388,48 @@ const UpdateSubscription = () => {
                   required
                 />
               </div>
+
+              <div className="w-full md:w-1/2 px-3 mt-6">
+                <label
+                  className="block text-gray-200 text-sm font-bold mb-3"
+                  htmlFor="fees-amount"
+                >
+                  Fees amount
+                </label>
+                <div className="flex justify-center items-center">
+                  <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                  <select
+                    className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                    id="feesAmount"
+                    name="feesAmount"
+                    value={formData.feesAmount}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Please select --</option>
+                    {priceOptions.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.price}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
 
-            <div className="flex flex-wrap mx-3 mb-6 mt-7">
-              <div className="w-full px-4 flex justify-center ">
-                <button
-                  type="submit"
-                  className="bg-indigo-500 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-2 px-5 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Update
-                </button>
-              </div>
+            <div className="flex justify-center gap-5 items-center">
+              <button
+                className="bg-indigo-500 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Update
+              </button>
+              <Link
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                to="/admin/update/subscription"
+              >
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

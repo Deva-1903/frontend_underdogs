@@ -13,6 +13,7 @@ const ContactForms = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(true);
 
   const { admin } = useSelector((state) => state.auth);
   const { users, isLoading, isError, message } = useSelector(
@@ -29,7 +30,9 @@ const ContactForms = () => {
         getContactForms({
           page: currentPage,
         })
-      );
+      ).then(() => {
+        setIsFetching(false); // Set loading state to false after data is fetched
+      });
     }
   }, [admin, dispatch, currentPage, navigate]);
 
@@ -115,79 +118,80 @@ const ContactForms = () => {
             </span>
           </div>
         )
+      ) : isFetching ? (
+        <div className="flex justify-center items-center mt-36 ml-6">
+          <span className="block sm:inline text-white pe-5 text-xl md:text-3xl font-bold	">
+            Loading....
+          </span>
+        </div>
       ) : (
-        <>
-          <div className="flex justify-center items-center pb-8 mt-10  w-full">
-            <div className=" overflow-x-auto p-4 ">
-              <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
-                <table
-                  id="users-table"
-                  className="w-full divide-y divide-x divide-gray-200 border"
-                >
-                  <thead>
-                    <tr>
-                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                        Name
-                      </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                        Email
-                      </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                        Message
-                      </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                        Reply
-                      </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                        Delete
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y  divide-gray-200 border ">
-                    {users.map((user) => (
-                      <tr key={user._id} className="border">
-                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          {user.fullName}
-                        </td>
-                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          {user.email}
-                        </td>
-                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          <div className="max-h-48 overflow-y-auto">
-                            <textarea
-                              className="bg-slate-900 px-8 py-2"
-                              readOnly
-                            >
-                              {user.message}
-                            </textarea>
-                          </div>
-                        </td>
-                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          <button>
-                            <a
-                              className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-green-500 "
-                              href={`mailto:${user.email}`}
-                            >
-                              <FaReplyAll className="hover:opacity-75 hover:scale-100 duration-200" />
-                            </a>
-                          </button>
-                        </td>
-                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          <button
-                            className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-white"
-                            onClick={() => handleDelete(user._id)}
+        <div className="flex justify-center items-center pb-8 mt-10  w-full">
+          <div className=" overflow-x-auto p-4 ">
+            <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
+              <table
+                id="users-table"
+                className="w-full divide-y divide-x divide-gray-200 border"
+              >
+                <thead>
+                  <tr>
+                    <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      Message
+                    </th>
+                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      Reply
+                    </th>
+                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      Delete
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y  divide-gray-200 border ">
+                  {users.map((user) => (
+                    <tr key={user._id} className="border">
+                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        {user.fullName}
+                      </td>
+                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        {user.email}
+                      </td>
+                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        <div className="max-h-48 overflow-y-auto">
+                          <textarea className="bg-slate-900 px-8 py-2" readOnly>
+                            {user.message}
+                          </textarea>
+                        </div>
+                      </td>
+                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        <button>
+                          <a
+                            className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-green-500 "
+                            href={`mailto:${user.email}`}
                           >
-                            <RiDeleteBin2Fill className="text-2xl hover:opacity-75 hover:scale-100 duration-200 text-red-500 hover:text-red-400" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                            <FaReplyAll className="hover:opacity-75 hover:scale-100 duration-200" />
+                          </a>
+                        </button>
+                      </td>
+                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                        <button
+                          className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-white"
+                          onClick={() => handleDelete(user._id)}
+                        >
+                          <RiDeleteBin2Fill className="text-2xl hover:opacity-75 hover:scale-100 duration-200 text-red-500 hover:text-red-400" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

@@ -9,6 +9,10 @@ import logo from "../assets/UnderDogs_logo.png";
 import { FiDownload } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
+import NewUserInvoice from "./pdf/NewUserInvoice";
+import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
+import { pdf } from "@react-pdf/renderer";
+import { BsCurrencyRupee } from "react-icons/bs";
 
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
@@ -94,14 +98,14 @@ function FeesDetails() {
   };
 
   const handleDownloadPDF = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF("landscape", "px", "a4", "portrait");
     const table = tableRef.current;
 
     const logoImage = new Image();
     logoImage.src = logo;
 
     logoImage.onload = function () {
-      const logoWidth = 90; // Adjust the desired width of the logo
+      const logoWidth = 150; // Adjust the desired width of the logo
       const logoHeight = (logoWidth * logoImage.height) / logoImage.width;
 
       const pageWidth = doc.internal.pageSize.getWidth();
@@ -124,9 +128,9 @@ function FeesDetails() {
       doc.setFont("helvetica", "bold"); // Set font style to bold
       doc.setFontSize(16); // Increase the font size for start date, end date, and fees details
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`Start Date: ${startDateStr}`, 20, y + logoHeight + 30);
+      doc.text(`Start Date: ${startDateStr}`, 20, y + logoHeight + 20);
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`End Date: ${endDateStr}`, pageWidth - 20, y + logoHeight + 30, {
+      doc.text(`End Date: ${endDateStr}`, pageWidth - 20, y + logoHeight + 20, {
         align: "right",
       });
 
@@ -139,12 +143,12 @@ function FeesDetails() {
 
       // Add table with centered "Fees Details" text and styling
       doc.setFont("helvetica", "bold"); // Set font style to bold
-      doc.setFontSize(18); // Increase the font size for the "Fees Details" heading
+      doc.setFontSize(14); // Increase the font size for the "Fees Details" heading
       doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 60);
+      doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 40);
 
       // Set the current page number
-      doc.setFontSize(12); // Set font size for the page number
+      doc.setFontSize(10); // Set font size for the page number
       doc.text(
         `Page ${currentPage}`,
         pageWidth / 2,
@@ -154,9 +158,57 @@ function FeesDetails() {
         }
       );
 
-      doc.autoTable({ html: table, startY: y + logoHeight + 80 });
+      doc.autoTable({
+        html: table,
+        startY: y + logoHeight + 50,
+        orientation: "landscape",
+      });
       doc.save("fees_details.pdf");
     };
+  };
+
+  const userData = {
+    invoice_id: "1001",
+    id: 1038,
+    name: "Madanraj",
+    email: "Madanraj@gmail.com",
+    mobile: "808567822",
+    subscription: "12 months",
+    subscription_type: "Special training",
+    cardio: "Cardio",
+    mode_of_payment: "Cash",
+    registrationFees: 100,
+    feesAmount: 1500,
+    transaction_type: "Renewal",
+    planEnds: "2025-06-18T18:30:00.000Z",
+  };
+
+  const handlePdf = async () => {
+    try {
+      const component = <NewUserInvoice user={userData} />;
+      const blob = await pdf(component).toBlob();
+      const fileUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.download = "SamplePdf.pdf";
+      downloadLink.click();
+    } catch (error) {
+      console.error("Error generating or downloading PDF:", error);
+    }
+  };
+
+  const handleUpdatePdf = async () => {
+    try {
+      const components = <UpdateSubInvoice user={userData} />;
+      const blob = await pdf(components).toBlob();
+      const fileUrl = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.download = "Sample2Pdf.pdf";
+      downloadLink.click();
+    } catch (error) {
+      console.error("Error generating or downloading updated PDF:", error);
+    }
   };
 
   return (
@@ -225,60 +277,90 @@ function FeesDetails() {
               >
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       User ID
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       User Name
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription Type
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Mode of Payment
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Cardio
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Pay Method
+                    </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Admin
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Transaction Type
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Amount
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Payment Date
                     </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
+                    <tr>
+                      {" "}
+                      <button onClick={handlePdf} className="text-white ">
+                        {" "}
+                        DownloadInvoicePdf{" "}
+                      </button>
+                    </tr>
+                    <button onClick={handleUpdatePdf} className="text-white ">
+                      {" "}
+                      DownloadUpdatePdf{" "}
+                    </button>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
                   {users.map((user) => (
                     <tr key={user.user_id} className="border">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.user_id}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.user_name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.subscription}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.subscription_type}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
+                        {user.cardio}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.mode_of_payment}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.admin}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
+                        <div className="flex">
+                          {typeof user.amount === "number" ? (
+                            <BsCurrencyRupee className="mt-1" />
+                          ) : (
+                            " "
+                          )}
+                          {user.amount}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.transaction_type}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {new Date(user.createdAt)
                           .toLocaleDateString("en-GB", {
                             day: "2-digit",
@@ -288,7 +370,7 @@ function FeesDetails() {
                           .replace(/\//g, "-")}
                       </td>
 
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {new Date(user.createdAt).toLocaleTimeString("en-US", {
                           hour: "numeric",
                           minute: "numeric",

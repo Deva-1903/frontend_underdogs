@@ -10,6 +10,9 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { BsCurrencyRupee } from "react-icons/bs";
+import NewUserInvoice from "./pdf/NewUserInvoice";
+import { pdf } from "@react-pdf/renderer";
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -30,11 +33,17 @@ function RegistrationForm() {
     cardio: "",
     joiningDate: "",
     photoURL: "",
+    occupation: "",
+    feesAmount: "",
+    registrationFees: "",
   });
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [options, setOptions] = useState([]);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
   const [cardioOptions, setCardioOptions] = useState([]);
+  const [priceOptions, setPriceOptions] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [registeredUser, setRegisteredUser] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,7 +57,6 @@ function RegistrationForm() {
   useEffect(() => {
     const fetchSubscriptionOptions = async () => {
       try {
-        // Fetch subscription options
         const optionsResponse = await axios.get(
           "/api/admin/subscription-options",
           {
@@ -67,13 +75,21 @@ function RegistrationForm() {
         });
         setSubscriptionTypes(typesResponse.data);
 
-        // Fetch subscription types
+        // Fetch cardio types
         const cardioTypesResponse = await axios.get("/api/admin/cardio-types", {
           headers: {
             Authorization: `Bearer ${admin.token}`,
           },
         });
         setCardioOptions(cardioTypesResponse.data);
+
+        // Fetch price options
+        const priceTypesResponse = await axios.get("/api/admin/prices", {
+          headers: {
+            Authorization: `Bearer ${admin.token}`,
+          },
+        });
+        setPriceOptions(priceTypesResponse.data);
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
@@ -93,6 +109,8 @@ function RegistrationForm() {
 
     if (isSuccess) {
       toast.success(`User ${user.id} registered successfully`);
+      setRegisteredUser(user);
+      setIsRegistered(true);
       setFormData({
         name: "",
         age: "",
@@ -111,7 +129,11 @@ function RegistrationForm() {
         cardio: "",
         photoURL: "",
         joiningDate: "",
+        occupation: "",
+        feesAmount: "",
+        registrationFees: "",
       });
+      setSelectedPhoto(null);
     }
 
     dispatch(reset());
@@ -138,13 +160,59 @@ function RegistrationForm() {
       mode_of_payment: formData.mode_of_payment,
       cardio: formData.cardio,
       joiningDate: formData.joiningDate,
+      occupation: formData.occupation,
+      feesAmount: formData.feesAmount,
+      registrationFees: formData.registrationFees,
       adminName: admin.username,
     };
 
     dispatch(createUser(userData));
-
-    // Reset form data
   };
+
+  const generatePDF = async () => {
+    const component = <NewUserInvoice user={registeredUser} />;
+    const pdfBlob = await pdf(component).toBlob();
+    return pdfBlob;
+  };
+
+  useEffect(() => {
+    if (isRegistered) {
+      const generateAndSendInvoice = async () => {
+        try {
+          const pdfData = await generatePDF();
+
+          const formData = new FormData();
+          formData.append("email", registeredUser.email);
+          formData.append("attachment", pdfData, "invoice.pdf");
+          formData.append("action", "register");
+          formData.append("invoice_id", registeredUser.invoice_id);
+          formData.append("user_name", registeredUser.name);
+
+          const response = await axios.post(
+            "/api/admin/send-invoice",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${admin.token}`,
+              },
+            }
+          );
+
+          // Check if the invoice was sent successfully
+          if (response.data.message === "Invoice sent successfully!") {
+            toast.success("Invoice sent successfully!");
+          } else {
+            toast.error("Invoice sent successfully!");
+          }
+        } catch (error) {
+          console.error("Error generating or sending the invoice:", error);
+        }
+      };
+
+      generateAndSendInvoice();
+    }
+  }, [isRegistered, registeredUser]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -224,6 +292,8 @@ function RegistrationForm() {
           <p className="text-gray-200 font-bold text-xl md:text-3xl mb-6 mt-4 lg:mt-0 flex justify-center">
             Registration Form
           </p>
+
+          {/* Profile Photo field */}
           <div className="col-span-1 flex flex-col items-center pb-3">
             <div className="relative mb-4">
               {selectedPhoto && (
@@ -252,8 +322,6 @@ function RegistrationForm() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Profile Photo field */}
-
             {/* <!-- Username field --> */}
             <div class="col-span-1">
               <label
@@ -442,14 +510,14 @@ function RegistrationForm() {
               >
                 Health Issues
               </label>
-              <textarea
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-3 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline"
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="healthIssues"
                 name="healthIssues"
                 value={formData.healthIssues}
                 onChange={handleChange}
                 placeholder="Enter any health issues here"
-              ></textarea>
+              ></input>
             </div>
 
             {/* <!-- Address field --> */}
@@ -460,14 +528,31 @@ function RegistrationForm() {
               >
                 Address
               </label>
-              <textarea
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-3 py-2 w-full rounded-lg focus:outline-none focus:shadow-outline"
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
                 placeholder=""
-              ></textarea>
+              ></input>
+            </div>
+
+            <div class="col-span-1">
+              <label
+                class="block text-gray-200 text-sm font-bold mb-3"
+                for="occupation"
+              >
+                Occupation
+              </label>
+              <input
+                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                id="occupation"
+                name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+                placeholder="Enter Occupation"
+              ></input>
             </div>
 
             {/* <!-- Subscription field --> */}
@@ -479,7 +564,7 @@ function RegistrationForm() {
                 Subscription
               </label>
               <select
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+                className="appearance-none rounded w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
     border-transparent border-2 focus:border-indigo-500"
                 id="subscription"
                 name="subscription"
@@ -505,7 +590,7 @@ function RegistrationForm() {
                 Subscription Type
               </label>
               <select
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+                className="appearance-none rounded w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
                  border-transparent border-2 focus:border-indigo-500"
                 id="subscription_type"
                 name="subscription_type"
@@ -521,6 +606,8 @@ function RegistrationForm() {
                 ))}
               </select>
             </div>
+
+            {/* cardio */}
             <div className="col-span-1">
               <label
                 className="block text-gray-200 text-sm font-bold mb-3"
@@ -529,7 +616,7 @@ function RegistrationForm() {
                 Cardio
               </label>
               <select
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                className="appearance-none rounded w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                 id="cardio"
                 name="cardio"
                 value={formData.cardio}
@@ -544,7 +631,6 @@ function RegistrationForm() {
                 ))}
               </select>
             </div>
-            {/* Joining Date field */}
 
             <div class="col-span-1">
               <label
@@ -554,7 +640,7 @@ function RegistrationForm() {
                 Mode of Payment
               </label>
               <select
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
+                className="appearance-none rounded w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
     border-transparent border-2 focus:border-indigo-500"
                 id="mode_of_payment"
                 name="mode_of_payment"
@@ -568,6 +654,57 @@ function RegistrationForm() {
                 <option value="UPI">UPI</option>
               </select>
             </div>
+
+            <div className="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                htmlFor="registration-fees"
+              >
+                Registration Fee
+              </label>
+              <div className="flex justify-center items-center">
+                <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <input
+                  type="number"
+                  className="appearance-none rounded-e-md  w-52 py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="registrationFees"
+                  name="registrationFees"
+                  value={formData.registrationFees}
+                  onChange={handleChange}
+                  min="0"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                htmlFor="fees-amount"
+              >
+                Fees amount
+              </label>
+              <div className="flex justify-center items-center">
+                <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <select
+                  className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="feesAmount"
+                  name="feesAmount"
+                  value={formData.feesAmount}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">-- Please select --</option>
+                  {priceOptions.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.price}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Joining Date */}
             <div className="col-span-1">
               <label
                 className="block text-gray-200 text-sm font-bold mb-3"
@@ -576,7 +713,7 @@ function RegistrationForm() {
                 Joining Date
               </label>
               <DatePicker
-                className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                className="appearance-none rounded w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                 id="joining-date"
                 name="joiningDate"
                 selected={formData.joiningDate}
