@@ -24,7 +24,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import { MdPermIdentity } from "react-icons/md";
-import {MdWork} from "react-icons/md"
+import { MdWork } from "react-icons/md";
 
 import { fetchUserDataForUpdate, reset } from "../features/user/userSlice";
 import Spinner from "../components/Spinner";
@@ -49,6 +49,7 @@ function ViewUser() {
     status: "",
     photoURL: "",
     joiningDate: "",
+    occupation: "",
   });
 
   const { id } = useParams();
@@ -183,7 +184,7 @@ function ViewUser() {
             <div className="flex items-center">
               <MdWork className="text-white mr-2" size={24} />
               <span className="text-white text-base text-clip">
-                Occupation: software Engineer
+                Occupation: {userData.occupation}
               </span>
             </div>
             <div className="flex items-center">
@@ -206,7 +207,11 @@ function ViewUser() {
             </div>
             <div className="flex items-center">
               <FaToggleOn className="text-white mr-2" size={24} />
-              <span className={`${userData.status === "active" ? "text-white" : "text-red-500"} text-base`}>
+              <span
+                className={`${
+                  userData.status === "active" ? "text-white" : "text-red-500"
+                } text-base`}
+              >
                 Status: {userData.status}
               </span>
             </div>
