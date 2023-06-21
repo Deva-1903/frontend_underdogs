@@ -168,19 +168,19 @@ function FeesDetails() {
   };
 
   const userData = {
-    invoice_id: "#A9JW",
+    invoice_id: "1001",
     id: 1038,
-    name: "Vijay",
-    email: "vj@gmail.com",
-    mobile: "908567822",
+    name: "Madanraj",
+    email: "Madanraj@gmail.com",
+    mobile: "808567822",
     subscription: "12 months",
     subscription_type: "Special training",
-    cardio: "With Cardio",
-    mode_of_payment: "Card",
-    registrationFees: 300,
-    feesAmount: 1200,
-    transaction_type: "New User",
-    planEnds: "2024-06-18T18:30:00.000Z",
+    cardio: "Cardio",
+    mode_of_payment: "Cash",
+    registrationFees: 100,
+    feesAmount: 1500,
+    transaction_type: "Renewal",
+    planEnds: "2025-06-18T18:30:00.000Z",
   };
 
   const handlePdf = async () => {
