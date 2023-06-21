@@ -24,6 +24,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import { MdPermIdentity } from "react-icons/md";
+import {MdWork} from "react-icons/md"
 
 import { fetchUserDataForUpdate, reset } from "../features/user/userSlice";
 import Spinner from "../components/Spinner";
@@ -177,6 +178,12 @@ function ViewUser() {
               <FaMapMarkerAlt className="text-white mr-2" size={24} />
               <span className="text-white text-base text-clip">
                 Address: {userData.address}
+              </span>
+            </div>
+            <div className="flex items-center">
+              <MdWork className="text-white mr-2" size={24} />
+              <span className="text-white text-base text-clip">
+                Occupation: software Engineer
               </span>
             </div>
             <div className="flex items-center">
