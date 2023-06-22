@@ -331,7 +331,7 @@ function RegistrationForm() {
                 Username
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="name"
                 name="name"
@@ -351,7 +351,7 @@ function RegistrationForm() {
                 Age
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="number"
                 id="age"
                 name="age"
@@ -395,7 +395,7 @@ function RegistrationForm() {
                 Mobile
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="tel"
                 id="mobile"
                 name="mobile"
@@ -415,7 +415,7 @@ function RegistrationForm() {
                 Email
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="email"
                 id="email"
                 name="email"
@@ -435,7 +435,7 @@ function RegistrationForm() {
                 Emergency Contact
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="tel"
                 id="emergencyContactNo"
                 name="emergencyContactNo"
@@ -454,7 +454,7 @@ function RegistrationForm() {
                 Height
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="height"
                 name="height"
@@ -473,7 +473,7 @@ function RegistrationForm() {
                 Weight
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="weight"
                 name="weight"
@@ -492,7 +492,7 @@ function RegistrationForm() {
                 Blood Group
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="bloodGroup"
                 name="bloodGroup"
@@ -511,7 +511,7 @@ function RegistrationForm() {
                 Health Issues
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2  focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="healthIssues"
                 name="healthIssues"
                 value={formData.healthIssues}
@@ -529,7 +529,7 @@ function RegistrationForm() {
                 Address
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2  focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="address"
                 name="address"
                 value={formData.address}
@@ -666,7 +666,7 @@ function RegistrationForm() {
                 <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
                 <input
                   type="number"
-                  className="appearance-none rounded-e-md  w-52 py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                   id="registrationFees"
                   name="registrationFees"
                   value={formData.registrationFees}
