@@ -215,7 +215,7 @@ function EditUserForm() {
                 Username
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="name"
                 name="name"
@@ -235,7 +235,7 @@ function EditUserForm() {
                 Age
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="number"
                 id="age"
                 name="age"
@@ -279,7 +279,7 @@ function EditUserForm() {
                 Mobile
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="tel"
                 id="mobile"
                 name="mobile"
@@ -299,7 +299,7 @@ function EditUserForm() {
                 Email
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="email"
                 id="email"
                 name="email"
@@ -319,7 +319,7 @@ function EditUserForm() {
                 Emergency Contact
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="tel"
                 id="emergencyContactNo"
                 name="emergencyContactNo"
@@ -338,7 +338,7 @@ function EditUserForm() {
                 Height
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="height"
                 name="height"
@@ -357,7 +357,7 @@ function EditUserForm() {
                 Health Issues
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2  focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="healthIssues"
                 name="healthIssues"
                 value={formData.healthIssues}
@@ -375,7 +375,7 @@ function EditUserForm() {
                 Weight
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="weight"
                 name="weight"
@@ -394,7 +394,7 @@ function EditUserForm() {
                 Blood Group
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2 w-full focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
                 type="text"
                 id="bloodGroup"
                 name="bloodGroup"
@@ -413,7 +413,7 @@ function EditUserForm() {
                 Address
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2  focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="address"
                 name="address"
                 value={formData.address}
@@ -430,7 +430,7 @@ function EditUserForm() {
                 Occupation
               </label>
               <input
-                className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
+                className="border-transparent border-2  focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 w-full rounded-lg focus:outline-none focus:shadow-outline"
                 id="occupation"
                 name="occupation"
                 value={formData.occupation}

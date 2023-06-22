@@ -89,8 +89,8 @@ function Hero() {
           <div className="items-center flex flex-wrap">
             <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
               <div>
-                <h1 className="text-white font-semibold text-2xl lg:text-5xl">
-                  Underdogs<span className="text-orange-500"> FitnessClub</span>
+                <h1 className="animated-text text-white font-semibold text-2xl lg:text-5xl">
+                  Underdogs FitnessClub
                 </h1>
                 <p className="mt-4 text-base lg:text-lg text-gray-300">
                   Unleash your potential at Underdogs Fitness Club. Experience
