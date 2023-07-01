@@ -39,6 +39,8 @@ const UpdateSubscription = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [updatedUser, setUpdatedUser] = useState(null);
 
+  const [flip, setFlip] = useState(true);
+
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -218,9 +220,16 @@ const UpdateSubscription = () => {
     <div className="flex justify-center items-center ">
       <div className="container mx-auto p-4 mt-2">
         <div className="bg-gray-900 text-white p-4  rounded-md">
-          <form
+          <input className="checkbox -mt-4" type="checkbox" id="reg-log" name="reg-log"/>
+			    <label for="reg-log" onClick={()=>setFlip(!flip)}></label>
+          <div className="card-3d-wrap mx-auto">
+           <div className="card-3d-wrapper">
+              
+              {
+                flip ? <div className="card-front">
+                <form
             onSubmit={handleSubmit}
-            className="w-full max-w-lg mx-auto shadow-md shadow-gray-700  p-4 rounded-md"
+            className="w-full max-w-lg mx-auto shadow-md shadow-gray-700  p-4 rounded-md -mt-14"
           >
             <div className="bg-gray-900 text-white p-4 rounded-lg">
               <h2 className="text-xl font-bold mb-4 text-center">
@@ -391,7 +400,7 @@ const UpdateSubscription = () => {
 
               <div className="w-full md:w-1/2 px-3 mt-6">
                 <label
-                  className="block text-gray-200 text-sm font-bold mb-3"
+                  className="block text-gray-200 text-base font-semibold mb-3"
                   htmlFor="fees-amount"
                 >
                   Fees amount
@@ -415,6 +424,47 @@ const UpdateSubscription = () => {
                   </select>
                 </div>
               </div>
+              
+              <div className="w-full md:w-1/2 px-3 mt-6">
+                <label
+                  className="block text-gray-200 text-base font-semibold  mb-3"
+                  htmlFor="fees-amount"
+                >
+                  Pending?
+                </label>
+                <div className="flex justify-center items-center">
+                  <select
+                    className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                    id="feesAmount"
+                    name="feesAmount"
+                    value={formData.feesAmount}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Please select --</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2 px-3 mt-6">
+                <label
+                  className="block text-gray-200 text-base font-semibold mb-3"
+                  htmlFor="fees-amount"
+                >
+                   Pending Amount
+                </label>
+                <div className="flex justify-center items-center">
+                  <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                  <input
+                    className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                    id="amountPaid"
+                    name="amountPaid"
+                    required
+                  ></input>
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-center gap-5 items-center">
@@ -432,9 +482,105 @@ const UpdateSubscription = () => {
               </Link>
             </div>
           </form>
+              </div>
+
+              :
+
+
+              <div className="card-back">
+                <form
+            // onSubmit={handleSubmit}
+            className="w-full max-w-lg mx-auto shadow-md shadow-gray-700  p-4 rounded-md -mt-14"
+          >
+            <div className="bg-gray-900 text-white p-4 rounded-lg">
+              <h2 className="text-xl font-bold mb-4 text-center">
+                Pending Amount
+              </h2>{" "}
+              <div className="flex flex-wrap mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                  <p className="text-gray-300 font-semibold mb-2">User ID:</p>
+                  <p className="text-gray-400">{userData.id}</p>
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                  <p className="text-gray-300 font-semibold mb-2">Name:</p>
+                  <p className="text-gray-400">{userData.name}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                  <p className="text-gray-300 font-semibold mb-2">
+                    Subscription:
+                  </p>
+                  <p className="text-gray-400">{userData.subscription}</p>
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                  <p className="text-gray-300 font-semibold mb-2">
+                    Subscription Type:
+                  </p>
+                  <p className="text-gray-400">{userData.subscription_type}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                  <p className="text-gray-300 font-semibold mb-2">Status:</p>
+                  <p
+                    className={`${
+                      userData.status === "active"
+                        ? "text-gray-400"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {userData.status}
+                  </p>
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                  <p className="text-gray-300 font-semibold mb-2">Pending Amount:</p>
+                  <p className="text-gray-400 flex items-center"><BsCurrencyRupee/>500                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap-mx-3 justify-center  mb-6">
+              <div className="w-full md:w-2/4 px-3">
+                <label
+                  className="block text-gray-200 font-semibold mb-2 text-center"
+                  htmlFor="payment-date"
+                >
+                  Pending Amount
+                </label>
+                <input
+                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="pending-amount"
+                  name="pendingAmount"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-5 items-center">
+              <button
+                className="bg-indigo-500 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Update
+              </button>
+              <Link
+                className="bg-gray-300 hover:bg-gray-400 text-gray-800 mb-3 hover:scale-110 duration-200 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+                to="/admin/update/subscription"
+              >
+                Cancel
+              </Link>
+            </div>
+          </form>
+                </div>
+
+              }
+
+              
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
