@@ -15,6 +15,7 @@ import ContactFormsPage from "./pages/ContactFormsPage";
 import FeesDetailsPage from "./pages/FeesDetailsPage";
 import AdminUpdatePage from "./pages/AdminUpdatePage";
 import ManageContentPage from "./pages/ManageContentPage";
+import PendingFeesPage from "./pages/PendingFeesPage";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               element={<ContactFormsPage />}
             />
             <Route path="/admin/fees-details" element={<FeesDetailsPage />} />
+            <Route path="/admin/fee-details/pending-fees" element={<PendingFeesPage />} />
             <Route path="/admin/update" element={<AdminUpdatePage />} />
             <Route
               path="/admin/manage/content"

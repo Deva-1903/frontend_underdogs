@@ -94,7 +94,7 @@ display: none;
   padding: 0;
   margin: 10px auto;
   cursor: pointer;
-  background-color: #ffeba7;
+  background-color:#9ca3af ;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before{
@@ -103,8 +103,8 @@ display: none;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: #ffeba7;
-  background-color: #020305;
+  color: #9ca3af;
+  background-color: #6366f1;
   font-family: 'unicons';
   content: '\eb4f';
   z-index: 20;

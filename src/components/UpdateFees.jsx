@@ -149,6 +149,8 @@ const UpdateSubscription = () => {
         planEnds: response.payload.planEnds,
       }));
     }
+
+    setFlip(true);
   };
 
   const generatePDF = async () => {
@@ -437,8 +439,6 @@ const UpdateSubscription = () => {
                     className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                     id="feesAmount"
                     name="feesAmount"
-                    value={formData.feesAmount}
-                    onChange={handleChange}
                     required
                   >
                     <option value="">-- Please select --</option>
@@ -489,7 +489,7 @@ const UpdateSubscription = () => {
 
               <div className="card-back">
                 <form
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             className="w-full max-w-lg mx-auto shadow-md shadow-gray-700  p-4 rounded-md -mt-14"
           >
             <div className="bg-gray-900 text-white p-4 rounded-lg">
@@ -540,21 +540,24 @@ const UpdateSubscription = () => {
               </div>
             </div>
             <div className="flex flex-wrap-mx-3 justify-center  mb-6">
-              <div className="w-full md:w-2/4 px-3">
-                <label
-                  className="block text-gray-200 font-semibold mb-2 text-center"
-                  htmlFor="payment-date"
+              <div className="w-full md:w-3/5 px-3">
+              <label
+                  className="block text-gray-200 text-base font-semibold mb-3 text-center"
+                  htmlFor="fees-amount"
                 >
-                  Pending Amount
+                   Pending Amount
                 </label>
-                <input
-                  className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                  id="pending-amount"
-                  name="pendingAmount"
-                  required
-                />
+                <div className="flex justify-center items-center">
+                  <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                  <input
+                    className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                    id="amountPaid"
+                    name="amountPaid"
+                    required
+                  ></input>
+                </div>
               </div>
-            </div>
+              </div>
 
             <div className="flex justify-center gap-5 items-center">
               <button
