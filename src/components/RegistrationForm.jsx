@@ -321,7 +321,7 @@ function RegistrationForm() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* <!-- Username field --> */}
             <div class="col-span-1">
               <label
@@ -701,6 +701,47 @@ function RegistrationForm() {
                     </option>
                   ))}
                 </select>
+              </div>
+            </div>
+
+            {/* pending option */}
+            <div className="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                htmlFor="fees-amount"
+              >
+                Pending?
+              </label>
+              <div className="flex justify-center items-center">
+                <select
+                  className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="pending"
+                  name="pending"
+                  required
+                >
+                  <option value="">-- Please select --</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+
+            {/* pending amount */}
+            <div className="col-span-1">
+              <label
+                className="block text-gray-200 text-sm font-bold mb-3"
+                htmlFor="fees-amount"
+              >
+                Pending amount
+              </label>
+              <div className="flex justify-center items-center">
+                <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                <input
+                  className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                  id="pendingAmount"
+                  name="pendingAmount"
+                  required
+                />
               </div>
             </div>
 

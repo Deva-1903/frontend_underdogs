@@ -15,7 +15,7 @@ import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-function FeesDetails() {
+const PendingFees = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
@@ -167,42 +167,29 @@ function FeesDetails() {
       doc.save("fees_details.pdf");
     };
   };
-
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
-        Fees Details{" "}
-        <span className="text-white cursor-pointer" onClick={handleDownloadPDF}>
-          <FiDownload className="inline-block align-middle text-2xl mb-1 ml-3 hover:text-orange-600 hover:scale-110 duration-200" />{" "}
-        </span>
+        Pending Details{" "}
       </h1>
       <div className="flex justify-center items-center">
-        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
-          <div className="flex justify-center items-center gap-3 mb-6 ml-20 ">
-            <label className="text-gray-500 uppercase font-bold text-sm mr-4">
-              Start Date:
+        <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 ">
+        <div className="flex justify-center items-center gap-2 mb-6  ">
+            <label className="text-gray-500 uppercase font-bold text-sm ">
+              Sort By:
             </label>
-            <DatePicker
-              className="border-transparent border-2 focus:border-indigo-500 w-8/12  bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline -ml-7"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="dd-MM-yyyy"
-            />
+            <select
+              className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
+              value={selectedAdmin}
+              onChange={handleAdminFilterChange}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
           </div>
-          <div className="flex justify-center items-center gap-6 mb-6 ml-20">
-            <label className="text-gray-500 uppercase font-bold text-sm mr-4">
-              End Date:
-            </label>
-            <DatePicker
-              className="border-transparent border-2 focus:border-indigo-500 w-8/12  bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline -ml-6"
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="dd-MM-yyyy"
-            />
-          </div>
-          <div className="flex justify-center items-center gap-6 mb-6 lg:ml-20 ">
-            <label className="text-gray-500 uppercase font-bold text-sm mr-4">
-              Admin Filter:
+          <div className="flex justify-center items-center gap-2 mb-6  ">
+            <label className="text-gray-500 uppercase font-bold text-sm -ml-2">
+              Status Filter:
             </label>
             <select
               className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
@@ -210,15 +197,9 @@ function FeesDetails() {
               onChange={handleAdminFilterChange}
             >
               <option value="">All</option>
-              {adminNames.map((adminName) => (
-                <option key={adminName} value={adminName}>
-                  {adminName}
-                </option>
-              ))}
+              <option value="paid">Paid</option>
+              <option value="pending">Pending</option>
             </select>
-          </div>
-          <div className="flex justify-center items-center gap-6 mb-6 lg:ml-20 ">
-             <Link to={"/admin/fee-details/pending-fees"}><button className="text-white bg-slate-800 px-3 py-2 rounded-xl text-sm border border-gray-200 hover:scale-110 duration-200">Pending Detail</button></Link>
           </div>
         </div>
       </div>
@@ -244,31 +225,13 @@ function FeesDetails() {
                       User Name
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Subscription
+                      Date
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Subscription Type
+                      Pending Amount
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Cardio
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Pay Method
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Admin
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Type
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Payment Date
-                    </th>
-                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      Time
+                      Status
                     </th>
                   </tr>
                 </thead>
@@ -282,49 +245,13 @@ function FeesDetails() {
                         {user.user_name}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.subscription}
+                        {user.Date}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.subscription_type}
+                        {user.amount}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {user.cardio}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {user.mode_of_payment}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {user.admin}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        <div className="flex">
-                          {typeof user.amount === "number" ? (
-                            <BsCurrencyRupee className="mt-1" />
-                          ) : (
-                            " "
-                          )}
-                          {user.amount}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {user.transaction_type}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {new Date(user.createdAt)
-                          .toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                          })
-                          .replace(/\//g, "-")}
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {new Date(user.createdAt).toLocaleTimeString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                        })}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
+                        {user.status}
                       </td>
                     </tr>
                   ))}
@@ -354,7 +281,7 @@ function FeesDetails() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default FeesDetails;
+export default PendingFees;
