@@ -277,6 +277,7 @@ const NewUserInvoice = ({ user }) => {
     feesAmount,
     transaction_type,
     planEnds,
+    pending_amount,
   } = user;
 
   const currentDate = new Date()
@@ -307,39 +308,39 @@ const NewUserInvoice = ({ user }) => {
             <Image src={Logo} style={styles.logo}></Image>
             <Text style={styles.h3font}>Invoice to:</Text>
             <View style={styles.FlexRow}>
-               <View>
-               <Text style={styles.pfont}>User ID</Text>
-               <Text style={styles.pfont}>Name</Text>
-               <Text style={styles.pfont}>Mobile</Text>
-               </View>
-               <View>
-               <Text style={styles.symbol}>:</Text>
-               <Text style={styles.symbol}>:</Text>
-               <Text style={styles.symbol}>:</Text>
-               </View>
-               <View>
-               <Text style={styles.pfont}>{id}</Text>
-               <Text style={styles.pfont}>{name}</Text>
-               <Text style={styles.pfont}>{mobile}</Text>
-               </View>
+              <View>
+                <Text style={styles.pfont}>User ID</Text>
+                <Text style={styles.pfont}>Name</Text>
+                <Text style={styles.pfont}>Mobile</Text>
+              </View>
+              <View>
+                <Text style={styles.symbol}>:</Text>
+                <Text style={styles.symbol}>:</Text>
+                <Text style={styles.symbol}>:</Text>
+              </View>
+              <View>
+                <Text style={styles.pfont}>{id}</Text>
+                <Text style={styles.pfont}>{name}</Text>
+                <Text style={styles.pfont}>{mobile}</Text>
+              </View>
             </View>
           </View>
           <View style={styles.headerRightcolumn}>
             <Text style={styles.h1font}>INVOICE</Text>
             <View style={styles.invoiceHeaderRow}>
-            <View >
-              <Text style={styles.h2font}>Invoice ID</Text>
-              <Text style={styles.h2font}>Date</Text>
+              <View>
+                <Text style={styles.h2font}>Invoice ID</Text>
+                <Text style={styles.h2font}>Date</Text>
+              </View>
+              <View>
+                <Text style={styles.h2font}>:</Text>
+                <Text style={styles.h2font}>:</Text>
+              </View>
+              <View>
+                <Text style={styles.h2font}>{invoice_id}</Text>
+                <Text style={styles.h2font}>{currentDate}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.h2font}>:</Text>
-              <Text style={styles.h2font}>:</Text>
-            </View>
-            <View >
-              <Text style={styles.h2font}>{invoice_id}</Text>
-              <Text style={styles.h2font}>{currentDate}</Text>
-            </View>
-           </View>
           </View>
         </View>
         <View style={styles.details}>
@@ -393,21 +394,24 @@ const NewUserInvoice = ({ user }) => {
           <View style={styles.headerLeftcolumn}>
             <Text style={styles.h3font}>Additional Details</Text>
             <View style={styles.FlexRow}>
-               <View>
+              <View>
                 <Text style={styles.pfont}>Payment for </Text>
                 <Text style={styles.pfont}>Payment mode</Text>
                 <Text style={styles.pfont}>Plan Ends on </Text>
-               </View>
-               <View>
-               <Text style={styles.symbol}>:</Text>
-               <Text style={styles.symbol}>:</Text>
-               <Text style={styles.symbol}>:</Text>
-               </View>
-               <View>
-               <Text style={styles.pfont}>{transaction_type}</Text>
-               <Text style={styles.pfont}>{mode_of_payment}</Text>
-               <Text style={styles.pfont}>{formattedPlanEnds}</Text>
-               </View>
+                <Text style={styles.pfont}>Pending amount</Text>
+              </View>
+              <View>
+                <Text style={styles.symbol}>:</Text>
+                <Text style={styles.symbol}>:</Text>
+                <Text style={styles.symbol}>:</Text>
+                <Text style={styles.symbol}>:</Text>
+              </View>
+              <View>
+                <Text style={styles.pfont}>{transaction_type}</Text>
+                <Text style={styles.pfont}>{mode_of_payment}</Text>
+                <Text style={styles.pfont}>{formattedPlanEnds}</Text>
+                <Text style={styles.pfont}>{pending_amount}</Text>
+              </View>
             </View>
           </View>
 

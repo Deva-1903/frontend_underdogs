@@ -275,6 +275,7 @@ const UpdateSubInvoice = ({ user }) => {
     feesAmount,
     transaction_type,
     planEnds,
+    pending_amount,
   } = user;
 
   const currentDate = new Date()
@@ -391,14 +392,17 @@ const UpdateSubInvoice = ({ user }) => {
               <View>
                 <Text style={styles.pfont}>Payment for </Text>
                 <Text style={styles.pfont}>Plan Ends on </Text>
+                <Text style={styles.pfont}>Pending amount</Text>
               </View>
               <View>
+                <Text style={styles.symbol}>:</Text>
                 <Text style={styles.symbol}>:</Text>
                 <Text style={styles.symbol}>:</Text>
               </View>
               <View>
                 <Text style={styles.pfont}>{transaction_type}</Text>
                 <Text style={styles.pfont}>{formattedPlanEnds}</Text>
+                <Text style={styles.pfont}>{pending_amount}</Text>
               </View>
             </View>
           </View>

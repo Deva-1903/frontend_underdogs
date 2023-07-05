@@ -304,14 +304,7 @@ function FeesDetails() {
                         {user.admin}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        <div className="flex">
-                          {typeof user.amount === "number" ? (
-                            <BsCurrencyRupee className="mt-1" />
-                          ) : (
-                            " "
-                          )}
-                          {user.amount}
-                        </div>
+                        ₹{user.amount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.transaction_type}
@@ -334,7 +327,7 @@ function FeesDetails() {
                         })}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        {user.pending_amount}
+                        ₹{user.pending_amount}
                       </td>
                     </tr>
                   ))}

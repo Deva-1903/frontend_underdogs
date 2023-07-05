@@ -147,7 +147,7 @@ const PendingFees = () => {
                         {formatDate(user.createdAt)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        ₹ {user.pendingAmount}
+                        ₹{user.pendingAmount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         {user.paymentStatus}

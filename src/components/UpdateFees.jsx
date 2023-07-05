@@ -34,8 +34,9 @@ const UpdateSubscription = () => {
     status: "",
     planEnds: "",
   });
-  const [userPendingAmount, setUserPendingAmount] = useState(null);
-  const [payingPendingAmount, setPayingPendingAmount] = useState(null);
+  const [userPendingAmount, setUserPendingAmount] = useState("");
+  const [payingPendingAmount, setPayingPendingAmount] = useState("");
+  const [payingMode, setPayingMode] = useState("");
   const [options, setOptions] = useState([]);
   const [flip, setFlip] = useState(true);
   const [subscriptionTypes, setSubscriptionTypes] = useState([]);
@@ -253,14 +254,25 @@ const UpdateSubscription = () => {
     setPayingPendingAmount(event.target.value);
   };
 
+  const handlePayingMode = (event) => {
+    setPayingMode(event.target.value);
+  };
+
   const handleUpdatePending = async (event) => {
     event.preventDefault();
+
+    if (!payingMode) {
+      toast.error("Please enter payment mode");
+      return;
+    }
 
     try {
       const response = await axios.put(
         `/api/admin/pending-fees/${id}`,
         {
           amount: payingPendingAmount,
+          payment_mode: payingMode,
+          adminName: admin.username,
         },
         {
           headers: {
@@ -269,13 +281,23 @@ const UpdateSubscription = () => {
         }
       );
 
-      const { message, pendingAmount } = response.data;
+      if (response.status === 200) {
+        const { message, pendingAmount } = response.data;
 
-      toast.success(message);
-      setUserPendingAmount(pendingAmount);
-      setPayingPendingAmount("");
+        toast.success(message);
+        setUserPendingAmount(pendingAmount);
+        setPayingPendingAmount("");
+        setPayingMode("");
+      } else {
+        toast.error("An error occurred");
+      }
     } catch (error) {
-      console.error(error);
+      if (error.response && error.response.status === 400) {
+        toast.error("Invalid Amount");
+      } else {
+        console.error(error);
+        toast.error("An error occurred");
+      }
     }
   };
 
@@ -640,18 +662,41 @@ const UpdateSubscription = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-wrap-mx-3 justify-center  mb-6">
-                      <div className="w-full md:w-3/5 px-3">
+
+                    <div className="flex flex-col md:flex-row">
+                      <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
                         <label
-                          className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                          htmlFor="fees-amount"
+                          htmlFor="subscriptionType"
+                          className="block text-gray-200 font-semibold mb-2"
                         >
-                          Pending Amount
+                          Payment Mode
+                        </label>
+                        <select
+                          id="payingMode"
+                          name="payingMode"
+                          value={payingMode}
+                          onChange={handlePayingMode}
+                          className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                          required
+                        >
+                          <option value="">-- Please select --</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Card">Card</option>
+                          <option value="UPI">UPI</option>
+                        </select>
+                      </div>
+
+                      <div className="w-full md:w-1/2 px-3">
+                        <label
+                          className="block text-gray-200 text-base font-semibold mb-3"
+                          htmlFor="paying-amount"
+                        >
+                          Paying Amount
                         </label>
                         <div className="flex justify-center items-center">
-                          <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
+                          <BsCurrencyRupee className="rounded-s-md py-1 px-2 text-4xl bg-slate-800 text-white" />
                           <input
-                            className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                            className="appearance-none rounded-e-md w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                             id="payingPendingAmount"
                             name="payingPendingAmount"
                             value={payingPendingAmount}
@@ -661,29 +706,8 @@ const UpdateSubscription = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-full md:w-1/2 px-3">
-                      <label
-                        htmlFor="subscriptionType"
-                        className="block text-gray-200 font-semibold mb-2"
-                      >
-                        Payment Mode
-                      </label>
-                      <select
-                        id="mode_of_payment"
-                        name="mode_of_payment"
-                        value={formData.mode_of_payment}
-                        onChange={handleChange}
-                        className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                        required
-                      >
-                        <option value="">-- Please select --</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Card">Card</option>
-                        <option value="UPI">UPI</option>
-                      </select>
-                    </div>
 
-                    <div className="flex justify-center gap-5 items-center">
+                    <div className="flex justify-center gap-5 items-center mt-6">
                       <button
                         className="bg-indigo-500 mb-3 hover:scale-110 duration-200 hover:bg-indigo-400 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
