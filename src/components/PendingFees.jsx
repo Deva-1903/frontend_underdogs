@@ -149,7 +149,7 @@ const PendingFees = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
                         ₹{user.pendingAmount}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
+                      <td className={`px-6 py-4 whitespace-nowrap text-sm md:text-base text-center border ${user.paymentStatus === "paid" ? "text-white" : "text-red-500"}`}>
                         {user.paymentStatus}
                       </td>
                     </tr>
