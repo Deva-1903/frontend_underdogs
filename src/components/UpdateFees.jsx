@@ -296,7 +296,7 @@ const UpdateSubscription = () => {
         toast.error("Invalid Amount");
       } else {
         console.error(error);
-        toast.error("An error occurred");
+        toast.error("Pending fees not found");
       }
     }
   };
