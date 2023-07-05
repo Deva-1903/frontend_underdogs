@@ -13,6 +13,7 @@ import NewUserInvoice from "./pdf/NewUserInvoice";
 import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
 import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
@@ -176,7 +177,7 @@ function FeesDetails() {
         </span>
       </h1>
       <div className="flex justify-center items-center">
-        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 ">
+        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
           <div className="flex justify-center items-center gap-3 mb-6 ml-20 ">
             <label className="text-gray-500 uppercase font-bold text-sm mr-4">
               Start Date:
@@ -216,6 +217,13 @@ function FeesDetails() {
               ))}
             </select>
           </div>
+          <div className="flex justify-center items-center gap-6 mb-6 lg:ml-20 ">
+            <Link to={"/admin/fee-details/pending-fees"}>
+              <button className="text-white bg-slate-800 px-3 py-2 rounded-xl text-sm border border-gray-200 hover:scale-110 duration-200">
+                Pending Detail
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -234,10 +242,10 @@ function FeesDetails() {
                 <thead>
                   <tr>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      User ID
+                      ID
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      User Name
+                      Name
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription
@@ -266,6 +274,9 @@ function FeesDetails() {
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
                     </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Pending
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
@@ -293,14 +304,7 @@ function FeesDetails() {
                         {user.admin}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
-                        <div className="flex">
-                          {typeof user.amount === "number" ? (
-                            <BsCurrencyRupee className="mt-1" />
-                          ) : (
-                            " "
-                          )}
-                          {user.amount}
-                        </div>
+                        ₹{user.amount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         {user.transaction_type}
@@ -321,6 +325,9 @@ function FeesDetails() {
                           minute: "numeric",
                           hour12: true,
                         })}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
+                        ₹{user.pending_amount}
                       </td>
                     </tr>
                   ))}
