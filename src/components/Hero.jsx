@@ -9,12 +9,15 @@ import { FaTags } from "react-icons/fa";
 function Hero() {
   const [showForm, setShowForm] = useState(false);
   const [userId, setUserId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setIsLoading(true);
+
     try {
       const response = await axios.post("/api/attendance", { id: userId });
       if (response.status === 200) {
@@ -37,6 +40,8 @@ function Hero() {
       } else {
         toast.error("User does not exist");
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -187,9 +192,15 @@ function Hero() {
                 </div>
               </div>
               <div className="flex justify-end">
-                <button className="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
-                  Submit
-                </button>
+                {isLoading ? (
+                  <div className="text-white font-bold py-2 px-4 rounded bg-gray-600">
+                    Loading...
+                  </div>
+                ) : (
+                  <button className="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">
+                    Submit
+                  </button>
+                )}
               </div>
             </form>
           </div>

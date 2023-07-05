@@ -149,6 +149,11 @@ function RegistrationForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (formData.isPending === "yes" && formData.pendingAmount === "") {
+      toast.error("Enter the pending amount");
+      return;
+    }
+
     const userData = {
       photoURL: formData.photoURL,
       name: formData.name,
