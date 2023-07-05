@@ -53,11 +53,24 @@ const contactFormService = async (searchParams, token) => {
   return response.data;
 };
 
+const getAllPendingFees = async (searchParams, token) => {
+  const config = {
+    params: searchParams,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(API_URL + "pending-fees", config);
+  return response.data;
+};
+
 const allUsersService = {
   getAllUsers,
   getFeesDetailsByDate,
   getAttendancesByDate,
   contactFormService,
+  getAllPendingFees,
 };
 
 export default allUsersService;

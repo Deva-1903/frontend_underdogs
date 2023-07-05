@@ -218,7 +218,11 @@ function FeesDetails() {
             </select>
           </div>
           <div className="flex justify-center items-center gap-6 mb-6 lg:ml-20 ">
-             <Link to={"/admin/fee-details/pending-fees"}><button className="text-white bg-slate-800 px-3 py-2 rounded-xl text-sm border border-gray-200 hover:scale-110 duration-200">Pending Detail</button></Link>
+            <Link to={"/admin/fee-details/pending-fees"}>
+              <button className="text-white bg-slate-800 px-3 py-2 rounded-xl text-sm border border-gray-200 hover:scale-110 duration-200">
+                Pending Detail
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -238,10 +242,10 @@ function FeesDetails() {
                 <thead>
                   <tr>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      User ID
+                      ID
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
-                      User Name
+                      Name
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Subscription
@@ -269,6 +273,9 @@ function FeesDetails() {
                     </th>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Time
+                    </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Pending
                     </th>
                   </tr>
                 </thead>
@@ -325,6 +332,9 @@ function FeesDetails() {
                           minute: "numeric",
                           hour12: true,
                         })}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
+                        {user.pending_amount}
                       </td>
                     </tr>
                   ))}

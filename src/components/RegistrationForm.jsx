@@ -36,6 +36,8 @@ function RegistrationForm() {
     occupation: "",
     feesAmount: "",
     registrationFees: "",
+    isPending: "",
+    pendingAmount: "",
   });
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [options, setOptions] = useState([]);
@@ -44,6 +46,9 @@ function RegistrationForm() {
   const [priceOptions, setPriceOptions] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [registeredUser, setRegisteredUser] = useState(null);
+  const [formValidation, setFormValidation] = useState({
+    pendingAmount: false,
+  });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -132,6 +137,8 @@ function RegistrationForm() {
         occupation: "",
         feesAmount: "",
         registrationFees: "",
+        isPending: "",
+        pendingAmount: "",
       });
       setSelectedPhoto(null);
     }
@@ -163,6 +170,8 @@ function RegistrationForm() {
       occupation: formData.occupation,
       feesAmount: formData.feesAmount,
       registrationFees: formData.registrationFees,
+      isPending: formData.isPending,
+      pendingAmount: formData.pendingAmount,
       adminName: admin.username,
     };
 
@@ -220,6 +229,18 @@ function RegistrationForm() {
       ...prevData,
       [name]: value,
     }));
+
+    if (name === "isPending" && value === "yes") {
+      setFormValidation((prevValidation) => ({
+        ...prevValidation,
+        pendingAmount: true,
+      }));
+    } else {
+      setFormValidation((prevValidation) => ({
+        ...prevValidation,
+        pendingAmount: false,
+      }));
+    }
   };
 
   const uploadProfilePhoto = (file) => {
@@ -715,8 +736,10 @@ function RegistrationForm() {
               <div className="flex justify-center items-center">
                 <select
                   className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                  id="pending"
-                  name="pending"
+                  id="isPending"
+                  name="isPending"
+                  value={formData.isPending}
+                  onChange={handleChange}
                   required
                 >
                   <option value="">-- Please select --</option>
@@ -732,7 +755,7 @@ function RegistrationForm() {
                 className="block text-gray-200 text-sm font-bold mb-3"
                 htmlFor="fees-amount"
               >
-                Pending amount
+                Pending Amount
               </label>
               <div className="flex justify-center items-center">
                 <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
@@ -740,7 +763,9 @@ function RegistrationForm() {
                   className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                   id="pendingAmount"
                   name="pendingAmount"
-                  required
+                  value={formData.pendingAmount}
+                  onChange={handleChange}
+                  required={formValidation.pendingAmount}
                 />
               </div>
             </div>

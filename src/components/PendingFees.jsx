@@ -1,86 +1,47 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import axios from "../axios";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
-import logo from "../assets/UnderDogs_logo.png";
-import { FiDownload } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
+import { getAllPendingFees } from "../features/allUsers/allUsersSlice";
 import { toast } from "react-toastify";
-import NewUserInvoice from "./pdf/NewUserInvoice";
-import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
-import { pdf } from "@react-pdf/renderer";
-import { BsCurrencyRupee } from "react-icons/bs";
-import { Link } from "react-router-dom";
 
 const PendingFees = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedAdmin, setSelectedAdmin] = useState("");
-  const [adminNames, setAdminNames] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const tableRef = useRef(null);
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [isFetching, setIsFetching] = useState(true);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { admin } = useSelector((state) => state.auth);
+  const { users, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.allUsers
+  );
+
+  console.log(users);
 
   useEffect(() => {
-    const fetchAdminNames = async () => {
-      try {
-        const response = await axios.get("/api/admin/admin-names", {
-          headers: {
-            Authorization: `Bearer ${admin.token}`,
-          },
-        });
-        setAdminNames(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchAdminNames();
-  }, []);
-
-  useEffect(() => {
-    const fetchFeesDetails = async () => {
-      try {
-        setIsLoading(true);
-
-        const params = {
-          startDate: startDate,
-          endDate: endDate,
-          admin: selectedAdmin,
+    if (!admin) {
+      navigate("/login");
+    } else {
+      dispatch(
+        getAllPendingFees({
+          status: statusFilter,
+          sort: sortOrder,
           page: currentPage,
-        };
+        })
+      ).then(() => {
+        setIsFetching(false); // Set loading state to false after data is fetched
+      });
+    }
+  }, [admin, dispatch, currentPage, sortOrder, statusFilter]);
 
-        if (admin.username !== "bala" && admin.username !== "karthik") {
-          params.admin = admin.username;
-        }
-
-        const apiUrl = "/api/admin/fees-details";
-        const response = await axios.get(apiUrl, {
-          params,
-          headers: {
-            Authorization: `Bearer ${admin.token}`,
-          },
-        });
-        const data = response.data;
-
-        setUsers(data);
-      } catch (error) {
-        console.error("Error fetching fees details:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchFeesDetails();
-  }, [dispatch, startDate, endDate, selectedAdmin, currentPage]);
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+  }, [isError, message, dispatch]);
 
   const handlePageForward = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -92,111 +53,52 @@ const PendingFees = () => {
     }
   };
 
-  const handleAdminFilterChange = (event) => {
-    setSelectedAdmin(event.target.value);
-
-    setCurrentPage(1);
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF("landscape", "px", "a4", "portrait");
-    const table = tableRef.current;
-
-    const logoImage = new Image();
-    logoImage.src = logo;
-
-    logoImage.onload = function () {
-      const logoWidth = 150; // Adjust the desired width of the logo
-      const logoHeight = (logoWidth * logoImage.height) / logoImage.width;
-
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const x = (pageWidth - logoWidth) / 2;
-      const y = 10; // Adjust the desired vertical position from the top
-
-      doc.addImage(logoImage, "JPEG", x, y, logoWidth, logoHeight);
-
-      // Add start date and end date with bigger font size and styling
-      const startDateStr = startDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      const endDateStr = endDate.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-      doc.setFont("helvetica", "bold"); // Set font style to bold
-      doc.setFontSize(16); // Increase the font size for start date, end date, and fees details
-      doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`Start Date: ${startDateStr}`, 20, y + logoHeight + 20);
-      doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(`End Date: ${endDateStr}`, pageWidth - 20, y + logoHeight + 20, {
-        align: "right",
-      });
-
-      // Calculate the x-coordinate for centering the "Fees Details" text
-      const feesDetailsText = "Fees Details";
-      const feesDetailsTextWidth =
-        (doc.getStringUnitWidth(feesDetailsText) * doc.internal.getFontSize()) /
-        doc.internal.scaleFactor;
-      const feesDetailsX = (pageWidth - feesDetailsTextWidth) / 2;
-
-      // Add table with centered "Fees Details" text and styling
-      doc.setFont("helvetica", "bold"); // Set font style to bold
-      doc.setFontSize(14); // Increase the font size for the "Fees Details" heading
-      doc.setTextColor("#333"); // Set text color to dark gray
-      doc.text(feesDetailsText, feesDetailsX, y + logoHeight + 40);
-
-      // Set the current page number
-      doc.setFontSize(10); // Set font size for the page number
-      doc.text(
-        `Page ${currentPage}`,
-        pageWidth / 2,
-        doc.internal.pageSize.getHeight() - 10,
-        {
-          align: "center",
-        }
-      );
-
-      doc.autoTable({
-        html: table,
-        startY: y + logoHeight + 50,
-        orientation: "landscape",
-      });
-      doc.save("fees_details.pdf");
-    };
+  const handleStatusFilterChange = (event) => {
+    setStatusFilter(event.target.value);
   };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+  };
+
   return (
     <div className="bg-gray-900 h-screen flex flex-col">
       <h1 className="text-white text-center text-3xl font-bold py-6">
-        Pending Details{" "}
+        Pending Details
       </h1>
       <div className="flex justify-center items-center">
-        <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 ">
-        <div className="flex justify-center items-center gap-2 mb-6  ">
-            <label className="text-gray-500 uppercase font-bold text-sm ">
+        <div className="items-center grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="flex justify-center items-center gap-2 mb-6">
+            <label className="text-gray-500 uppercase font-bold text-sm">
               Sort By:
             </label>
             <select
               className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
-              value={selectedAdmin}
-              onChange={handleAdminFilterChange}
+              value={sortOrder}
+              onChange={handleSortOrderChange}
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
             </select>
           </div>
-          <div className="flex justify-center items-center gap-2 mb-6  ">
+          <div className="flex justify-center items-center gap-2 mb-6">
             <label className="text-gray-500 uppercase font-bold text-sm -ml-2">
               Status Filter:
             </label>
             <select
               className="border-transparent border-2 focus:border-indigo-500 bg-slate-800 text-white border-gray-200 px-2 py-1 rounded-lg focus:outline-none focus:shadow-outline"
-              value={selectedAdmin}
-              onChange={handleAdminFilterChange}
+              value={statusFilter}
+              onChange={handleStatusFilterChange}
             >
-              <option value="">All</option>
+              <option value="all">All</option>
               <option value="paid">Paid</option>
               <option value="pending">Pending</option>
             </select>
@@ -212,10 +114,7 @@ const PendingFees = () => {
                 <p className="text-white text-lg font-bold">Loading...</p>
               </div>
             ) : (
-              <table
-                className="w-full divide-y divide-x divide-gray-200 border"
-                ref={tableRef}
-              >
+              <table className="w-full divide-y divide-x divide-gray-200 border">
                 <thead>
                   <tr>
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
@@ -239,19 +138,19 @@ const PendingFees = () => {
                   {users.map((user) => (
                     <tr key={user.user_id} className="border">
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.user_id}
+                        {user.userId}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.user_name}
+                        {user.userName}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.Date}
+                        {formatDate(user.createdAt)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.amount}
+                        ₹ {user.pendingAmount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-center text-gray-100 border">
-                        {user.status}
+                        {user.paymentStatus}
                       </td>
                     </tr>
                   ))}
@@ -281,7 +180,7 @@ const PendingFees = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PendingFees;

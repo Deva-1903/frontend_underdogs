@@ -85,6 +85,24 @@ export const getContactForms = createAsyncThunk(
   }
 );
 
+export const getAllPendingFees = createAsyncThunk(
+  "fees/getAllPendingFees",
+  async (searchParams, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.admin.token;
+      return await allUsersService.getAllPendingFees(searchParams, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const allUsersSlice = createSlice({
   name: "allUsers",
   initialState,
@@ -141,6 +159,19 @@ export const allUsersSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(getContactForms.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getAllPendingFees.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllPendingFees.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = action.payload;
+      })
+      .addCase(getAllPendingFees.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
