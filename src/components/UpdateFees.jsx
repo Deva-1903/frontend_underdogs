@@ -539,7 +539,7 @@ const UpdateSubscription = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap-mx-3 justify-center  mb-6">
+            <div className="flex flex-wrap-mx-3 mb-6">
               <div className="w-full md:w-3/5 px-3">
               <label
                   className="block text-gray-200 text-base font-semibold mb-3 text-center"
@@ -551,10 +551,27 @@ const UpdateSubscription = () => {
                   <BsCurrencyRupee className="rounded-s-md  py-1 px-2 text-4xl bg-slate-800 text-white" />
                   <input
                     className="appearance-none rounded-e-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
-                    id="amountPaid"
-                    name="amountPaid"
+                    id="pendingAmount"
+                    name="pendingAmount"
                     required
                   ></input>
+                </div>
+              </div>
+
+              <div className="w-full md:w-3/5 px-3">
+              <label
+                  className="block text-gray-200 text-base font-semibold mb-3 text-center"
+                  htmlFor="fees-amount"
+                >
+                    Mode of Payment
+                </label>
+                <div className="flex justify-center items-center">
+                  <select  className="appearance-none rounded-md  w-full py-1.5 px-2.5 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500">
+                  <option value="">-- Please select --</option>
+                  <option value="cash">Cash</option>
+                  <option value="card">Card</option>
+                  <option value="Upi">UPI</option>
+                  </select>
                 </div>
               </div>
               </div>
