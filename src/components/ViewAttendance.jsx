@@ -140,6 +140,9 @@ function ViewAttendance() {
                     No
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                    Image
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Id
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
@@ -151,7 +154,6 @@ function ViewAttendance() {
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Time In
                   </th>
-
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Subscription
                   </th>
@@ -176,12 +178,33 @@ function ViewAttendance() {
                       {user.number}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
+                      <a
+                        href={user.photoURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div class="rounded-full h-16 w-16 overflow-hidden">
+                          <img
+                            src={user.photoURL}
+                            alt="image"
+                            class="h-full w-full rounded-full object-cover"
+                          />
+                        </div>
+                      </a>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_name}
                     </td>
-                    <td className={`${user.status === "active" ? "text-gray-100" : "text-red-500"} px-6 py-4 whitespace-nowrap text-sm md:text-base border text-center`}>
+                    <td
+                      className={`${
+                        user.status === "active"
+                          ? "text-gray-100"
+                          : "text-red-500"
+                      } px-6 py-4 whitespace-nowrap text-sm md:text-base border text-center`}
+                    >
                       {user.status}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
