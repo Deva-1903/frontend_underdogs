@@ -139,9 +139,11 @@ function ViewAttendance() {
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     No
                   </th>
+                  {/* 
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Image
                   </th>
+                  */}
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
                     Id
                   </th>
@@ -177,6 +179,7 @@ function ViewAttendance() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.number}
                     </td>
+                    {/*
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       <a
                         href={user.photoURL}
@@ -192,6 +195,7 @@ function ViewAttendance() {
                         </div>
                       </a>
                     </td>
+                  */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_id}
                     </td>
