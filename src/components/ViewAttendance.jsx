@@ -128,8 +128,8 @@ function ViewAttendance() {
       </div>
 
       <div className="flex justify-center pb-8  w-full">
-        <div className=" overflow-x-auto p-4 ">
-          <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
+        <div className=" overflow-x-auto  p-4">
+          <div className="inline-block min-w-full justify-center max-h-screen ">
             <table
               id="users-table"
               className="w-full divide-y divide-x divide-gray-200 border"
@@ -177,20 +177,26 @@ function ViewAttendance() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.number}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
-                      <a
-                        href={user.photoURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div class="rounded-full h-16 w-16 overflow-hidden">
-                          <img
-                            src={user.photoURL}
-                            alt="image"
-                            class="h-full w-full rounded-full object-cover"
-                          />
-                        </div>
-                      </a>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center ">
+                      {
+                        user.photoURL ? (
+                          <a
+                          href={user.photoURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div class="rounded-full h-16 w-16 justify-center ml-3">
+                            <img
+                              src={user.photoURL}
+                              alt="image"
+                              class="h-full w-full rounded-full object-cover"
+                            />
+                          </div>
+                        </a>
+                        ) : (
+                          <p className="text-xs text-red-400 p-4">Not found</p>
+                        )
+                      }
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_id}
