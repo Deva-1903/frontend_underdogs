@@ -23,6 +23,8 @@ function FeesDetails() {
   const [adminNames, setAdminNames] = useState([]);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalFees, setTotalFees] = useState(0);
+  const [userId, setUserId] = useState("");
 
   const tableRef = useRef(null);
 
@@ -57,6 +59,7 @@ function FeesDetails() {
           endDate: endDate,
           admin: selectedAdmin,
           page: currentPage,
+          userId: userId,
         };
 
         if (admin.username !== "bala" && admin.username !== "karthik") {
@@ -78,9 +81,31 @@ function FeesDetails() {
       } finally {
         setIsLoading(false);
       }
+
+      try {
+        if (startDate && endDate) {
+          const totalFeesApiUrl = "/api/admin/total-fees"; // Replace with your total fees API URL
+          const totalFeesResponse = await axios.get(totalFeesApiUrl, {
+            params: {
+              startDate: startDate,
+              endDate: endDate,
+              userId: userId,
+            },
+            headers: {
+              Authorization: `Bearer ${admin.token}`,
+            },
+          });
+
+          const totalFeesData = totalFeesResponse.data;
+          setTotalFees(totalFeesData.totalAmount); // Update the totalFees state
+        }
+      } catch (error) {
+        console.error("Error fetching total fees:", error);
+      }
     };
+
     fetchFeesDetails();
-  }, [dispatch, startDate, endDate, selectedAdmin, currentPage]);
+  }, [dispatch, startDate, endDate, selectedAdmin, currentPage, admin, userId]);
 
   const handlePageForward = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -178,6 +203,18 @@ function FeesDetails() {
       </h1>
       <div className="flex justify-center items-center">
         <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
+          <input
+            type="text"
+            placeholder="Search by User ID"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                // Save user ID to state or perform search here
+              }
+            }}
+            className="p-2 border rounded focus:outline-none focus:border-blue-500"
+          />
           <div className="flex justify-center items-center gap-3 mb-6 ml-20 ">
             <label className="text-gray-500 uppercase font-bold text-sm mr-4">
               Start Date:
@@ -355,6 +392,7 @@ function FeesDetails() {
             <IoChevronForwardCircleSharp />
           </button>
         </div>
+        <p className="text-white text-2xl">Total Fees: {totalFees}</p>
       </div>
     </div>
   );
