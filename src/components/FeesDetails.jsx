@@ -202,21 +202,6 @@ function FeesDetails() {
           <FiDownload className="inline-block align-middle text-2xl mb-1 ml-3 hover:text-orange-600 hover:scale-110 duration-200" />{" "}
         </span>
       </h1>
-      <div className="flex justify-center md:justify-end items-center md:mr-12 md:-mt-10 mb-10">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchValue}
-            onChange={handleSearch}
-            className="px-2 py-1 border rounded-md w-52 md:w-48 focus:outline-none focus:ring focus:border-indigo-500 bg-slate-900 text-white"
-          />
-          <FiSearch
-            className="absolute w-6 h-6 right-3 top-1.5 cursor-pointer text-white"
-            onClick={() => setShowDetails(true)}
-          />
-        </div>
-      </div>
       <div className="flex justify-center items-center">
         <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
           <input
@@ -410,48 +395,6 @@ function FeesDetails() {
         </div>
         <p className="text-white text-2xl">Total Fees: {totalFees}</p>
       </div>
-      {showDetails && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 z-50 bg-gray-900 bg-opacity-50 flex items-center p-4 justify-center">
-          <div className="bg-slate-800 rounded-lg shadow-lg p-10">
-            <button
-              className="absolute top-0 right-0 mt-4 mr-4 rounded-full p-2 bg-gray-800 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
-              onClick={() => setShowDetails(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <div className="flex justify-center items-center mb-4 p-4 px-12">
-              <h2 className="text-2xl md:text-3xl text-white font-bold ">
-                <span className="text-orange-500">{`${searchValue}'s`}</span>{" "}
-                Details
-              </h2>
-            </div>
-
-            <form className="space-y-6 p-8 px-16 ">
-              <div className="flex justify-center flex-col mb-6 gap-10">
-                <h1 className="text-white font-bold text-2xl mb-2">
-                  Paid Fees : ₹ 7000
-                </h1>
-                <h1 className="text-white font-bold text-2xl mb-2">
-                  Pending Fees : <span className="text-red-600">₹ 500</span>
-                </h1>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
