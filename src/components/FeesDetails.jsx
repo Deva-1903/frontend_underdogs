@@ -26,6 +26,12 @@ function FeesDetails() {
   const [isLoading, setIsLoading] = useState(false);
   const [totalFees, setTotalFees] = useState(0);
   const [userId, setUserId] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    setUserId(inputValue);
+  }
 
   const tableRef = useRef(null);
 
@@ -202,20 +208,28 @@ function FeesDetails() {
           <FiDownload className="inline-block align-middle text-2xl mb-1 ml-3 hover:text-orange-600 hover:scale-110 duration-200" />{" "}
         </span>
       </h1>
-      <div className="flex justify-center items-center">
-        <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
-          <input
+      <div className="flex justify-center md:justify-end md:-mt-10 md:mr-20 mb-8">
+      <form onSubmit={handleInputSubmit} className="relative">
+      <input
             type="text"
             placeholder="Search by User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                // Save user ID to state or perform search here
-              }
-            }}
-            className="p-2 border rounded focus:outline-none focus:border-blue-500"
-          />
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            // onKeyPress={(e) => {
+            //   if (e.key === "Enter") {
+            //     // Save user ID to state or perform search here
+            //   }
+            // }}
+            className="p-2 border rounded focus:outline-none focus:border-blue-500 bg-slate-800 text-white"
+           />
+           <button type="submit">
+           <FiSearch
+          className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
+           </button>
+      </form>
+      </div>
+      <div className="flex justify-center items-center">
+        <div className="items-center justify-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
           <div className="flex justify-center items-center gap-3 mb-6 ml-20 ">
             <label className="text-gray-500 uppercase font-bold text-sm mr-4">
               Start Date:
@@ -375,6 +389,7 @@ function FeesDetails() {
           </div>
         </div>
       </div>
+      <p className="text-white text-3xl text-center mb-8">Total Fees:   ₹ {totalFees}</p>
       <div className="flex justify-center pb-8">
         <div className="flex items-center">
           <button
@@ -393,7 +408,6 @@ function FeesDetails() {
             <IoChevronForwardCircleSharp />
           </button>
         </div>
-        <p className="text-white text-2xl">Total Fees: {totalFees}</p>
       </div>
     </div>
   );
