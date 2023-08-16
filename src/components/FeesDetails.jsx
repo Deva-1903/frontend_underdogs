@@ -389,7 +389,7 @@ function FeesDetails() {
           </div>
         </div>
       </div>
-      <p className="text-white text-3xl text-center mb-8">Total Fees:   ₹ {totalFees}</p>
+      <p className="text-white text-xl md:text-3xl text-center uppercase mb-8">Total Fees:   ₹ {totalFees}</p>
       <div className="flex justify-center pb-8">
         <div className="flex items-center">
           <button
