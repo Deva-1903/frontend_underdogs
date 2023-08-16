@@ -7,6 +7,7 @@ import { getAttendancesByDate } from "../features/allUsers/allUsersSlice";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
+import { FiSearch } from "react-icons/fi";
 
 function ViewAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
@@ -70,6 +71,19 @@ function ViewAttendance() {
       <h1 className="text-white text-center text-3xl font-bold py-6 ">
         Attendance
       </h1>
+      <div className="flex justify-center md:justify-end md:-mt-10 md:mr-24 mb-8">
+      <form className="relative">
+      <input
+            type="text"
+            placeholder="Search by User ID"
+            className="p-2 border rounded focus:outline-none focus:border-blue-500 bg-slate-800 text-white"
+           />
+           <button type="submit">
+           <FiSearch
+          className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
+           </button>
+      </form>
+      </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           <div className="flex items-center justify-center">
