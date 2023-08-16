@@ -7,12 +7,15 @@ import { getAttendancesByDate } from "../features/allUsers/allUsersSlice";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
+import { FiSearch } from "react-icons/fi";
 
 function ViewAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sessionFilter, setSessionFilter] = useState("all");
   const [date, setDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
+  const [userId, setUserId] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const dispatch = useDispatch();
 
@@ -25,9 +28,10 @@ function ViewAttendance() {
         date: date,
         page: currentPage,
         session: sessionFilter,
+        userId: userId,
       })
     );
-  }, [dispatch, date, statusFilter, sessionFilter, currentPage]);
+  }, [dispatch, date, statusFilter, sessionFilter, currentPage, userId]);
 
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);
@@ -57,6 +61,11 @@ function ViewAttendance() {
   //   doc.save("attendance.pdf");
   // }
 
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    setUserId(inputValue);
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -70,6 +79,20 @@ function ViewAttendance() {
       <h1 className="text-white text-center text-3xl font-bold py-6 ">
         Attendance
       </h1>
+      <div className="flex justify-center md:justify-end md:-mt-10 md:mr-24 mb-8">
+        <form onSubmit={handleInputSubmit} className="relative">
+          <input
+            type="text"
+            placeholder="Search by User ID"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="p-2 border rounded focus:outline-none focus:border-blue-500 bg-slate-800 text-white"
+          />
+          <button type="submit">
+            <FiSearch className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
+          </button>
+        </form>
+      </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           <div className="flex items-center justify-center">
@@ -178,9 +201,8 @@ function ViewAttendance() {
                       {user.number}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center ">
-                      {
-                        user.photoURL ? (
-                          <a
+                      {user.photoURL ? (
+                        <a
                           href={user.photoURL}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -193,10 +215,9 @@ function ViewAttendance() {
                             />
                           </div>
                         </a>
-                        ) : (
-                          <p className="text-xs text-red-400 p-4">Not found</p>
-                        )
-                      }
+                      ) : (
+                        <p className="text-xs text-red-400 p-4">Not found</p>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.user_id}
