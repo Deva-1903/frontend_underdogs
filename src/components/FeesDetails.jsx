@@ -31,7 +31,7 @@ function FeesDetails() {
   const handleInputSubmit = (e) => {
     e.preventDefault();
     setUserId(inputValue);
-  }
+  };
 
   const tableRef = useRef(null);
 
@@ -209,24 +209,18 @@ function FeesDetails() {
         </span>
       </h1>
       <div className="flex justify-center md:justify-end md:-mt-10 md:mr-20 mb-8">
-      <form onSubmit={handleInputSubmit} className="relative">
-      <input
+        <form onSubmit={handleInputSubmit} className="relative">
+          <input
             type="text"
             placeholder="Search by User ID"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            // onKeyPress={(e) => {
-            //   if (e.key === "Enter") {
-            //     // Save user ID to state or perform search here
-            //   }
-            // }}
             className="p-2 border rounded focus:outline-none focus:border-blue-500 bg-slate-800 text-white"
-           />
-           <button type="submit">
-           <FiSearch
-          className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
-           </button>
-      </form>
+          />
+          <button type="submit">
+            <FiSearch className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
+          </button>
+        </form>
       </div>
       <div className="flex justify-center items-center">
         <div className="items-center justify-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 ">
@@ -389,7 +383,9 @@ function FeesDetails() {
           </div>
         </div>
       </div>
-      <p className="text-white text-xl md:text-3xl text-center uppercase mb-8">Total Fees:   ₹ {totalFees}</p>
+      <p className="text-white text-xl md:text-2xl text-center uppercase mb-8">
+        Total Fees: ₹ {totalFees}
+      </p>
       <div className="flex justify-center pb-8">
         <div className="flex items-center">
           <button
