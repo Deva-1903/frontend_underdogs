@@ -15,6 +15,7 @@ import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
 import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import {MdDeleteForever} from "react-icons/md"
 
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
@@ -323,6 +324,9 @@ function FeesDetails() {
                     <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
                       Pending
                     </th>
+                    <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                      Delete
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 border">
@@ -374,6 +378,9 @@ function FeesDetails() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         ₹{user.pending_amount}
+                      </td>
+                      <td className="px-12 py-4 whitespace-nowrap text-sm text-center md:text-base text-red-500 border cursor-pointer">
+                        <MdDeleteForever className="text-2xl text-center" />
                       </td>
                     </tr>
                   ))}
