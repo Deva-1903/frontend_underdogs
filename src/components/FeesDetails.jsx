@@ -15,7 +15,7 @@ import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
 import { pdf } from "@react-pdf/renderer";
 import { BsCurrencyRupee } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import {MdDeleteForever} from "react-icons/md"
+import { MdDeleteForever } from "react-icons/md";
 
 function FeesDetails() {
   const [startDate, setStartDate] = useState(new Date());
@@ -28,6 +28,7 @@ function FeesDetails() {
   const [totalFees, setTotalFees] = useState(0);
   const [userId, setUserId] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [isFeesDeleted, setIsFeesDeleted] = useState(true);
 
   const handleInputSubmit = (e) => {
     e.preventDefault();
@@ -56,6 +57,34 @@ function FeesDetails() {
 
     fetchAdminNames();
   }, []);
+
+  const handleDeleteFees = (id) => {
+    const allowedAdminUsernames = ["bala", "karthik"]; // Replace with the allowed admin usernames
+
+    if (!allowedAdminUsernames.includes(admin.username)) {
+      toast.warning("You are not allowed to delete fees details.");
+      return;
+    }
+
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this fees detail?"
+    );
+
+    if (isConfirmed) {
+      setIsFeesDeleted(false);
+      const apiUrl = `api/admin/fees/${id}`;
+
+      axios
+        .delete(apiUrl)
+        .then((response) => {
+          toast.success("Fees detail deleted successfully");
+          setIsFeesDeleted(true);
+        })
+        .catch((error) => {
+          toast.error("An error occurred while deleting fees detail");
+        });
+    }
+  };
 
   useEffect(() => {
     const fetchFeesDetails = async () => {
@@ -113,7 +142,16 @@ function FeesDetails() {
     };
 
     fetchFeesDetails();
-  }, [dispatch, startDate, endDate, selectedAdmin, currentPage, admin, userId]);
+  }, [
+    dispatch,
+    startDate,
+    endDate,
+    selectedAdmin,
+    currentPage,
+    admin,
+    userId,
+    isFeesDeleted,
+  ]);
 
   const handlePageForward = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -378,9 +416,6 @@ function FeesDetails() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         ₹{user.pending_amount}
-                      </td>
-                      <td className="px-12 py-4 whitespace-nowrap text-sm text-center md:text-base text-red-500 border cursor-pointer">
-                        <MdDeleteForever className="text-2xl text-center" />
                       </td>
                     </tr>
                   ))}

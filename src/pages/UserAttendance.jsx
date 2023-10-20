@@ -17,6 +17,8 @@ function UserAttendance() {
     cardio: "",
     status: "",
     planEnds: "",
+    photoURL: "",
+    pendingFees: "",
   });
 
   const { id } = useParams();
@@ -74,6 +76,25 @@ function UserAttendance() {
                 />
               </svg>
             </Link>
+            <div className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center ">
+              {userData.photoURL ? (
+                <a
+                  href={userData.photoURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="rounded-full h-16 w-16 justify-center ml-3">
+                    <img
+                      src={userData.photoURL}
+                      alt="image"
+                      class="h-full w-full rounded-full object-cover"
+                    />
+                  </div>
+                </a>
+              ) : (
+                <p className="text-xs text-red-400 p-4">Not found</p>
+              )}
+            </div>
             <div className="flex items-center mb-6">
               <FaUserCircle className="text-3xl text-gray-300 mr-2" />
               <h1 className="text-xl font-semibold text-orange-500">
@@ -97,6 +118,9 @@ function UserAttendance() {
             </p>
             <p className="text-gray-200 mb-6">
               Cardio status: {userData.cardio}
+            </p>
+            <p className="text-gray-200 mb-6">
+              Pending fees: {userData.pendingFees}
             </p>
             <p className="text-gray-200 mb-6">
               Subscription ends on{" "}
