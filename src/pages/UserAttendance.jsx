@@ -17,6 +17,8 @@ function UserAttendance() {
     cardio: "",
     status: "",
     planEnds: "",
+    photoURL: "",
+    pendingFees: "",
   });
 
   const { id } = useParams();
@@ -74,12 +76,34 @@ function UserAttendance() {
                 />
               </svg>
             </Link>
-            <div className="flex items-center mb-6">
+            <div className="px-4 py-2 whitespace-nowrap text-sm md:text-base text-gray-100 flex justify-center text-center mb-2 -mt-5 ">
+              {userData.photoURL ? (
+                <a
+                  href={userData.photoURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div class="rounded-full h-20 w-20 justify-evenly items-center mb-10">
+                    <img
+                      src={userData.photoURL}
+                      alt="image"
+                      class="h-full w-full rounded-full border object-cover"
+                    />
+                    <h1 className="text-xl font-semibold text-orange-500 mt-2">
+                      {userData.name}
+                    </h1>
+                  </div>
+                </a>
+              ) : (
+                <p className="text-xs text-red-400 p-4">Not found</p>
+              )}
+            </div>
+            {/* <div className="flex items-center mb-6">
               <FaUserCircle className="text-3xl text-gray-300 mr-2" />
               <h1 className="text-xl font-semibold text-orange-500">
                 {userData.name}
               </h1>
-            </div>
+            </div> */}
             <p className="text-gray-300 mb-6">User ID: {userData.id}</p>
             <div className="flex items-center mb-6">
               <p className="text-gray-200 mr-2">Status:</p>
@@ -97,6 +121,9 @@ function UserAttendance() {
             </p>
             <p className="text-gray-200 mb-6">
               Cardio status: {userData.cardio}
+            </p>
+            <p className="text-gray-200 mb-6">
+              Pending fees: {userData.pendingFees}
             </p>
             <p className="text-gray-200 mb-6">
               Subscription ends on{" "}
