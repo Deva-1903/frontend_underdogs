@@ -417,6 +417,12 @@ function FeesDetails() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-center md:text-base text-gray-100 border">
                         ₹{user.pending_amount}
                       </td>
+                      <td
+                        className="px-12 py-4 whitespace-nowrap text-sm text-center md:text-base text-red-500 border cursor-pointer"
+                        onClick={() => handleDeleteFees(user._id)}
+                      >
+                        <MdDeleteForever className="text-2xl text-center" />
+                      </td>
                     </tr>
                   ))}
                 </tbody>
