@@ -4,13 +4,14 @@ import { GrInstagram } from "react-icons/gr";
 import { BsPersonFill } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import logo from "../assets/logo.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { login, reset } from "../features/auth/authSlice";
 
 import { SiInstagram, SiGmail } from "react-icons/si";
 import { IconContext } from "react-icons";
+import {BsCalendarCheckFill} from "react-icons/bs";
 
 function Navbar() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -70,7 +71,7 @@ function Navbar() {
 
   return (
     <nav className="relative flex  items-center justify-between px-2 py-3  bg-black">
-      <div className="container px-4 mx-auto flex items-center justify-between flex-wrap lg:flex-no-wrap">
+      <div className="container px-4 mx-auto flex items-center justify-between lg:flex-no-wrap">
         <a href="/" class="flex items-center">
           <div className="leading-relaxed inline-block mr-4 py-2">
             <img src={logo} alt="" className="img w-36 md:w-48 sm:w-40" />
@@ -78,13 +79,13 @@ function Navbar() {
         </a>
         <IconContext.Provider
           value={{
-            className: "text-2xl md:text-3xl leading-10 text-white opacity-75",
+            className: "text-xl md:text-3xl leading-10 text-white opacity-75",
           }}
         >
           <ul className="flex flex-wrap list-none lg:flex-no-wrap">
             <li className="nav-item ">
               <a
-                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                className="px-2 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 href="https://www.instagram.com/underdogsfitness_/"
               >
                 <SiInstagram />
@@ -92,7 +93,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <a
-                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                className="px-2 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 href="mailto:underdogsfitnessclub@gmail.com"
               >
                 <SiGmail />
@@ -101,11 +102,18 @@ function Navbar() {
             <li className="nav-item">
               <a
                 href="#"
-                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                className="px-2 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 onClick={() => setShowLoginForm(true)}
               >
                 <HiLockClosed />
               </a>
+            </li>
+            <li className="nav-item">
+              <Link to="/attendance"
+                className="px-2 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+              >
+                <BsCalendarCheckFill />
+              </Link>
             </li>
           </ul>
         </IconContext.Provider>
