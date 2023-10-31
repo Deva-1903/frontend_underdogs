@@ -16,6 +16,7 @@ import FeesDetailsPage from "./pages/FeesDetailsPage";
 import AdminUpdatePage from "./pages/AdminUpdatePage";
 import ManageContentPage from "./pages/ManageContentPage";
 import PendingFeesPage from "./pages/PendingFeesPage";
+import Attendance from "./components/Attendance";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="/attendance" element={<Attendance />} />
             <Route path="/admin/dashboard" element={<RegisterUser />} />
             <Route path="/admin/register/user" element={<RegisterUser />} />
             <Route path="/admin/update/user" element={<GetUserDetails />} />

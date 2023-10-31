@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 
-function ViewAttendance() {
+function Attendance() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sessionFilter, setSessionFilter] = useState("all");
   const [date, setDate] = useState(new Date());
@@ -79,21 +79,8 @@ function ViewAttendance() {
       <h1 className="text-white text-center text-3xl font-bold py-6 ">
         Attendance
       </h1>
-      <div className="flex justify-center md:justify-end md:-mt-10 md:mr-24 mb-8">
-        <form onSubmit={handleInputSubmit} className="relative">
-          <input
-            type="text"
-            placeholder="Search by User ID"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="p-2 border rounded focus:outline-none focus:border-blue-500 bg-slate-800 text-white"
-          />
-          <button type="submit">
-            <FiSearch className="text-white absolute w-6 h-6 right-3 top-2 cursor-pointer" />
-          </button>
-        </form>
-      </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+
+      <div className="items-center w-full my-4">
         <div className="items-center w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           <div className="flex items-center justify-center">
             <label
@@ -148,8 +135,7 @@ function ViewAttendance() {
             />
           </div>
         </div>
-      </div>
-
+        </div>
       <div className="flex justify-center pb-8  w-full">
         <div className=" overflow-x-auto  p-4">
           <div className="inline-block min-w-full justify-center max-h-screen ">
@@ -275,7 +261,7 @@ function ViewAttendance() {
             {currentPage}
           </span>
           <button
-            className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
+            className={`px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2`}
             onClick={handlePageForward}
           >
             <IoChevronForwardCircleSharp />
@@ -288,4 +274,4 @@ function ViewAttendance() {
   );
 }
 
-export default ViewAttendance;
+export default Attendance;
