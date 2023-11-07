@@ -26,6 +26,11 @@ const UpdateSubscription = () => {
     isPending: "",
     pendingAmount: "",
   });
+  const [formData2, setFormData2] = useState({
+    subscription_1: "",
+    subscription_type_1: "",
+    cardio_1: "",
+  });
   const [userData, setUserData] = useState({
     id: "",
     name: "",
@@ -155,9 +160,9 @@ const UpdateSubscription = () => {
     event.preventDefault();
 
     const userData = {
-      subscription: formData.subscription,
-      subscription_type: formData.subscription_type,
-      cardio: formData.cardio,
+      subscription: formData2.subscription_1,
+      subscription_type: formData2.subscription_type_1,
+      cardio: formData2.cardio_1,
       mode_of_payment: formData.mode_of_payment,
       paymentDate: formData.paymentDate,
       feesAmount: formData.feesAmount,
@@ -244,6 +249,14 @@ const UpdateSubscription = () => {
         pendingAmount: false,
       }));
     }
+  };
+
+  const handleChange2 = (event) => {
+    const { name, value } = event.target;
+    setFormData2((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   if (isLoading) {
@@ -398,10 +411,10 @@ const UpdateSubscription = () => {
                           Subscription
                         </label>
                         <select
-                          id="subscription"
-                          name="subscription"
-                          value={formData.subscription}
-                          onChange={handleChange}
+                          id="subscription_1"
+                          name="subscription_1"
+                          value={formData2.subscription_1}
+                          onChange={handleChange2}
                           className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
     border-transparent border-2 focus:border-indigo-500"
                           required
@@ -422,10 +435,10 @@ const UpdateSubscription = () => {
                           Subscription Type
                         </label>
                         <select
-                          id="subscription_type"
-                          name="subscription_type"
-                          value={formData.subscription_type}
-                          onChange={handleChange}
+                          id="subscription_type_1"
+                          name="subscription_type_1"
+                          value={formData2.subscription_type_1}
+                          onChange={handleChange2}
                           className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white 
     border-transparent border-2 focus:border-indigo-500"
                           required
@@ -448,10 +461,10 @@ const UpdateSubscription = () => {
                           Cardio
                         </label>
                         <select
-                          id="cardio"
-                          name="cardio"
-                          value={formData.cardio}
-                          onChange={handleChange}
+                          id="cardio_1"
+                          name="cardio_1"
+                          value={formData2.cardio_1}
+                          onChange={handleChange2}
                           className="appearance-none rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                           required
                         >

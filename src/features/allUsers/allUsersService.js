@@ -17,9 +17,6 @@ const getAllUsers = async (searchParams, token) => {
 
 const getAttendancesByDate = async (searchParams, token) => {
   const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     params: searchParams,
   };
 
