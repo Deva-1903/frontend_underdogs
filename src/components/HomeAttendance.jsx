@@ -175,6 +175,9 @@ function HomeAttendance() {
                     Status
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                    Pending Fee
+                  </th>
+                  <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base   font-medium text-white uppercase tracking-wider">
                     Time In
                   </th>
                   <th className="px-6 py-3 border bg-slate-800 text-center text-xs md:text-base  font-medium text-white uppercase tracking-wider">
@@ -235,6 +238,9 @@ function HomeAttendance() {
                       {user.status}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
+                      ₹{user.pendingAmount}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border text-center">
                       {user.timeIn}
                     </td>
 
@@ -261,27 +267,25 @@ function HomeAttendance() {
         </div>
       </div>
 
-      {users.length > 8 && (
-        <div className="flex items-center justify-center pb-8">
-          <div className="flex items-center">
-            <button
-              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
-              onClick={handlePageBackward}
-            >
-              <IoChevronForwardCircleSharp className="rotate-180" />
-            </button>
-            <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
-              {currentPage}
-            </span>
-            <button
-              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
-              onClick={handlePageForward}
-            >
-              <IoChevronForwardCircleSharp />
-            </button>
-          </div>
+      <div className="flex items-center justify-center pb-8">
+        <div className="flex items-center">
+          <button
+            className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
+            onClick={handlePageBackward}
+          >
+            <IoChevronForwardCircleSharp className="rotate-180" />
+          </button>
+          <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
+            {currentPage}
+          </span>
+          <button
+            className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
+            onClick={handlePageForward}
+          >
+            <IoChevronForwardCircleSharp />
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }

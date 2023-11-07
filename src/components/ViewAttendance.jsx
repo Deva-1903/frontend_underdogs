@@ -261,9 +261,7 @@ function ViewAttendance() {
         </div>
       </div>
 
-      {
-        users.length > 8 && (
-            <div className="flex items-center justify-center pb-8">
+      <div className="flex items-center justify-center pb-8">
         <div className="flex items-center">
           <button
             className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
@@ -282,8 +280,6 @@ function ViewAttendance() {
           </button>
         </div>
       </div>
-        )
-      }
     </div>
   );
 }
