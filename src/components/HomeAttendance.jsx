@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 
-function ViewAttendance() {
+function HomeAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sessionFilter, setSessionFilter] = useState("all");
   const [date, setDate] = useState(new Date());
@@ -261,31 +261,29 @@ function ViewAttendance() {
         </div>
       </div>
 
-      {
-        users.length > 8 && (
-            <div className="flex items-center justify-center pb-8">
-        <div className="flex items-center">
-          <button
-            className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
-            onClick={handlePageBackward}
-          >
-            <IoChevronForwardCircleSharp className="rotate-180" />
-          </button>
-          <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
-            {currentPage}
-          </span>
-          <button
-            className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
-            onClick={handlePageForward}
-          >
-            <IoChevronForwardCircleSharp />
-          </button>
+      {users.length > 8 && (
+        <div className="flex items-center justify-center pb-8">
+          <div className="flex items-center">
+            <button
+              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
+              onClick={handlePageBackward}
+            >
+              <IoChevronForwardCircleSharp className="rotate-180" />
+            </button>
+            <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
+              {currentPage}
+            </span>
+            <button
+              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
+              onClick={handlePageForward}
+            >
+              <IoChevronForwardCircleSharp />
+            </button>
+          </div>
         </div>
-      </div>
-        )
-      }
+      )}
     </div>
   );
 }
 
-export default ViewAttendance;
+export default HomeAttendance;

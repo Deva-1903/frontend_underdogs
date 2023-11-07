@@ -31,8 +31,7 @@ export const getAttendancesByDate = createAsyncThunk(
   "attendances/getByDate",
   async (searchParams, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.admin.token;
-      return await allUsersService.getAttendancesByDate(searchParams, token);
+      return await allUsersService.getAttendancesByDate(searchParams);
     } catch (error) {
       const message =
         (error.response &&
