@@ -68,7 +68,7 @@ function UserAttendance() {
         <div className="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-gray-700 rounded-lg p-8 w-120">
             <Link
-              to="/"
+              to={`/${decryptedBranch}`}
               className="absolute top-0 right-0 mt-4 mr-4 rounded-full p-2"
             >
               <svg
