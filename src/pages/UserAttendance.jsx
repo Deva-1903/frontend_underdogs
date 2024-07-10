@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { publicGetUser, reset } from "../features/user/userSlice";
 import { FaCheckCircle, FaTimesCircle, FaUserCircle } from "react-icons/fa";
+import { encryptData, decryptData } from '../utils/utils';
 
 function UserAttendance() {
   const [userData, setUserData] = useState({
@@ -21,7 +22,9 @@ function UserAttendance() {
     pendingFees: "",
   });
 
-  const { id } = useParams();
+  const { id, branch } = useParams();
+  const decryptedBranch = decryptData(branch);
+  const decryptedUserId = decryptData(id);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,7 +45,14 @@ function UserAttendance() {
     const fetchUser = async () => {
       let searchParams = {};
 
-      searchParams.id = id;
+      if (decryptedBranch !== 'branch1' && decryptedBranch !== 'branch2') {
+        toast.error("Invalid branch selected. Please choose a valid branch");
+        return;
+      }
+
+      console.log(parseInt(decryptedUserId))
+      searchParams.id = parseInt(decryptedUserId);
+      searchParams.branch = decryptedBranch;
 
       const response = await dispatch(publicGetUser(searchParams));
       setUserData(response.payload);

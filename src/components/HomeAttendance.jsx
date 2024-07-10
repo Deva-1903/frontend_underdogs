@@ -8,6 +8,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { useParams, useNavigate } from 'react-router-dom';
 
 function HomeAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
@@ -20,8 +22,14 @@ function HomeAttendance() {
   const dispatch = useDispatch();
 
   const { users } = useSelector((state) => state.allUsers);
+  const { branch } = useParams();
 
   useEffect(() => {
+    if (branch !== 'branch1' && branch !== 'branch2') {
+      toast.error("Invalid branch selected. Please choose a valid branch");
+      return;
+    }
+
     dispatch(
       getAttendancesByDate({
         status: statusFilter,
@@ -29,9 +37,10 @@ function HomeAttendance() {
         page: currentPage,
         session: sessionFilter,
         userId: userId,
+        branch
       })
     );
-  }, [dispatch, date, statusFilter, sessionFilter, currentPage, userId]);
+  }, [branch, statusFilter, date, currentPage, sessionFilter, userId, dispatch]);
 
   const handleStatusFilterChange = (event) => {
     setStatusFilter(event.target.value);

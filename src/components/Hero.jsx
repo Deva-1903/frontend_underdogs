@@ -5,6 +5,9 @@ import axios from "../axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaTags } from "react-icons/fa";
+import { useParams } from 'react-router-dom';
+import { encryptData, decryptData } from '../utils/utils';
+
 
 function Hero() {
   const [showForm, setShowForm] = useState(false);
@@ -13,18 +16,33 @@ function Hero() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { branch } = useParams();
+
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 
+    if (branch !== 'branch1' && branch !== 'branch2') {
+      toast.error("Invalid branch selected. Please choose a valid branch");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await axios.post("/api/attendance", { id: userId });
+      const response = await axios.post("/api/attendance", { id: userId, branch });
       if (response.status === 200) {
         toast.success("Attendance added successfully");
         setShowForm(false);
         setUserId("");
-        navigate(`/attendance/${userId}`);
+        const encryptedBranch = encryptData(branch);
+        const encryptedUserId = encryptData(userId.toString());
+
+        // Encode encrypted data for URL
+        const encodedUserId = encodeURIComponent(encryptedUserId);
+        const encodedBranch = encodeURIComponent(encryptedBranch);
+        console.log(encryptedUserId)
+        navigate(`/data/${encodedBranch}/${encodedUserId}`);
       } else if (response.status === 204) {
         toast.error(response.data.message);
       } else {
@@ -51,10 +69,19 @@ function Hero() {
 
   function handleDownload(event) {
     event.preventDefault();
+    if (branch !== 'branch1' && branch !== 'branch2') {
+      toast.error("Invalid branch selected. Please choose a valid branch.");
+      return;
+    }
+
     axios
-      .get("/api/brochure")
+      .get(`/api/brochure?branch=${branch}`)
       .then((response) => {
         const data = response.data;
+        if (data.length === 0) {
+          toast.error("No brochure available for the selected branch.");
+          return;
+        }
         const brochureURL = data[0].photoURL;
         const link = document.createElement("a");
         link.href = brochureURL;
@@ -65,6 +92,7 @@ function Hero() {
       })
       .catch((error) => {
         console.error("Error downloading brochure:", error);
+        toast.error("Error downloading brochure. Please try again later.");
       });
   }
 
