@@ -73,7 +73,7 @@ const publicUserDetails = async (searchParams) => {
     params: searchParams,
   };
 
-  const response = await axios.get("api/users", config);
+  const response = await axios.get("api/users/public", config);
 
   return response.data;
 };

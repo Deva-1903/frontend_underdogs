@@ -26,7 +26,8 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/attendance" element={<HomeAttendance />} />
+            <Route path="/:branch" element={<Homepage />} />
+            <Route path="/attendance/:branch" element={<HomeAttendance />} />
             <Route path="/admin/dashboard" element={<RegisterUser />} />
             <Route path="/admin/register/user" element={<RegisterUser />} />
             <Route path="/admin/update/user" element={<GetUserDetails />} />
@@ -43,7 +44,7 @@ function App() {
             <Route path="/admin/get/user/:id" element={<ViewUserDetails />} />
             <Route path="/admin/all/clients" element={<AllClients />} />
             <Route path="/admin/get/attendance" element={<AttendancePage />} />
-            <Route path="/attendance/:id" element={<UserAttendance />} />
+            <Route path="/data/:branch/:id" element={<UserAttendance />} />
             <Route
               path="/admin/get/contactforms"
               element={<ContactFormsPage />}

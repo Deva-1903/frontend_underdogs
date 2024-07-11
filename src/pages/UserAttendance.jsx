@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { publicGetUser, reset } from "../features/user/userSlice";
 import { FaCheckCircle, FaTimesCircle, FaUserCircle } from "react-icons/fa";
+import { encryptData, decryptData } from '../utils/utils';
 
 function UserAttendance() {
   const [userData, setUserData] = useState({
@@ -21,7 +22,9 @@ function UserAttendance() {
     pendingFees: "",
   });
 
-  const { id } = useParams();
+  const { id, branch } = useParams();
+  const decryptedBranch = decryptData(branch);
+  const decryptedUserId = decryptData(id);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,7 +45,13 @@ function UserAttendance() {
     const fetchUser = async () => {
       let searchParams = {};
 
-      searchParams.id = id;
+      if (decryptedBranch !== 'branch1' && decryptedBranch !== 'branch2') {
+        toast.error("Invalid branch selected. Please choose a valid branch");
+        return;
+      }
+
+      searchParams.id = parseInt(decryptedUserId);
+      searchParams.branch = decryptedBranch;
 
       const response = await dispatch(publicGetUser(searchParams));
       setUserData(response.payload);
@@ -58,7 +67,7 @@ function UserAttendance() {
         <div className="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-gray-700 rounded-lg p-8 w-120">
             <Link
-              to="/"
+              to={`/${decryptedBranch}`}
               className="absolute top-0 right-0 mt-4 mr-4 rounded-full p-2"
             >
               <svg

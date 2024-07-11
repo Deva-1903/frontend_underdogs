@@ -24,6 +24,12 @@ function UpdateAdmin() {
   const [eyeOpen, setEyeOpen] = useState(false);
   const [eyeOpenTwo, setEyeOpenTwo] = useState(false);
 
+  const [selectedBranch, setSelectedBranch] = useState('');
+
+  const handleBranchChange = (e) => {
+    setSelectedBranch(e.target.value);
+  };
+
   const { username, password, confirmPassword } = formData;
 
   const {
@@ -57,6 +63,7 @@ function UpdateAdmin() {
         password: "",
         confirmPassword: "",
       }));
+      setSelectedBranch('')
     }
 
     dispatch(reset());
@@ -96,6 +103,7 @@ function UpdateAdmin() {
     const userData = {
       username,
       password,
+      branch: selectedBranch
     };
 
     if (condition) {
@@ -259,6 +267,38 @@ function UpdateAdmin() {
                 </div>
               </div>
             </div>
+            <div className="mb-4">
+              <label htmlFor="branch" className="text-gray-200 font-semibold mb-2">
+                Select Branch Access
+              </label>
+              <div className="relative">
+                <select
+                  id="branch"
+                  name="branch"
+                  value={selectedBranch}
+                  onChange={handleBranchChange}
+                  className="appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
+                >
+                  <option value="">Select branch</option>
+                  <option value="branch1">Branch 1</option>
+                  <option value="branch2">Branch 2</option>
+                  {/* Add more options as needed */}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-indigo-500">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6 8l4 4 4-4H6z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
             <div className="flex items-center justify-center">
               <button
                 type="submit"
@@ -280,28 +320,32 @@ function UpdateAdmin() {
                 >
                   <thead>
                     <tr>
-                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                         Username
                       </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
+                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                         Created At
                       </th>
-                      <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
+                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
+                        Branch
+                      </th>
+                      <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base font-medium text-white uppercase tracking-wider">
                         Action
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y  divide-gray-200 border ">
+                  <tbody className="divide-y divide-gray-200 border">
                     {admins.map((admin) => (
                       <tr key={admin.id} className="border">
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                           {admin.username}
                         </td>
-
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                           {formatDate(admin.createdAt)}
                         </td>
-
+                        <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                          {admin.branch}
+                        </td>
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                           {/* Action button for each admin */}
                           <button
