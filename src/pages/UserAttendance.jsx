@@ -50,7 +50,6 @@ function UserAttendance() {
         return;
       }
 
-      console.log(parseInt(decryptedUserId))
       searchParams.id = parseInt(decryptedUserId);
       searchParams.branch = decryptedBranch;
 

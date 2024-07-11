@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
     const state = store.getState();
     const admin = state.auth.admin;
 
-    if (config.headers.Authorization && admin && admin.branch) {
+    if (admin && admin.branch) {
       config.headers['X-Branch'] = admin.branch;
     }
 

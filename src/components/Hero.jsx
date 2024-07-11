@@ -41,7 +41,6 @@ function Hero() {
         // Encode encrypted data for URL
         const encodedUserId = encodeURIComponent(encryptedUserId);
         const encodedBranch = encodeURIComponent(encryptedBranch);
-        console.log(encryptedUserId)
         navigate(`/data/${encodedBranch}/${encodedUserId}`);
       } else if (response.status === 204) {
         toast.error(response.data.message);

@@ -65,6 +65,7 @@ function Navbar() {
     const userData = {
       username,
       password,
+      branch
     };
 
     dispatch(login(userData));
