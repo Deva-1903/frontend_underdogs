@@ -3,7 +3,7 @@ import { HiLockClosed } from "react-icons/hi";
 import { GrInstagram } from "react-icons/gr";
 import { BsPersonFill } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/UnderDogs Final LOGO-01.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -84,7 +84,7 @@ function Navbar() {
       <div className="container px-4 mx-auto flex items-center justify-between lg:flex-no-wrap">
         <a href="/" class="flex items-center">
           <div className="leading-relaxed inline-block mr-4 py-2">
-            <img src={logo} alt="" className="img w-36 md:w-48 sm:w-40" />
+            <img src={logo} alt="" className="img w-20 md:w-24 sm:w-32" />
           </div>
         </a>
         <IconContext.Provider

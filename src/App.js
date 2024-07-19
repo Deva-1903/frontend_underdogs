@@ -17,7 +17,7 @@ import AdminUpdatePage from "./pages/AdminUpdatePage";
 import ManageContentPage from "./pages/ManageContentPage";
 import PendingFeesPage from "./pages/PendingFeesPage";
 import HomeAttendance from "./components/HomeAttendance";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
   return (

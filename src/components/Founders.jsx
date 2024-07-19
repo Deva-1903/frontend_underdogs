@@ -1,7 +1,7 @@
 import React from "react";
 import Founder1 from "../assets/Founder1.jpg";
 import Founder2 from "../assets/Founder2.jpg";
-import { GoMailRead } from "react-icons/go";
+import { IoMailSharp } from "react-icons/io5";
 import { BsFacebook } from "react-icons/bs";
 import { FaInstagramSquare, FaTwitterSquare } from "react-icons/fa";
 
@@ -67,7 +67,7 @@ const Founders = () => {
                     </a>
 
                     <a className="hover:text-indigo-600" href={user.email}>
-                      <GoMailRead />
+                      <IoMailSharp />
                     </a>
                   </div>
                 </div>
