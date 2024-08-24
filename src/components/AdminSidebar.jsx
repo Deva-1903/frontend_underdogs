@@ -109,15 +109,15 @@ function AdminSidebar() {
         </>
       ),
     },
-    {
-      Name: "Contact Forms",
-      links: "/admin/get/contactforms",
-      child: (
-        <>
-          <RiMessage2Fill />
-        </>
-      ),
-    },
+  {
+    Name: "Enquiries & Forms",
+    links: "/admin/enquiries-and-forms",
+    child: (
+      <>
+        <RiMessage2Fill />
+      </>
+    ),
+  },
     {
     Name: "Manage Team",
     links: "/admin/manage/team",

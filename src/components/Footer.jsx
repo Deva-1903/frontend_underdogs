@@ -76,12 +76,12 @@ function Footer() {
                   <li className="flex items-center">
                     <FaMapMarkerAlt className="mr-3 text-orange-500" />
                     <a
-                      href="https://goo.gl/maps/BRANCH2_MAP_LINK"
+                      href="https://maps.app.goo.gl/WBnurgaGoARoGmGKA"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-orange-500 transition-colors duration-300"
                     >
-                      Branch 2 Address, City, State, Pincode
+                      NO:98/4, Kundrathur Main Road, Kumananchavadi, Chennai 56.
                     </a>
                   </li>
                 </ul>
