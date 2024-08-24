@@ -3,7 +3,7 @@ import { HiLockClosed } from "react-icons/hi";
 import { GrInstagram } from "react-icons/gr";
 import { BsPersonFill } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import logo from "../assets/UnderDogs Final LOGO-01.png";
+import logo from "../assets/UnderDogs.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";

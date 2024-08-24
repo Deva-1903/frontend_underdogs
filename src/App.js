@@ -17,7 +17,8 @@ import AdminUpdatePage from "./pages/AdminUpdatePage";
 import ManageContentPage from "./pages/ManageContentPage";
 import PendingFeesPage from "./pages/PendingFeesPage";
 import HomeAttendance from "./components/HomeAttendance";
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import ManageTeamPage from './pages/ManageTeamPage';
+import EnquiriesAndFormsPage from './pages/EnquiriesAndFormsPage';
 
 function App() {
   return (
@@ -60,8 +61,9 @@ function App() {
               path="/admin/manage/content"
               element={<ManageContentPage />}
             />
+            <Route path="/admin/manage/team" element={<ManageTeamPage />} />
+            <Route path="/admin/enquiries-and-forms" element={<EnquiriesAndFormsPage />} />
           </Routes>
-          <SpeedInsights />
         </div>
       </Router>
     </>

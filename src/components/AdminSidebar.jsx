@@ -16,7 +16,6 @@ import { logout, reset } from "../features/auth/authSlice";
 import { RiAdminFill } from "react-icons/ri";
 import { useSelector, useDispatch } from "react-redux";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaClipboardQuestion } from "react-icons/fa6";
 
 function AdminSidebar() {
   const navigate = useNavigate();
@@ -110,29 +109,29 @@ function AdminSidebar() {
         </>
       ),
     },
+  {
+    Name: "Enquiries & Forms",
+    links: "/admin/enquiries-and-forms",
+    child: (
+      <>
+        <RiMessage2Fill />
+      </>
+    ),
+  },
     {
-      Name: "Contact Forms",
-      links: "/admin/get/contactforms",
-      child: (
-        <>
-          <RiMessage2Fill />
-        </>
-      ),
-    },
-    {
-      Name: "Contact Forms",
-      links: "/admin/get/contactforms",
-      child: (
-        <>
-          <FaClipboardQuestion />
-        </>
-      ),
-    },
+    Name: "Manage Team",
+    links: "/admin/manage/team",
+    child: (
+      <>
+        <FaUser />
+      </>
+    ),
+  },
   ];
 
   return (
-    <section className="flex w-full bg-black overflow-y-scroll">
-      <div className="bg-black h-screen duration-500 text-gray-100 px-4 flex flex-col items-center">
+   <section className="flex w-full bg-black">
+      <div className="bg-black min-h-screen duration-500 text-gray-100 px-4 flex flex-col items-center">
         <div className="py-2 lg:py-2 px-6 lg:px-6 flex items-center">
           <img
             src={logo}

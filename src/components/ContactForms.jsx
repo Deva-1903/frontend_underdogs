@@ -1,59 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getContactForms } from "../features/allUsers/allUsersSlice";
-import Spinner from "../components/Spinner";
-import { IoChevronForwardCircleSharp } from "react-icons/io5";
+import axios from "../axios";
+import { IoChevronForwardCircleSharp, IoChevronBackCircleSharp } from "react-icons/io5";
 import { FaReplyAll } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import axios from "../axios";
 
 const ContactForms = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isFetching, setIsFetching] = useState(true);
-
-  const { admin } = useSelector((state) => state.auth);
-  const { users, isLoading, isError, message } = useSelector(
-    (state) => state.allUsers
-  );
-
-  const condition = admin?.username === "karthik" || admin?.username === "bala";
+  const [contactForms, setContactForms] = useState([]);
+  const [admin, setAdmin] = useState(null);
 
   useEffect(() => {
-    if (!admin) {
+    const storedAdmin = JSON.parse(localStorage.getItem('admin'));
+    if (!storedAdmin) {
       navigate("/login");
     } else {
-      dispatch(
-        getContactForms({
-          page: currentPage,
-        })
-      ).then(() => {
-        setIsFetching(false); // Set loading state to false after data is fetched
+      setAdmin(storedAdmin);
+      fetchContactForms(storedAdmin.token);
+    }
+  }, [navigate, currentPage]);
+
+  const fetchContactForms = async (token) => {
+    setIsFetching(true);
+    try {
+      const response = await axios.get('/api/admin/contact-forms', {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page: currentPage },
       });
+      setContactForms(response.data.data);
+      setTotalPages(response.data.totalPages || 1);
+      setCurrentPage(response.data.currentPage || 1);
+    } catch (error) {
+      console.error('Error fetching contact forms:', error);
+      toast.error('Failed to fetch contact forms');
+    } finally {
+      setIsFetching(false);
     }
-  }, [admin, dispatch, currentPage, navigate]);
+  };
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
+  const handlePageForward = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prevPage => prevPage + 1);
     }
-  }, [isError, message, dispatch]);
+  };
 
-  function handlePageForward() {
-    setCurrentPage((prevPage) => prevPage + 1);
-  }
-
-  function handlePageBackward() {
+  const handlePageBackward = () => {
     if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
+      setCurrentPage(prevPage => prevPage - 1);
     }
-  }
+  };
 
   const handleDelete = async (id) => {
-    if (condition) {
+    if (admin?.username === "karthik" || admin?.username === "bala") {
       try {
         const response = await axios.delete(`/api/admin/contact-form/${id}`, {
           headers: {
@@ -61,14 +63,9 @@ const ContactForms = () => {
           },
         });
 
-        dispatch(
-          getContactForms({
-            page: currentPage,
-          })
-        );
-
         if (response.status === 200) {
           toast.success("Contact form deleted successfully");
+          fetchContactForms(admin.token);
         } else {
           console.error("Error deleting contact form:", response);
           toast.error("Error deleting contact form");
@@ -84,115 +81,82 @@ const ContactForms = () => {
 
   return (
     <div className="bg-gray-900 flex flex-col justify-center items-center">
-      <h1 className="text-white text-center text-3xl font-bold py-6 pr-6 ">
+      <h1 className="text-white text-center text-3xl font-bold py-6">
         Contact Forms
       </h1>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className="flex items-center w-1/3 justify-center pr-6">
-          <div className="flex items-center">
-            <button
-              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
-              onClick={handlePageBackward}
-            >
-              <IoChevronForwardCircleSharp className="rotate-180" />
-            </button>
-            <span className="text-white uppercase font-bold text-sm mr-1 ml-1">
-              {currentPage}
-            </span>
-            <button
-              className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
-              onClick={handlePageForward}
-            >
-              <IoChevronForwardCircleSharp />
-            </button>
-          </div>
-        </div>
-      </div>
-      {!users || users.length === 0 ? (
-        isLoading ? (
-          <Spinner />
-        ) : (
-          <div className="flex justify-center items-center mt-36 ml-6">
-            <span className="block sm:inline text-white pe-5 text-xl md:text-3xl font-bold	">
-              No contact forms to display
-            </span>
-          </div>
-        )
-      ) : isFetching ? (
-        <div className="flex justify-center items-center mt-36 ml-6">
-          <span className="block sm:inline text-white pe-5 text-xl md:text-3xl font-bold	">
-            Loading....
-          </span>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center pb-8 mt-10  w-full">
-          <div className=" overflow-x-auto p-4 ">
-            <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
-              <table
-                id="users-table"
-                className="w-full divide-y divide-x divide-gray-200 border"
-              >
+      <div className="flex justify-center pb-8 w-full">
+        <div className="overflow-x-auto p-4">
+          <div className="inline-block min-w-full justify-center max-h-screen overflow-hidden">
+            {isFetching ? (
+              <div className="flex justify-center items-center h-16">
+                <p className="text-white text-lg font-bold">Loading...</p>
+              </div>
+            ) : contactForms.length > 0 ? (
+              <table className="min-w-full bg-gray-900 text-white">
                 <thead>
                   <tr>
-                    <th className="px-2 md:px-6 py-2 md:py-3 border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base   font-medium text-white uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                      Message
-                    </th>
-                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                      Reply
-                    </th>
-                    <th className="px-2 md:px-6 py-2 md:py-3  border bg-slate-800 text-left text-xs md:text-base  font-medium text-white uppercase tracking-wider">
-                      Delete
-                    </th>
+                    <th className="py-2 px-4 border-b border-gray-800 text-left">Name</th>
+                    <th className="py-2 px-4 border-b border-gray-800 text-left">Email</th>
+                    <th className="py-2 px-4 border-b border-gray-800 text-left">Message</th>
+                    <th className="py-2 px-4 border-b border-gray-800 text-left">Reply</th>
+                    <th className="py-2 px-4 border-b border-gray-800 text-left">Delete</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y  divide-gray-200 border ">
-                  {users.map((user) => (
-                    <tr key={user._id} className="border">
-                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        {user.fullName}
-                      </td>
-                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        {user.email}
-                      </td>
-                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
+                <tbody>
+                  {contactForms.map((form) => (
+                    <tr key={form._id}>
+                      <td className="py-2 px-4 border-b border-gray-800">{form.fullName}</td>
+                      <td className="py-2 px-4 border-b border-gray-800">{form.email}</td>
+                      <td className="py-2 px-4 border-b border-gray-800">
                         <div className="max-h-48 overflow-y-auto">
-                          <textarea className="bg-slate-900 px-8 py-2" readOnly>
-                            {user.message}
-                          </textarea>
+                          <p className="whitespace-pre-wrap">{form.message}</p>
                         </div>
                       </td>
-                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        <button>
-                          <a
-                            className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-green-500 "
-                            href={`mailto:${user.email}`}
-                          >
-                            <FaReplyAll className="hover:opacity-75 hover:scale-100 duration-200" />
-                          </a>
-                        </button>
-                      </td>
-                      <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                        <button
-                          className="px-3 py-2 flex items-center text-2xl uppercase font-bold leading-snug text-white"
-                          onClick={() => handleDelete(user._id)}
+                      <td className="py-2 px-4 border-b border-gray-800">
+                        <a
+                          href={`mailto:${form.email}`}
+                          className="text-green-500 hover:text-green-400"
                         >
-                          <RiDeleteBin2Fill className="text-2xl hover:opacity-75 hover:scale-100 duration-200 text-red-500 hover:text-red-400" />
+                          <FaReplyAll className="text-2xl" />
+                        </a>
+                      </td>
+                      <td className="py-2 px-4 border-b border-gray-800">
+                        <button
+                          onClick={() => handleDelete(form._id)}
+                          className="text-red-500 hover:text-red-400"
+                        >
+                          <RiDeleteBin2Fill className="text-2xl" />
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
+            ) : (
+              <p className="text-white text-center">No contact forms found.</p>
+            )}
           </div>
         </div>
-      )}
+      </div>
+      <div className="flex justify-center mt-4">
+        <button
+          className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 mr-2"
+          onClick={handlePageBackward}
+          disabled={currentPage === 1}
+        >
+          <IoChevronBackCircleSharp />
+        </button>
+        <span className="text-white uppercase font-bold text-sm mx-2">
+          {currentPage} / {totalPages}
+        </span>
+        <button
+          className="px-2 py-1 text-white rounded-lg border text-xl border-gray-300 hover:border-gray-400 ml-2"
+          onClick={handlePageForward}
+          disabled={currentPage === totalPages}
+        >
+          <IoChevronForwardCircleSharp />
+        </button>
+      </div>
     </div>
   );
 };
