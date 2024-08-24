@@ -64,7 +64,6 @@ function App() {
             <Route path="/admin/manage/team" element={<ManageTeamPage />} />
             <Route path="/admin/enquiries-and-forms" element={<EnquiriesAndFormsPage />} />
           </Routes>
-          <SpeedInsights />
         </div>
       </Router>
     </>

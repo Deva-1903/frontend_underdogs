@@ -1,4 +1,3 @@
-import brochure from "../assets/brochure.jpg";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "../axios";
