@@ -118,6 +118,15 @@ function AdminSidebar() {
         </>
       ),
     },
+    {
+    Name: "Manage Team",
+    links: "/admin/manage/team",
+    child: (
+      <>
+        <FaUser />
+      </>
+    ),
+  },
   ];
 
   return (

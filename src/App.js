@@ -18,6 +18,7 @@ import ManageContentPage from "./pages/ManageContentPage";
 import PendingFeesPage from "./pages/PendingFeesPage";
 import HomeAttendance from "./components/HomeAttendance";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import ManageTeamPage from './pages/ManageTeamPage';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
               path="/admin/manage/content"
               element={<ManageContentPage />}
             />
+            <Route path="/admin/manage/team" element={<ManageTeamPage />} />
           </Routes>
           <SpeedInsights />
         </div>
