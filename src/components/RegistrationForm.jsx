@@ -184,7 +184,7 @@ function RegistrationForm() {
   };
 
   const generatePDF = async () => {
-    const component = <NewUserInvoice user={registeredUser} />;
+    const component = <NewUserInvoice user={{ ...registeredUser, branch: admin.branch }} />;
     const pdfBlob = await pdf(component).toBlob();
     return pdfBlob;
   };

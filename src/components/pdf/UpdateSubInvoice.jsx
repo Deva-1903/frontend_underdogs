@@ -12,6 +12,7 @@ import {
 import Logo from "../../assets/UnderDogs_logo.png";
 import WebsiteLogo from "../../assets/websitelogo.png";
 import AddressLogo from "../../assets/addresslogo.png";
+import { getBranchAddress } from "../../config/branchConfig";
 
 //fonts
 import Roboto from "../../assets/fontsource/Roboto-Bold.ttf";
@@ -276,7 +277,10 @@ const UpdateSubInvoice = ({ user }) => {
     transaction_type,
     planEnds,
     pending_amount,
+    branch,
   } = user;
+
+  const branchAddress = getBranchAddress(branch || "branch1");
 
   const currentDate = new Date()
     .toLocaleDateString("en-GB", {
@@ -431,7 +435,7 @@ const UpdateSubInvoice = ({ user }) => {
           <View style={styles.footerItem}>
             <Image src={AddressLogo} style={styles.logo2} />
             <Text style={styles.footerText}>
-              1/186, Mariamman Kovil St, Mugalivakkam, Ch-125
+              {branchAddress}
             </Text>
           </View>
         </View>

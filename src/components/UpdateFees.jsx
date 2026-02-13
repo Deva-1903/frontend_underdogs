@@ -187,7 +187,7 @@ const UpdateSubscription = () => {
   };
 
   const generatePDF = async () => {
-    const component = <UpdateSubInvoice user={updatedUser} />;
+    const component = <UpdateSubInvoice user={{ ...updatedUser, branch: admin.branch }} />;
     const pdfBlob = await pdf(component).toBlob();
     return pdfBlob;
   };

@@ -10,6 +10,7 @@ import { getAdmins } from "../features/admins/adminSlice";
 import { MdDeleteForever } from "react-icons/md";
 import { VscCheck, VscClose } from "react-icons/vsc";
 import { AiFillDelete } from "react-icons/ai";
+import { getBranchName } from "../config/branchConfig";
 
 function UpdateAdmin() {
   const [activeTab, setActiveTab] = useState("addAdmin");
@@ -280,8 +281,8 @@ function UpdateAdmin() {
                   className="appearance-none rounded-lg w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-800 text-white border-transparent border-2 focus:border-indigo-500"
                 >
                   <option value="">Select branch</option>
-                  <option value="branch1">Branch 1</option>
-                  <option value="branch2">Branch 2</option>
+                  <option value="branch1">{getBranchName("branch1")}</option>
+                  <option value="branch2">{getBranchName("branch2")}</option>
                   {/* Add more options as needed */}
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-indigo-500">
@@ -344,7 +345,7 @@ function UpdateAdmin() {
                           {formatDate(admin.createdAt)}
                         </td>
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
-                          {admin.branch}
+                          {getBranchName(admin.branch)}
                         </td>
                         <td className="px-2 md:px-6 py-2 md:py-4 whitespace-nowrap text-sm md:text-base text-gray-100 border">
                           {/* Action button for each admin */}

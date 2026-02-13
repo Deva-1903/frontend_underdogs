@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { SiInstagram, SiGmail } from "react-icons/si";
 import { IconContext } from "react-icons";
 import {BsCalendarCheckFill} from "react-icons/bs";
+import { getBranchName } from "../config/branchConfig";
 
 function Navbar() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -216,8 +217,8 @@ function Navbar() {
                       value={branch}
                     >
                       <option value="" disabled>Select branch</option>
-                      <option value="branch1">Branch 1</option>
-                      <option value="branch2">Branch 2</option>
+                      <option value="branch1">{getBranchName("branch1")}</option>
+                      <option value="branch2">{getBranchName("branch2")}</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-orange-500">
                       <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7 10l5 5 5-5H7z"/></svg>

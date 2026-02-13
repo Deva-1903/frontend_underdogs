@@ -1,5 +1,6 @@
 import React from "react";
 import { FaEnvelope, FaInstagram, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import { branchConfig } from "../config/branchConfig";
 
 function Footer() {
   return (
@@ -40,48 +41,48 @@ function Footer() {
             <div className="flex flex-wrap items-top mb-6">
               <div className="w-full lg:w-1/2 px-4 mb-4 lg:mb-0">
                 <span className="block uppercase text-orange-500 text-sm font-semibold mb-4">
-                  Branch 1
+                  {branchConfig.branch1.name}
                 </span>
                 <ul className="list-unstyled">
                   <li className="flex items-center mb-4">
                     <FaPhone className="mr-3 text-orange-500" />
                     <span className="hover:text-orange-500 transition-colors duration-300">
-                      +91 91235 25358
+                      {branchConfig.branch1.phone}
                     </span>
                   </li>
                   <li className="flex items-center">
                     <FaMapMarkerAlt className="mr-3 text-orange-500" />
                     <a
-                      href="https://goo.gl/maps/zg8zYVShCY2ywrZS6"
+                      href={branchConfig.branch1.mapLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-orange-500 transition-colors duration-300"
                     >
-                      No:1/186, Mariamman Kovil Street, Mugalivakkam, Chennai 600125
+                      {branchConfig.branch1.address}
                     </a>
                   </li>
                 </ul>
               </div>
               <div className="w-full lg:w-1/2 px-4">
                 <span className="block uppercase text-orange-500 text-sm font-semibold mb-4">
-                  Branch 2
+                  {branchConfig.branch2.name}
                 </span>
                 <ul className="list-unstyled">
                   <li className="flex items-center mb-4">
                     <FaPhone className="mr-3 text-orange-500" />
                     <span className="hover:text-orange-500 transition-colors duration-300">
-                      +91 63822 32050
+                      {branchConfig.branch2.phone}
                     </span>
                   </li>
                   <li className="flex items-center">
                     <FaMapMarkerAlt className="mr-3 text-orange-500" />
                     <a
-                      href="https://maps.app.goo.gl/WBnurgaGoARoGmGKA"
+                      href={branchConfig.branch2.mapLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-orange-500 transition-colors duration-300"
                     >
-                      NO:98/4, Kundrathur Main Road, Kumananchavadi, Chennai 56.
+                      {branchConfig.branch2.address}
                     </a>
                   </li>
                 </ul>
