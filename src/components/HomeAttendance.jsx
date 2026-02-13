@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function HomeAttendance() {
   const [statusFilter, setStatusFilter] = useState("all");
@@ -222,7 +222,7 @@ function HomeAttendance() {
                           <div class="rounded-full h-16 w-16 justify-center ml-3">
                             <img
                               src={user.photoURL}
-                              alt="image"
+                              alt="User profile"
                               class="h-full w-full rounded-full object-cover"
                             />
                           </div>

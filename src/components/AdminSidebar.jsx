@@ -10,23 +10,11 @@ import {
 import { RiUserFollowLine } from "react-icons/ri";
 import { TiGroup } from "react-icons/ti";
 import { RiMessage2Fill } from "react-icons/ri";
-import { IoMdLogOut } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { logout, reset } from "../features/auth/authSlice";
+
 import { RiAdminFill } from "react-icons/ri";
-import { useSelector, useDispatch } from "react-redux";
 import { GiMoneyStack } from "react-icons/gi";
 
 function AdminSidebar() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    navigate("/");
-  };
-
   const Admin = [
     {
       Name: "Register User",

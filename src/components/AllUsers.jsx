@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers } from "../features/allUsers/allUsersSlice";
-import { useNavigate } from "react-router-dom";
+
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 
 function AllUsers() {
@@ -9,11 +9,10 @@ function AllUsers() {
   const [sortOrder, setSortOrder] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { admin } = useSelector((state) => state.auth);
-  const { users, isError, isSuccess, isLoading, message } = useSelector(
+  
+  const { users } = useSelector(
     (state) => state.allUsers
   );
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../axios";
-import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
 import { FaTags } from "react-icons/fa";
 import { useParams } from 'react-router-dom';
-import { encryptData, decryptData } from '../utils/utils';
+import { encryptData } from '../utils/utils';
 
 
 function Hero() {
@@ -14,7 +14,6 @@ function Hero() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { branch } = useParams();
 
 
@@ -129,8 +128,7 @@ function Hero() {
                   complete offers.
                 </p>
                 <div className="flex justify-center mt-5">
-                  <a
-                    href="#"
+                  <button
                     onClick={handleDownload}
                     className="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white p-4 border border-orange-500 hover:border-transparent rounded inline-block cursor-pointer mr-4"
                   >
@@ -138,7 +136,7 @@ function Hero() {
                       <FaTags className=" mt-1 text-2xl" />
                       <p className="text-xl lg:pr-2">Offers</p>
                     </div>
-                  </a>
+                  </button>
                   <button
                     className="bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white p-4 border border-orange-500 hover:border-transparent rounded inline-block cursor-pointer"
                     onClick={() => setShowForm(true)}

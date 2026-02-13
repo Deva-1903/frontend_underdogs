@@ -107,6 +107,7 @@ function EditUserForm() {
       setSelectedPhoto(response.payload.photoURL);
     };
     fetchUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -123,11 +124,8 @@ function EditUserForm() {
     }
 
     dispatch(reset());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [admin, user, isError, isSuccess, message, navigate, dispatch]);
-
-  const handleCancel = () => {
-    navigate("/admin/register/user");
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
@@ -9,17 +9,15 @@ const PendingFees = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
-  const [isFetching, setIsFetching] = useState(true);
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { admin } = useSelector((state) => state.auth);
-  const { users, isError, isSuccess, isLoading, message } = useSelector(
+  const { users, isError, isLoading, message } = useSelector(
     (state) => state.allUsers
   );
-
-  console.log(users);
 
   useEffect(() => {
     if (!admin) {
@@ -32,9 +30,10 @@ const PendingFees = () => {
           page: currentPage,
         })
       ).then(() => {
-        setIsFetching(false); // Set loading state to false after data is fetched
+         // Set loading state to false after data is fetched
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [admin, dispatch, currentPage, sortOrder, statusFilter]);
 
   useEffect(() => {

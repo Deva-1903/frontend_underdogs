@@ -27,14 +27,13 @@ function AdminHeader({ showSidebar, handleToggleSidebar }) {
         <h1 className="text-white text-2xl font-semibold">Dashboard</h1>
       </div>
       <div>
-        <a
-          href=""
+        <button
           className="py-2 px-6 flex items-center  text-gray-300 hover:text-white hover:scale-110 duration-200"
           onClick={handleLogout}
         >
           <IoMdLogOut className="h-5 w-5 mr-2 " />
           Logout
-        </a>
+        </button>
       </div>
     </header>
   );

@@ -22,6 +22,7 @@ const ContactForms = () => {
       setAdmin(storedAdmin);
       fetchContactForms(storedAdmin.token);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, currentPage]);
 
   const fetchContactForms = async (token) => {

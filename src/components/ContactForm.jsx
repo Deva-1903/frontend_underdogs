@@ -1,10 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
+
 import axios from "../axios";
-import { publicContactForm, reset } from "../features/user/userSlice";
-import Spinner from "../components/Spinner";
+
+
 
 function ContactForm() {
   const [formData, setFormData] = useState({

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { HiLockClosed } from "react-icons/hi";
-import { GrInstagram } from "react-icons/gr";
 import { BsPersonFill } from "react-icons/bs";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import logo from "../assets/UnderDogs.png";
@@ -111,13 +110,12 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <a
-                href="#"
+              <button
                 className="px-2 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 onClick={() => setShowLoginForm(true)}
               >
                 <HiLockClosed />
-              </a>
+              </button>
             </li>
             <li className="nav-item">
               <Link to={`/attendance/${currentBranch}`}

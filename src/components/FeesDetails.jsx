@@ -10,10 +10,6 @@ import { FiDownload } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
 import { IoChevronForwardCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-import NewUserInvoice from "./pdf/NewUserInvoice";
-import UpdateSubInvoice from "./pdf/UpdateSubInvoice";
-import { pdf } from "@react-pdf/renderer";
-import { BsCurrencyRupee } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -56,6 +52,7 @@ function FeesDetails() {
     };
 
     fetchAdminNames();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDeleteFees = (id) => {

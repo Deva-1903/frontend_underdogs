@@ -27,6 +27,7 @@ const EnquiriesAndForms = () => {
     if (activeTab === 'enquiryList') {
       fetchEnquiries();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, sortOption, statusFilter, currentPage]);
 
 const fetchEnquiries = async () => {

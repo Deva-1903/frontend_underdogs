@@ -3,7 +3,7 @@ import axios from "../axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { RiDeleteBack2Fill } from "react-icons/ri";
+
 import { storage } from "../utils/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
@@ -490,7 +490,7 @@ function ManageContent() {
                   {brochureImage && brochureImage.length > 0 ? (
                     <img
                       src={brochureImage[0].photoURL}
-                      alt="Selected Image"
+                      alt="Brochure preview"
                       className="mt-2 max-w-xs md:max-w-md"
                       style={{ margin: "auto" }}
                     />
