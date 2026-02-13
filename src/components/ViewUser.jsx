@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import {
-  FaUser,
   FaBirthdayCake,
   FaTransgenderAlt,
   FaMobileAlt,
@@ -23,7 +22,6 @@ import {
   FaRunning,
   FaCalendarAlt,
 } from "react-icons/fa";
-import { MdPermIdentity } from "react-icons/md";
 import { MdWork } from "react-icons/md";
 
 import { fetchUserDataForUpdate, reset } from "../features/user/userSlice";
@@ -69,7 +67,7 @@ function ViewUser() {
       setUserData(response.payload);
     };
     fetchUser();
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     if (isError) {
@@ -85,7 +83,7 @@ function ViewUser() {
     }
 
     dispatch(reset());
-  }, [admin, user, isError, isSuccess, message, navigate, dispatch]);
+  }, [admin, user, isError, isSuccess, message, navigate, dispatch, id]);
 
   if (isLoading) {
     return <Spinner />;
@@ -108,7 +106,7 @@ function ViewUser() {
               <img
                 src={userData.photoURL}
                 className="h-full w-full object-cover bg-white"
-                alt="User Photo"
+                alt={userData.name || "User profile"}
               />
             </div>
             <div>

@@ -7,7 +7,6 @@ import {
   View,
   Text,
   Font,
-  Link,
 } from "@react-pdf/renderer";
 import Logo from "../../assets/UnderDogs_logo.png";
 import WebsiteLogo from "../../assets/websitelogo.png";
@@ -267,7 +266,6 @@ const UpdateSubInvoice = ({ user }) => {
     invoice_id,
     id,
     name,
-    email,
     mobile,
     subscription,
     subscription_type,

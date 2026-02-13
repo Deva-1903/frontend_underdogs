@@ -136,7 +136,7 @@ const UpdateSubscription = () => {
     };
 
     fetchPendingAmount();
-  }, [id]);
+  }, [id, admin.token, admin]);
 
   useEffect(() => {
     if (isError) {
@@ -154,7 +154,7 @@ const UpdateSubscription = () => {
     }
 
     dispatch(reset());
-  }, [admin, user, isError, isSuccess, message, navigate, dispatch]);
+  }, [admin, user, isError, isSuccess, message, navigate, dispatch, id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -186,14 +186,14 @@ const UpdateSubscription = () => {
     setFlip(true);
   };
 
-  const generatePDF = async () => {
-    const component = <UpdateSubInvoice user={{ ...updatedUser, branch: admin.branch }} />;
-    const pdfBlob = await pdf(component).toBlob();
-    return pdfBlob;
-  };
-
   useEffect(() => {
     if (isUpdated) {
+      const generatePDF = async () => {
+        const component = <UpdateSubInvoice user={{ ...updatedUser, branch: admin.branch }} />;
+        const pdfBlob = await pdf(component).toBlob();
+        return pdfBlob;
+      };
+
       const generateAndSendInvoice = async () => {
         try {
           const pdfData = await generatePDF();
@@ -229,7 +229,7 @@ const UpdateSubscription = () => {
 
       generateAndSendInvoice();
     }
-  }, [isUpdated, updatedUser]);
+  }, [isUpdated, updatedUser, admin.token, admin.branch]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

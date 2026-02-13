@@ -207,11 +207,11 @@ function ViewAttendance() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <div class="rounded-full h-16 w-16 justify-center ml-3">
+                          <div className="rounded-full h-16 w-16 justify-center ml-3">
                             <img
                               src={user.photoURL}
-                              alt="image"
-                              class="h-full w-full rounded-full object-cover"
+                              alt={user.name || "User profile"}
+                              className="h-full w-full rounded-full object-cover"
                             />
                           </div>
                         </a>
