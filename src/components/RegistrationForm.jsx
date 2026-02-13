@@ -101,7 +101,7 @@ function RegistrationForm() {
     };
 
     fetchSubscriptionOptions();
-  }, []);
+  }, [admin.token]);
 
   useEffect(() => {
     if (isError) {
@@ -183,14 +183,14 @@ function RegistrationForm() {
     dispatch(createUser(userData));
   };
 
-  const generatePDF = async () => {
-    const component = <NewUserInvoice user={{ ...registeredUser, branch: admin.branch }} />;
-    const pdfBlob = await pdf(component).toBlob();
-    return pdfBlob;
-  };
-
   useEffect(() => {
     if (isRegistered) {
+      const generatePDF = async () => {
+        const component = <NewUserInvoice user={{ ...registeredUser, branch: admin.branch }} />;
+        const pdfBlob = await pdf(component).toBlob();
+        return pdfBlob;
+      };
+
       const generateAndSendInvoice = async () => {
         try {
           const pdfData = await generatePDF();
@@ -226,7 +226,7 @@ function RegistrationForm() {
 
       generateAndSendInvoice();
     }
-  }, [isRegistered, registeredUser]);
+  }, [isRegistered, registeredUser, admin.token, admin.branch]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

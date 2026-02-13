@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { BiLockAlt, BiLockOpenAlt, BiUserCircle } from "react-icons/bi";
 import { register, deleteAdmin, reset } from "../features/auth/authSlice";
 import { getAdmins } from "../features/admins/adminSlice";
-import { MdDeleteForever } from "react-icons/md";
 import { VscCheck, VscClose } from "react-icons/vsc";
 import { AiFillDelete } from "react-icons/ai";
 import { getBranchName } from "../config/branchConfig";
@@ -36,7 +35,6 @@ function UpdateAdmin() {
   const {
     admins,
     isError: adminsError,
-    isSuccess: adminsSuccess,
     message: adminsMessage,
   } = useSelector((state) => state.admins);
 

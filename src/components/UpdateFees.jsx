@@ -106,7 +106,7 @@ const UpdateSubscription = () => {
     };
 
     fetchSubscriptionOptions();
-  }, []);
+  }, [admin.token]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -116,7 +116,7 @@ const UpdateSubscription = () => {
       setUserData(response.payload);
     };
     fetchUser();
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     const fetchPendingAmount = async () => {

@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../axios';
-import { FaInstagram, FaEnvelope, FaChevronLeft, FaChevronRight, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaEnvelope, FaPhone } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
 const TeamSlider = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [teamMembers, setTeamMembers] = useState([]);
 
   useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const response = await axios.get('/api/team-members');
+        setTeamMembers(response.data);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+      }
+    };
     fetchTeamMembers();
   }, []);
-
-  const fetchTeamMembers = async () => {
-    try {
-      const response = await axios.get('/api/team-members');
-      setTeamMembers(response.data);
-    } catch (error) {
-      console.error('Error fetching team members:', error);
-    }
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 3 >= teamMembers.length ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? teamMembers.length - 3 : prevIndex - 1
-    );
-  };
   const settings = {
     dots: true,
     infinite: true,
