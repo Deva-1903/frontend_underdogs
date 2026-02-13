@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { publicGetUser, reset } from "../features/user/userSlice";
-import { FaCheckCircle, FaTimesCircle, FaUserCircle } from "react-icons/fa";
-import { encryptData, decryptData } from '../utils/utils';
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { decryptData } from '../utils/utils';
 
 function UserAttendance() {
   const [userData, setUserData] = useState({
@@ -29,7 +29,7 @@ function UserAttendance() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isError, isSuccess, isLoading, message } = useSelector(
+  const { isError, message } = useSelector(
     (state) => state.user
   );
 
@@ -57,7 +57,7 @@ function UserAttendance() {
       setUserData(response.payload);
     };
     fetchUser();
-  }, [id]);
+  }, [id, decryptedBranch, decryptedUserId, dispatch]);
 
   return (
     <body style={{ overflow: "hidden" }}>
@@ -93,11 +93,11 @@ function UserAttendance() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div class="rounded-full h-20 w-20 justify-evenly items-center">
+                  <div className="rounded-full h-20 w-20 justify-evenly items-center">
                     <img
                       src={userData.photoURL}
-                      alt="image"
-                      class="h-full w-full rounded-full border object-cover"
+                      alt={userData.name || "User profile"}
+                      className="h-full w-full rounded-full border object-cover"
                     />
                   </div>
                 </a>
